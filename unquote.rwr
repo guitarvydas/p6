@@ -1,0 +1,27 @@
+% rewrite unquote {
+  program [scm+] = ‛«scm»’
+  scm [x] = ‛«x»’
+
+  atom_false [x] = ‛«x»’
+  atom_true [x] = ‛«x»’
+  atom_int [x] = ‛«x»’
+  atom_string [x] = ‛«x»’
+  atom_symbol [x] = ‛«x»’
+
+  integer [d+] = ‛«d»’
+  string [lq cs* rq] = ‛«lq»«cs»«rq»’
+  symbol [cs+] = ‛«cs»’
+  symChar [c] = ‛«c»’
+  specialChar [c] = ‛«c»’
+
+  List_nil [lp rp] = ‛«lp»«rp»’
+  List_quoted [q s] = ‛(quote «s»)’
+  List_backquoted [q s] = ‛«q»«s»’
+  List_commaexpanded [_c s] = ‛«_c»«s»’
+  List_dotted [lp s+ Dotted rp] = ‛«lp»«s»«Dotted»«rp»’
+  List_list [lp s+ rp] = ‛«lp»«s»«rp»’
+  Dotted [_dot s] = ‛«_dot» «s»’
+
+  comment [_semi cs* nl] = ‛«_semi»«cs»«nl»’
+  space [x] = ‛«x»’
+}

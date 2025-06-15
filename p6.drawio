@@ -100,7 +100,7 @@
         <mxCell id="qUXiE29FCXPB7mMpxqje-5" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=1;jumpStyle=arc;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;labelBackgroundColor=default;strokeColor=#666666;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=classic;fillColor=#f5f5f5;opacity=90;dashed=1;" parent="u57hV6R-wIHW0BZcvFjU-1" source="qUXiE29FCXPB7mMpxqje-9" target="qUXiE29FCXPB7mMpxqje-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="qUXiE29FCXPB7mMpxqje-6" value=":$ pbp/t2t.bash . ./pbp p6.ohm p6.rwr empty.js -" style="rounded=1;whiteSpace=wrap;html=1;sketch=0;container=1;recursiveResize=0;verticalAlign=top;arcSize=6;fontStyle=1;autosize=0;points=[];absoluteArcSize=1;shadow=1;strokeColor=#001DBC;fillColor=#D4E4EF;fontColor=#ffffff;fontFamily=Helvetica;fontSize=11;gradientColor=#0050EF;" parent="u57hV6R-wIHW0BZcvFjU-1" vertex="1">
+        <mxCell id="qUXiE29FCXPB7mMpxqje-6" value=":$ pbp/t2t.bash . ./pbp scm.ohm scm.rwr empty.js -" style="rounded=1;whiteSpace=wrap;html=1;sketch=0;container=1;recursiveResize=0;verticalAlign=top;arcSize=6;fontStyle=1;autosize=0;points=[];absoluteArcSize=1;shadow=1;strokeColor=#001DBC;fillColor=#D4E4EF;fontColor=#ffffff;fontFamily=Helvetica;fontSize=11;gradientColor=#0050EF;" parent="u57hV6R-wIHW0BZcvFjU-1" vertex="1">
           <mxGeometry x="180" y="480" width="320" height="130" as="geometry">
             <mxRectangle x="-98" y="-1230" width="99" height="26" as="alternateBounds" />
           </mxGeometry>

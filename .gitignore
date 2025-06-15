@@ -3,5 +3,11 @@ node_modules/*
 _*
 temp.*
 *.pyc
+.DS_Store
 */.DS_Store
+out.*
+prolog.js
+.#*
 
+
+*.bkp

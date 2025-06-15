@@ -1,0 +1,33 @@
+scm {
+ program = scm+
+ scm = applySyntactic<List> | atom
+
+  atom =
+    | "#f" -- false
+    | "#t" -- true
+    | integer -- int
+    | string -- string
+    | symbol -- symbol
+
+  integer = digit+
+  string = "\"" (~"\"" any)* "\""
+  symbol = symChar+
+  symChar = ~specialChar  any
+  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "."
+
+  List =
+    | "(" ")" -- nil
+    | "'" scm -- quoted
+    | bq scm -- backquoted
+    | comma scm -- commaexpanded
+    | "(" scm+ Dotted ")" -- dotted
+    | "(" scm+ ")" -- list
+
+  Dotted = "." scm
+
+  bq = "`"
+  comma = ","
+
+  comment = ";" (~"\n" any)* "\n"
+  space += comment
+}

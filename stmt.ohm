@@ -20,6 +20,8 @@ stmt {
     | "(" "define" atom Expr ")" -- defvar
     | "(" "define" "(" fname formal* ")" Body ")" -- defun
     | "(" "cond" CondClause+ ")" -- cond
+    | "(" "if" Expr Then Else ")" -- ifthenelse
+    | "(" "if" Expr Then ")" -- ifthen
     | "(" "let*" "(" Binding+ ")" Body ")" -- letstar
     | "(" "let" symbol "(" Binding+ ")" Body ")" -- namedlet
     | "(" "let" "(" Binding+ ")" Body ")" -- let
@@ -40,6 +42,9 @@ stmt {
   Guard = sexp
 
   Binding = "(" atom Expr ")"
+  
+  Then = Expr
+  Else = Expr
   
   Dotted = "." sexp
 

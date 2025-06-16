@@ -18,6 +18,8 @@
   List_defvar [lp _define v e rp] = ‛\n«lp»«_define» «v» «e»«rp»’
   List_defun [lp _define lp2 fname formals* rp2 body rp] = ‛\n«lp»«_define» «lp2»«fname»«formals»«rp2»«body»«rp»’
   List_cond [lp _cond clauses+ rp] = ‛«lp»«_cond»«clauses»«rp»’
+  List_ifthenelse [lp _if e ethen eelse rp] = ‛«lp»«_if»«e»«ethen»«eelse»«rp»’
+  List_ifthen [lp _if e ethen rp] = ‛«lp»«_if»«e»«ethen»«rp»’
   List_namedlet [lp _let sym lp2 bindings+ rp2 body rp] = ‛«lp»«_let» «sym» «lp2»«bindings»«rp2»«body»«rp»’
   List_letstar [lp _let lp2 bindings+ rp2 body rp] = ‛«lp»«_let»«lp2»«bindings»«rp2»«body»«rp»’
   List_let [lp _let lp2 bindings+ rp2 body rp] = ‛«lp»«_let»«lp2»«bindings»«rp2»«body»«rp»’
@@ -38,6 +40,9 @@
   Guard [e] =‛«e»’
 
   Binding [lp v e rp] = ‛«lp»«v»«e»«rp»’
+
+  Then [e] = ‛\n«e»’
+  Else [e] = ‛\n«e»’
   
   Dotted [_dot s] = ‛«_dot» «s»’
 

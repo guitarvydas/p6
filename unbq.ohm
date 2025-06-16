@@ -1,6 +1,7 @@
-scm {
+unbq {
  program = scm+
  scm = applySyntactic<List> | atom
+ bqscm = applySyntactic<BQList> | atom
 
   atom =
     | "#f" -- false
@@ -18,12 +19,22 @@ scm {
   List =
     | "(" ")" -- nil
     | "'" scm -- quoted
-    | bq scm -- backquoted
-    | comma scm -- commaexpanded
+    | bq bqscm -- backquoted
     | "(" scm+ Dotted ")" -- dotted
     | "(" scm+ ")" -- list
 
+  BQList =
+    | "(" ")" -- nil
+    | "'" bqscm -- quoted
+    | bq bqscm -- backquoted
+    | comma atom -- commaatom
+    | atom -- atom
+    | comma BQList -- commabqlist
+    | "(" bqscm+ BQDotted ")" -- dotted
+    | "(" bqscm+ ")" -- list
+
   Dotted = "." scm
+  BQDotted = "." bqscm
 
   bq = "`"
   comma = ","

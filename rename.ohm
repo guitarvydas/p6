@@ -11,9 +11,17 @@ scm {
 
   integer = digit+
   string = "\"" (~"\"" any)* "\""
-  symbol = symChar+
-  symChar = ~specialChar  any
-  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "." | space
+  symbol =
+    | "let*" -- letstar
+    | symChar+ -- other
+  symChar =
+    | ~specialChar "*" -- asterisk
+    | ~specialChar "?" -- question
+    | ~specialChar "!" -- bang
+    | ~specialChar "-" -- dash
+    | ~specialChar any -- other
+
+  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "."
 
   List =
     | "(" ")" -- nil

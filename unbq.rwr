@@ -1,0 +1,38 @@
+% rewrite unbq {
+  program [scm+] = ‛«scm»’
+  scm [x] = ‛«x»’
+  bqscm [x] = ‛«x»’
+
+  atom_false [x] = ‛«x»’
+  atom_true [x] = ‛«x»’
+  atom_int [x] = ‛«x»’
+  atom_string [x] = ‛«x»’
+  atom_symbol [x] = ‛«x»’
+
+  integer [d+] = ‛«d»’
+  string [lq cs* rq] = ‛«lq»«cs»«rq»’
+  symbol [cs+] = ‛«cs»’
+  symChar [c] = ‛«c»’
+  specialChar [c] = ‛«c»’
+
+  List_nil [lp rp] = ‛«lp»«rp»’
+  List_quoted [q s] = ‛«q»«s»’
+  List_backquoted [q s] = ‛«s»’
+  List_dotted [lp s+ Dotted rp] = ‛«lp»«s»«Dotted»«rp»’
+  List_list [lp s+ rp] = ‛«lp»«s»«rp»’
+
+  BQList_nil [lp rp] = ‛(quote «lp»«rp»)’
+  BQList_quoted [q s] = ‛«s»’
+  BQList_backquoted [q s] = ‛«q»«s»’
+  BQList_commaatom [_c a] = ‛«a»’
+  BQList_atom [a] = ‛(quote «a»)’
+  BQList_commabqlist [_c l] = ‛«l»’
+  BQList_dotted [lp s+ Dotted rp] = ‛«s»«Dotted»’
+  BQList_list [lp s+ rp] = ‛(list «s»)’
+
+  Dotted [_dot s] = ‛«_dot» «s»’
+  BQDotted [_dot s] = ‛«_dot» «s»’
+
+  comment [_semi cs* nl] = ‛«_semi»«cs»«nl»’
+  space [x] = ‛«x»’
+}

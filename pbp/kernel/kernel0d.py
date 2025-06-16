@@ -1,4 +1,3 @@
-
 #
 import sys
 import re
@@ -603,15 +602,17 @@ def start (arg,Part_name,palette,env):                 #line 663
         d.clone =  lambda : obj_clone ( d)             #line 678
         d.reclaim =  None                              #line 679
         mev = make_mevent ( "", d)                     #line 680
-        inject ( Part, mev)                            #line 681#line 682
-    print (deque_to_json ( Part.outq))                 #line 683#line 684#line 685
+        inject ( Part, mev)                            #line 681
+    else:                                              #line 682
+        exit (1)                                       #line 683#line 684
+    print (deque_to_json ( Part.outq))                 #line 685#line 686#line 687
 
-def new_datum_bang ():                                 #line 686
-    d = Datum ()                                       #line 687
-    d.v =  "!"                                         #line 688
-    d.clone =  lambda : obj_clone ( d)                 #line 689
-    d.reclaim =  None                                  #line 690
-    return  d                                          #line 691#line 692
+def new_datum_bang ():                                 #line 688
+    d = Datum ()                                       #line 689
+    d.v =  "!"                                         #line 690
+    d.clone =  lambda : obj_clone ( d)                 #line 691
+    d.reclaim =  None                                  #line 692
+    return  d                                          #line 693#line 694
 def external_instantiate (reg,owner,name,arg):         #line 1
     name_with_id = gensymbol ( name)                   #line 2
     return make_leaf ( name_with_id, owner, None, arg, handle_external)#line 3#line 4#line 5
@@ -889,16 +890,19 @@ def handle_external (eh,mev):                          #line 1
         send ( eh, "",   s[1:] [1:] , mev)             #line 10#line 11#line 12#line 13
 
 def probe_handler (eh,s,mev):                          #line 14
-    live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 22#line 23#line 24
+    s =  mev.datum.v                                   #line 15
+    live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 23#line 24#line 25
 
-def shell_out_handler (eh,cmd,mev):                    #line 25
-    s =  mev.datum.v                                   #line 26
-    ret =  None                                        #line 27
-    rc =  None                                         #line 28
-    stdout =  None                                     #line 29
-    stderr =  None                                     #line 30
+def shell_out_handler (eh,cmd,mev):                    #line 26
+    s =  mev.datum.v                                   #line 27
+    ret =  None                                        #line 28
+    rc =  None                                         #line 29
+    stdout =  None                                     #line 30
+    stderr =  None                                     #line 31
 
     try:
+        with open('junk.txt', 'w') as file:
+            file.write(cmd)
         ret = subprocess.run (shlex.split ( cmd), input= s, text=True, capture_output=True)
         rc = ret.returncode
         stdout = ret.stdout.strip ()
@@ -908,8 +912,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 25
         rc = 1
         stdout = ''
         stderr = str(e)
-                                                       #line 31
-    if  rc ==  0:                                      #line 32
-        send ( eh, "", str( stdout) +  stderr , mev)   #line 33
-    else:                                              #line 34
-        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 35#line 36#line 37#line 38
+                                                       #line 32
+    if  rc ==  0:                                      #line 33
+        send ( eh, "", str( stdout) +  stderr , mev)   #line 34
+    else:                                              #line 35
+        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 36#line 37#line 38#line 39

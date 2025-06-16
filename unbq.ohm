@@ -1,0 +1,44 @@
+unbq {
+ program = scm+
+ scm = applySyntactic<List> | atom
+ bqscm = applySyntactic<BQList> | atom
+
+  atom =
+    | "#f" -- false
+    | "#t" -- true
+    | integer -- int
+    | string -- string
+    | symbol -- symbol
+
+  integer = digit+
+  string = "\"" (~"\"" any)* "\""
+  symbol = symChar+
+  symChar = ~specialChar  any
+  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "."
+
+  List =
+    | "(" ")" -- nil
+    | "'" scm -- quoted
+    | bq bqscm -- backquoted
+    | "(" scm+ Dotted ")" -- dotted
+    | "(" scm+ ")" -- list
+
+  BQList =
+    | "(" ")" -- nil
+    | "'" bqscm -- quoted
+    | bq bqscm -- backquoted
+    | comma atom -- commaatom
+    | atom -- atom
+    | comma BQList -- commabqlist
+    | "(" bqscm+ BQDotted ")" -- dotted
+    | "(" bqscm+ ")" -- list
+
+  Dotted = "." scm
+  BQDotted = "." bqscm
+
+  bq = "`"
+  comma = ","
+
+  comment = ";" (~"\n" any)* "\n"
+  space += comment
+}

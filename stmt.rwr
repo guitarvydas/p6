@@ -1,4 +1,4 @@
-% rewrite rename {
+% rewrite toplevel {
   program [scm+] = ‛«scm»’
   scm [x] = ‛«x»’
 
@@ -11,18 +11,21 @@
   integer [d+] = ‛«d»’
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
   symbol [cs+] = ‛«cs»’
-  symChar_asterisk [c] = ‛_a’
-  symChar_question [c] = ‛_q’
-  symChar_bang [c] = ‛_b’
-  symChar_other [c] = ‛«c»’
+  symChar [c] = ‛«c»’
   specialChar [c] = ‛«c»’
 
   List_nil [lp rp] = ‛«lp»«rp»’
-  List_quoted [q s] = ‛(quote «s»)’
+  List_defvar [lp _define v e rp] = ‛\n«lp»«_define» «v» «e»«rp»’
+  List_defun [lp _define lp2 fname formals* rp2 e rp] = ‛\n«lp»«_define» «lp2»«fname»«formals»«rp2»\n«e»«rp»’
+  List_quoted [q s] = ‛«q»«s»’
   List_backquoted [q s] = ‛«q»«s»’
   List_commaexpanded [_c s] = ‛«_c»«s»’
   List_dotted [lp s+ Dotted rp] = ‛«lp»«s»«Dotted»«rp»’
   List_list [lp s+ rp] = ‛«lp»«s»«rp»’
+
+  fname [n] = ‛ «n»’
+  formal [n] = ‛ «n»’
+  
   Dotted [_dot s] = ‛«_dot» «s»’
 
   comment [_semi cs* nl] = ‛«_semi»«cs»«nl»’

@@ -1,5 +1,6 @@
 % rewrite stmt {
   program [sexp+] = ‛«sexp»’
+  topsexp [x] = ‛\n«x»’
   sexp [x] = ‛«x»’
 
   atom_false [x] = ‛ «x»’

@@ -17,7 +17,7 @@
 
   List_nil [lp rp] = ‛«lp»«rp»’
   List_quoted [q s] = ‛«q»«s»’
-  List_backquoted [q s] = ‛(list «s»)’
+  List_backquoted [q s] = ‛«s»’
   List_dotted [lp s+ Dotted rp] = ‛«lp»«s»«Dotted»«rp»’
   List_list [lp s+ rp] = ‛«lp»«s»«rp»’
 
@@ -28,7 +28,7 @@
   BQList_atom [a] = ‛(quote «a»)’
   BQList_commabqlist [_c l] = ‛«l»’
   BQList_dotted [lp s+ Dotted rp] = ‛«s»«Dotted»’
-  BQList_list [lp s+ rp] = ‛«s»’
+  BQList_list [lp s+ rp] = ‛(list «s»)’
 
   Dotted [_dot s] = ‛«_dot» «s»’
   BQDotted [_dot s] = ‛«_dot» «s»’

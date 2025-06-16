@@ -3,3 +3,6 @@ all:
 dev:
 	./dev.bash
 
+bq:
+	./bq.bash
+

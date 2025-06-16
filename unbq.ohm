@@ -14,7 +14,7 @@ unbq {
   string = "\"" (~"\"" any)* "\""
   symbol = symChar+
   symChar = ~specialChar  any
-  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "."
+  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "." | space
 
   List =
     | "(" ")" -- nil

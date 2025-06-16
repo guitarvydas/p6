@@ -1,5 +1,6 @@
 stmt {
- program = sexp+
+ program = topsexp+
+ topsexp = sexp
  sexp = applySyntactic<List> | atom
 
   atom =

@@ -16,6 +16,7 @@ scm {
     | ~specialChar "*" -- asterisk
     | ~specialChar "?" -- question
     | ~specialChar "!" -- bang
+    | ~specialChar "-" -- dash
     | ~specialChar any -- other
 
   specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "."

@@ -1,6 +1,6 @@
-% rewrite toplevel {
-  program [scm+] = ‛«scm»’
-  scm [x] = ‛«x»’
+% rewrite stmt {
+  program [sexp+] = ‛«sexp»’
+  sexp [x] = ‛«x»’
 
   atom_false [x] = ‛«x»’
   atom_true [x] = ‛«x»’
@@ -16,7 +16,10 @@
 
   List_nil [lp rp] = ‛«lp»«rp»’
   List_defvar [lp _define v e rp] = ‛\n«lp»«_define» «v» «e»«rp»’
-  List_defun [lp _define lp2 fname formals* rp2 e rp] = ‛\n«lp»«_define» «lp2»«fname»«formals»«rp2»\n«e»«rp»’
+  List_defun [lp _define lp2 fname formals* rp2 body rp] = ‛\n«lp»«_define» «lp2»«fname»«formals»«rp2»«body»«rp»’
+  List_cond [lp _cond clauses+ rp] = ‛«lp»«_cond»«clauses»«rp»’
+  List_namedlet [lp _let sym lp2 bindings+ rp2 body+ rp] = ‛«lp»«_let» «sym» «lp2»«bindings»«rp2»«body»«rp»’
+  List_let [lp _let lp2 bindings+ rp2 body+ rp] = ‛«lp»«_let»«lp2»«bindings»«rp2»«body»«rp»’
   List_quoted [q s] = ‛«q»«s»’
   List_backquoted [q s] = ‛«q»«s»’
   List_commaexpanded [_c s] = ‛«_c»«s»’
@@ -25,6 +28,15 @@
 
   fname [n] = ‛ «n»’
   formal [n] = ‛ «n»’
+  Expr [e] = ‛«e»’
+
+  Body [es+] = ‛«es»’
+  BodyExpr [e] = ‛\n«e»’
+
+  CondClause [lp guard e rp] = ‛\n«lp»«guard» «e»«rp»’
+  Guard [e] =‛«e»’
+
+  Binding [lp v e rp] = ‛«lp»«v»«e»«rp»’
   
   Dotted [_dot s] = ‛«_dot» «s»’
 

@@ -1,1 +1,11 @@
-`(r! ,l)
+(define (resolve x e)
+  (cond ((not (pair? x)) x)
+	))
+
+(define (print-frame e)
+  (newline)
+  (let loop ((ee e))
+    (cond ((pair? (cdr ee))
+            (cond ((null? (time (caar ee)))
+                    (newline)))
+            (loop (cdr ee))))))

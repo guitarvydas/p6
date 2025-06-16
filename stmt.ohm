@@ -1,6 +1,6 @@
 stmt {
- program = scm+
- scm = applySyntactic<List> | atom
+ program = sexp+
+ sexp = applySyntactic<List> | atom
 
   atom =
     | "#f" -- false
@@ -18,18 +18,29 @@ stmt {
   List =
     | "(" ")" -- nil
     | "(" "define" atom Expr ")" -- defvar
-    | "(" "define" "(" fname formal* ")" Expr ")" -- defun
-    | "'" scm -- quoted
-    | bq scm -- backquoted
-    | comma scm -- commaexpanded
-    | "(" scm+ Dotted ")" -- dotted
-    | "(" scm+ ")" -- list
+    | "(" "define" "(" fname formal* ")" Body ")" -- defun
+    | "(" "cond" CondClause+ ")" -- cond
+    | "(" "let" symbol "(" Binding+ ")" Body ")" -- namedlet
+    | "(" "let" "(" Binding+ ")" Body ")" -- let
+    | "'" sexp -- quoted
+    | bq sexp -- backquoted
+    | comma sexp -- commaexpanded
+    | "(" sexp+ Dotted ")" -- dotted
+    | "(" sexp+ ")" -- list
 
   fname = symbol
   formal = symbol
-  Expr = List
+  Expr = sexp
+
+  Body = BodyExpr+
+  BodyExpr = sexp
+
+  CondClause = "(" Guard Expr ")"
+  Guard = sexp
+
+  Binding = "(" atom Expr ")"
   
-  Dotted = "." scm
+  Dotted = "." sexp
 
   bq = "`"
   comma = ","

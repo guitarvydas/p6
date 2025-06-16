@@ -20,8 +20,8 @@ stmt {
     | "(" "define" atom Expr ")" -- defvar
     | "(" "define" "(" fname formal* ")" Body ")" -- defun
     | "(" "cond" CondClause+ ")" -- cond
-    | "(" "let" symbol "(" Binding+ ")" Body ")" -- namedlet
     | "(" "let*" "(" Binding+ ")" Body ")" -- letstar
+    | "(" "let" symbol "(" Binding+ ")" Body ")" -- namedlet
     | "(" "let" "(" Binding+ ")" Body ")" -- let
     | "'" sexp -- quoted
     | bq sexp -- backquoted

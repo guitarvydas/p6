@@ -13,7 +13,7 @@ stmt {
   string = "\"" (~"\"" any)* "\""
   symbol = symChar+
   symChar = ~specialChar  any
-  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "."
+  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "." | space
 
   List =
     | "(" ")" -- nil
@@ -21,6 +21,7 @@ stmt {
     | "(" "define" "(" fname formal* ")" Body ")" -- defun
     | "(" "cond" CondClause+ ")" -- cond
     | "(" "let" symbol "(" Binding+ ")" Body ")" -- namedlet
+    | "(" "let*" "(" Binding+ ")" Body ")" -- letstar
     | "(" "let" "(" Binding+ ")" Body ")" -- let
     | "'" sexp -- quoted
     | bq sexp -- backquoted
@@ -30,12 +31,12 @@ stmt {
 
   fname = symbol
   formal = symbol
-  Expr = sexp
+  Expr = #sexp
 
   Body = BodyExpr+
-  BodyExpr = sexp
+  BodyExpr = #sexp
 
-  CondClause = "(" Guard Expr ")"
+  CondClause = "(" Guard Body ")"
   Guard = sexp
 
   Binding = "(" atom Expr ")"

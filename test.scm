@@ -1,11 +1,9 @@
-(define (resolve x e)
-  (cond ((not (pair? x)) x)
-	))
 
-(define (print-frame e)
-  (newline)
-  (let loop ((ee e))
-    (cond ((pair? (cdr ee))
-            (cond ((null? (time (caar ee)))
-                    (newline)))
-            (loop (cdr ee))))))
+(define (try g r e n)
+  (if (null? r)
+      #f
+      (let* ((a  (copy (car r) (list n)))
+             (ne (unify (car g) (car a) e)))
+        (if ne
+            (prove3 (append (cdr a) (cdr g)) ne (+ 1 n)))
+        (try g (cdr r) e n))))

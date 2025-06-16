@@ -10,7 +10,8 @@
 
   integer [d+] = ‛«d»’
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
-  symbol [cs+] = ‛«cs»’
+  symbol_letstar [l] = ‛«l»’
+  symbol_other [cs+] = ‛«cs»’
   symChar_asterisk [c] = ‛_a’
   symChar_question [c] = ‛_q’
   symChar_bang [c] = ‛_b’

@@ -11,16 +11,32 @@
         "id": 9
       },
       {
-        "name": "Rename",
+        "name": "Unbq",
         "id": 13
       },
       {
-        "name": "Unbq",
+        "name": "Rename",
         "id": 17
       },
       {
         "name": "Statements",
         "id": 21
+      },
+      {
+        "name": ":?a",
+        "id": 25
+      },
+      {
+        "name": ":?b",
+        "id": 27
+      },
+      {
+        "name": ":?c",
+        "id": 29
+      },
+      {
+        "name": ":?d",
+        "id": 31
       }
     ],
     "connections": [
@@ -55,7 +71,7 @@
           "id": 9
         },
         "target": {
-          "name": "Rename",
+          "name": "Unbq",
           "id": 13
         }
       },
@@ -64,11 +80,11 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": "Rename",
+          "name": "Unbq",
           "id": 13
         },
         "target": {
-          "name": "Unbq",
+          "name": "Rename",
           "id": 17
         }
       },
@@ -77,12 +93,64 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": "Unbq",
+          "name": "Rename",
           "id": 17
         },
         "target": {
           "name": "Statements",
           "id": 21
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Read Text File",
+          "id": 5
+        },
+        "target": {
+          "name": ":?a",
+          "id": 25
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Unquote",
+          "id": 9
+        },
+        "target": {
+          "name": ":?b",
+          "id": 27
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Unbq",
+          "id": 13
+        },
+        "target": {
+          "name": ":?c",
+          "id": 29
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Rename",
+          "id": 17
+        },
+        "target": {
+          "name": ":?d",
+          "id": 31
         }
       },
       {
@@ -108,7 +176,7 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": "Rename",
+          "name": "Unbq",
           "id": 13
         }
       },
@@ -117,7 +185,7 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": "Unbq",
+          "name": "Rename",
           "id": 17
         }
       },

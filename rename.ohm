@@ -11,7 +11,9 @@ scm {
 
   integer = digit+
   string = "\"" (~"\"" any)* "\""
-  symbol = symChar+
+  symbol =
+    | "let*" -- letstar
+    | symChar+ -- other
   symChar =
     | ~specialChar "*" -- asterisk
     | ~specialChar "?" -- question

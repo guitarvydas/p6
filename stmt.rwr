@@ -2,11 +2,11 @@
   program [sexp+] = ‛«sexp»’
   sexp [x] = ‛«x»’
 
-  atom_false [x] = ‛«x»’
-  atom_true [x] = ‛«x»’
-  atom_int [x] = ‛«x»’
-  atom_string [x] = ‛«x»’
-  atom_symbol [x] = ‛«x»’
+  atom_false [x] = ‛ «x»’
+  atom_true [x] = ‛ «x»’
+  atom_int [x] = ‛ «x»’
+  atom_string [x] = ‛ «x»’
+  atom_symbol [x] = ‛ «x»’
 
   integer [d+] = ‛«d»’
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
@@ -18,8 +18,9 @@
   List_defvar [lp _define v e rp] = ‛\n«lp»«_define» «v» «e»«rp»’
   List_defun [lp _define lp2 fname formals* rp2 body rp] = ‛\n«lp»«_define» «lp2»«fname»«formals»«rp2»«body»«rp»’
   List_cond [lp _cond clauses+ rp] = ‛«lp»«_cond»«clauses»«rp»’
-  List_namedlet [lp _let sym lp2 bindings+ rp2 body+ rp] = ‛«lp»«_let» «sym» «lp2»«bindings»«rp2»«body»«rp»’
-  List_let [lp _let lp2 bindings+ rp2 body+ rp] = ‛«lp»«_let»«lp2»«bindings»«rp2»«body»«rp»’
+  List_namedlet [lp _let sym lp2 bindings+ rp2 body rp] = ‛«lp»«_let» «sym» «lp2»«bindings»«rp2»«body»«rp»’
+  List_letstar [lp _let lp2 bindings+ rp2 body rp] = ‛«lp»«_let»«lp2»«bindings»«rp2»«body»«rp»’
+  List_let [lp _let lp2 bindings+ rp2 body rp] = ‛«lp»«_let»«lp2»«bindings»«rp2»«body»«rp»’
   List_quoted [q s] = ‛«q»«s»’
   List_backquoted [q s] = ‛«q»«s»’
   List_commaexpanded [_c s] = ‛«_c»«s»’

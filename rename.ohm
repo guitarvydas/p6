@@ -1,6 +1,6 @@
 scm {
- program = scm+
- scm = applySyntactic<List> | atom
+ program = sexpr+
+ sexpr = applySyntactic<List> | atom
 
   atom =
     | "#f" -- false
@@ -12,26 +12,26 @@ scm {
   integer = digit+
   string = "\"" (~"\"" any)* "\""
   symbol =
-    | "let*" -- letstar
-    | symChar+ -- other
+    | "let*" &terminator -- letstar
+    | symChar+ &terminator -- other
   symChar =
-    | ~specialChar "*" -- asterisk
-    | ~specialChar "?" -- question
-    | ~specialChar "!" -- bang
-    | ~specialChar "-" -- dash
-    | ~specialChar any -- other
+    | ~terminator "*" -- asterisk
+    | ~terminator "?" -- question
+    | ~terminator "!" -- bang
+    | ~terminator "-" -- dash
+    | ~terminator any -- other
 
-  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "."
+  terminator = ";" | "#" | "(" | ")" | "'" | bq | comma | "." | space | end
 
   List =
     | "(" ")" -- nil
-    | "'" scm -- quoted
-    | bq scm -- backquoted
-    | comma scm -- commaexpanded
-    | "(" scm+ Dotted ")" -- dotted
-    | "(" scm+ ")" -- list
+    | "'" sexpr -- quoted
+    | bq sexpr -- backquoted
+    | comma sexpr -- commaexpanded
+    | "(" sexpr+ Dotted ")" -- dotted
+    | "(" sexpr+ ")" -- list
 
-  Dotted = "." scm
+  Dotted = "." sexpr
 
   bq = "`"
   comma = ","

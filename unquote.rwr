@@ -1,6 +1,6 @@
 % rewrite unquote {
-  program [scm+] = ‛«scm»’
-  scm [x] = ‛«x»’
+  program [sexpr+] = ‛«sexpr»’
+  sexpr [x] = ‛«x»’
 
   atom_false [x] = ‛«x»’
   atom_true [x] = ‛«x»’
@@ -12,7 +12,7 @@
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
   symbol [cs+] = ‛«cs»’
   symChar [c] = ‛«c»’
-  specialChar [c] = ‛«c»’
+  terminator [c] = ‛«c»’
 
   List_nil [lp rp] = ‛«lp»«rp»’
   List_quoted [q s] = ‛(quote «s»)’

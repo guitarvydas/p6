@@ -1,6 +1,6 @@
 % rewrite scm {
-  program [scm+] = ‛«scm»’
-  scm [x] = ‛«x»’
+  program [sexpr+] = ‛«sexpr»’
+  sexpr [x] = ‛«x»’
 
   atom_false [x] = ‛«x»’
   atom_true [x] = ‛«x»’

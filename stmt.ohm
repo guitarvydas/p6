@@ -1,7 +1,7 @@
 stmt {
- program = topsexp+
- topsexp = sexp
- sexp = applySyntactic<List> | atom
+ program = topsexpr+
+ topsexpr = sexpr
+ sexpr = applySyntactic<List> | atom
 
   atom =
     | "#f" -- false
@@ -10,11 +10,11 @@ stmt {
     | string -- string
     | symbol -- symbol
 
-  integer = digit+
-  string = "\"" (~"\"" any)* "\""
-  symbol = symChar+
-  symChar = ~specialChar  any
-  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "." | space
+  integer = digit+ &terminator
+  string = "\"" (~"\"" any)* "\"" &terminator
+  symbol = symChar+ &terminator
+  symChar = ~terminator  any
+  terminator = ";" | "#" | "(" | ")" | "'" | bq | comma | "." | space | end
 
   List =
     | "(" ")" -- nil
@@ -26,28 +26,28 @@ stmt {
     | "(" "let*" "(" Binding+ ")" Body ")" -- letstar
     | "(" "let" symbol "(" Binding+ ")" Body ")" -- namedlet
     | "(" "let" "(" Binding+ ")" Body ")" -- let
-    | "'" sexp -- quoted
-    | bq sexp -- backquoted
-    | comma sexp -- commaexpanded
-    | "(" sexp+ Dotted ")" -- dotted
-    | "(" sexp+ ")" -- list
+    | "'" sexpr -- quoted
+    | bq sexpr -- backquoted
+    | comma sexpr -- commaexpanded
+    | "(" sexpr+ Dotted ")" -- dotted
+    | "(" sexpr+ ")" -- list
 
   fname = symbol
   formal = symbol
-  Expr = #sexp
 
-  Body = BodyExpr+
-  BodyExpr = #sexp
+  Body = bodyExpr+
+  bodyExpr = sexpr
 
-  CondClause = "(" Guard Body ")"
-  Guard = sexp
+  CondClause = "(" guard Body ")"
+  guard = sexpr
 
   Binding = "(" atom Expr ")"
+
+  Expr = #sexpr
+  Then = #sexpr
+  Else = #sexpr
   
-  Then = Expr
-  Else = Expr
-  
-  Dotted = "." sexp
+  Dotted = "." #sexpr
 
   bq = "`"
   comma = ","

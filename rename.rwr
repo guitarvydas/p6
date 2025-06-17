@@ -1,23 +1,23 @@
 % rewrite rename {
-  program [scm+] = ‛«scm»’
-  scm [x] = ‛«x»’
+  program [sexpr+] = ‛«sexpr»’
+  sexpr [x] = ‛«x»’
 
-  atom_false [x] = ‛«x»’
-  atom_true [x] = ‛«x»’
-  atom_int [x] = ‛«x»’
-  atom_string [x] = ‛«x»’
-  atom_symbol [x] = ‛«x»’
+  atom_false [x] = ‛ «x»’
+  atom_true [x] = ‛ «x»’
+  atom_int [x] = ‛ «x»’
+  atom_string [x] = ‛ «x»’
+  atom_symbol [x] = ‛ «x»’
 
   integer [d+] = ‛«d»’
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
-  symbol_letstar [l] = ‛«l»’
-  symbol_other [cs+] = ‛«cs»’
+  symbol_letstar [l _look] = ‛«l»’
+  symbol_other [cs+ _look] = ‛«cs»’
   symChar_asterisk [c] = ‛_a’
   symChar_question [c] = ‛_q’
   symChar_bang [c] = ‛_b’
   symChar_dash [c] = ‛_’
   symChar_other [c] = ‛«c»’
-  specialChar [c] = ‛«c»’
+  terminator [c] = ‛«c»’
 
   List_nil [lp rp] = ‛«lp»«rp»’
   List_quoted [q s] = ‛(quote «s»)’

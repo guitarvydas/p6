@@ -1,19 +1,19 @@
 % rewrite unbq {
-  program [scm+] = ‛«scm»’
-  scm [x] = ‛«x»’
-  bqscm [x] = ‛«x»’
+  program [sexpr+] = ‛«sexpr»’
+  sexpr [x] = ‛«x»’
+  bqsexpr [x] = ‛«x»’
 
-  atom_false [x] = ‛«x»’
-  atom_true [x] = ‛«x»’
-  atom_int [x] = ‛«x»’
-  atom_string [x] = ‛«x»’
-  atom_symbol [x] = ‛«x»’
+  atom_false [x] = ‛ «x»’
+  atom_true [x] = ‛ «x»’
+  atom_int [x] = ‛ «x»’
+  atom_string [x] = ‛ «x»’
+  atom_symbol [x] = ‛ «x»’
 
-  integer [d+] = ‛«d»’
-  string [lq cs* rq] = ‛«lq»«cs»«rq»’
-  symbol [cs+] = ‛«cs»’
+  integer [d+ _look] = ‛«d»’
+  string [lq cs* rq _look] = ‛«lq»«cs»«rq»’
+  symbol [cs+ _look] = ‛«cs»’
   symChar [c] = ‛«c»’
-  specialChar [c] = ‛«c»’
+  terminator [c] = ‛«c»’
 
   List_nil [lp rp] = ‛«lp»«rp»’
   List_quoted [q s] = ‛«q»«s»’
@@ -25,7 +25,7 @@
   BQList_quoted [q s] = ‛«s»’
   BQList_backquoted [q s] = ‛«q»«s»’
   BQList_commaatom [_c a] = ‛«a»’
-  BQList_atom [a] = ‛(quote «a»)’
+  BQList_atom [a] = ‛(quote«a»)’
   BQList_commabqlist [_c l] = ‛«l»’
   BQList_dotted [lp s+ Dotted rp] = ‛«s»«Dotted»’
   BQList_list [lp s+ rp] = ‛(list «s»)’

@@ -1,6 +1,6 @@
 scm {
- program = sexpr+
- sexpr = applySyntactic<List> | atom
+ Program = Sexpr+
+ Sexpr = List | atom
 
   atom =
     | "#f" -- false

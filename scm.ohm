@@ -5,7 +5,7 @@ scm {
   Atom =
     | "#f" ~#id -- false
     | "#t" ~#id -- true
-    | #integer -- int
+    | #integer -- integer
     | #string -- string
     | #symbol -- symbol
 

@@ -1,27 +1,30 @@
 % rewrite scm {
-  program [sexpr+] = ‛«sexpr»’
-  sexpr [x] = ‛«x»’
+  Program [Sexpr+] = ‛«Sexpr»’
+  Sexpr [x] = ‛«x»’
 
-  atom_false [x] = ‛«x»’
-  atom_true [x] = ‛«x»’
-  atom_int [x] = ‛«x»’
-  atom_string [x] = ‛«x»’
-  atom_symbol [x] = ‛«x»’
+  Atom_false [x] = ‛ «x»’
+  Atom_true [x] = ‛ «x»’
+  Atom_integer [x] = ‛ «x»’
+  Atom_string [x] = ‛ «x»’
+  Atom_symbol [x] = ‛ «x»’
 
-  integer [d+] = ‛«d»’
+  integer [digit+] = ‛«digit»’
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
-  symbol [cs+] = ‛«cs»’
-  symChar [c] = ‛«c»’
-  specialChar [c] = ‛«c»’
+  symbol [id (_dot id2)*] = ‛«id»«_dot»«id2»’
+  id [firstLetter followLetter*] = ‛«firstLetter»«followLetter»’
+  firstLetter [c] = ‛«c»’
+  followLetter [c] = ‛«c»’
+  special  [c] = ‛«c»’
+  unprintable [c] = ‛«c»’
+  separator  [c] = ‛«c»’
 
-  List_nil [lp rp] = ‛«lp»«rp»’
-  List_quoted [q s] = ‛«q»«s»’
-  List_backquoted [q s] = ‛«q»«s»’
-  List_commaexpanded [_c s] = ‛«_c»«s»’
-  List_dotted [lp s+ Dotted rp] = ‛«lp»«s»«Dotted»«rp»’
-  List_list [lp s+ rp] = ‛«lp»«s»«rp»’
-  Dotted [_dot s] = ‛«_dot» «s»’
+  List_nil [lq rq] = ‛«lq»«rq»’
+  List_quoted [q sexpr] = ‛«q»«sexpr»’
+  List_backquoted [q sexpr] = ‛«q»«sexpr»’
+  List_commaexpanded [c sexpr] = ‛«c»«sexpr»’
+  List_dotted [lp e+ _dot e2 rp] = ‛«lp»«e»«_dot»«e2»«rp»’
+  List_list [lp e+ rp] = ‛«lp»«e»«rp»’
 
-  comment [_semi cs* nl] = ‛«_semi»«cs»«nl»’
+  comment [_semicolon cs* _nl] =‛«_semicolon»«cs»«_nl»’
   space [x] = ‛«x»’
 }

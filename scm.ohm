@@ -1,33 +1,45 @@
 scm {
- program = sexpr+
- sexpr = applySyntactic<List> | atom
+ Program = Sexpr+
+ Sexpr = List | Atom
 
-  atom =
-    | "#f" -- false
-    | "#t" -- true
-    | integer -- int
-    | string -- string
-    | symbol -- symbol
+  Atom =
+    | "#f" ~#id -- false
+    | "#t" ~#id -- true
+    | #integer -- int
+    | #string -- string
+    | #symbol -- symbol
 
   integer = digit+
   string = "\"" (~"\"" any)* "\""
   symbol = id ("." id)*
   id = firstLetter followLetter*
-  firstLetter = letter | (~separator any)
-  followLetter = letter | digit | (~separator any)
-  special  = ";" | "#" | "(" | ")" | "'" | "`" | "," | "." 
+  firstLetter = letter | (~separator ~unprintable any)
+  followLetter = letter | digit | (~separator ~unprintable any)
+  special  = ";" | "#" | "(" | ")" | "'" | "`" | "," | "."
+  unprintable = ("\x00" .. "\x20") | "\x7F"
   separator = space | special | end
 
   List =
     | "(" ")" -- nil
-    | "'" sexpr -- quoted
-    | "`" sexpr -- backquoted
-    | "," sexpr -- commaexpanded
-    | "(" sexpr+ Dotted ")" -- dotted
-    | "(" sexpr+ ")" -- list
-
-  Dotted = "." #sexpr
+    | "'" Sexpr -- quoted
+    | "`" Sexpr -- backquoted
+    | "," Sexpr -- commaexpanded
+    | "(" Sexpr+ "." Sexpr ")" -- dotted
+    | "(" Sexpr+ ")" -- list
 
   comment = ";" (~"\n" any)* "\n"
   space += comment
 }
+
+//+ a
+//+ b.c
+//+ ()
+//+ (d)
+//+ (e f)
+//+ 'g
+//+ '(h i)
+//+ `j
+//+ `(k l)
+//+ `(m ,n o)
+//+ ,p
+//+ (q r s t . u)

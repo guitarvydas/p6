@@ -15,3 +15,7 @@
 '(x)
 '(x y z)
 (list x 'y z)
+(p.q)
+(r . s)
+`,(p.q)
+`(r . s)

@@ -7,6 +7,3 @@ dev:
 identity:
 	./identity.bash
 
-bq:
-	./bq.bash
-

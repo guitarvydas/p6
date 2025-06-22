@@ -9,34 +9,6 @@
       {
         "name": "Unbq",
         "id": 9
-      },
-      {
-        "name": "Unquote",
-        "id": 13
-      },
-      {
-        "name": "Rename",
-        "id": 17
-      },
-      {
-        "name": "Statements",
-        "id": 21
-      },
-      {
-        "name": ":?a",
-        "id": 25
-      },
-      {
-        "name": ":?b",
-        "id": 27
-      },
-      {
-        "name": ":?c",
-        "id": 29
-      },
-      {
-        "name": ":?d",
-        "id": 31
       }
     ],
     "connections": [
@@ -63,97 +35,6 @@
         }
       },
       {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Unquote",
-          "id": 13
-        },
-        "target": {
-          "name": "Rename",
-          "id": 17
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Rename",
-          "id": 17
-        },
-        "target": {
-          "name": "Statements",
-          "id": 21
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Read Text File",
-          "id": 5
-        },
-        "target": {
-          "name": ":?a",
-          "id": 25
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Unbq",
-          "id": 9
-        },
-        "target": {
-          "name": ":?b",
-          "id": 27
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Unquote",
-          "id": 13
-        },
-        "target": {
-          "name": ":?c",
-          "id": 29
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Rename",
-          "id": 17
-        },
-        "target": {
-          "name": ":?d",
-          "id": 31
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Unbq",
-          "id": 9
-        },
-        "target": {
-          "name": "Statements",
-          "id": 21
-        }
-      },
-      {
         "dir": 2,
         "source_port": "✗",
         "target_port": "✗",
@@ -169,33 +50,6 @@
         "source": {
           "name": "Unbq",
           "id": 9
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": "Unquote",
-          "id": 13
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": "Rename",
-          "id": 17
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": "Statements",
-          "id": 21
         }
       },
       {
@@ -203,86 +57,8 @@
         "source_port": "",
         "target_port": "Javascript",
         "source": {
-          "name": "Statements",
-          "id": 21
-        }
-      }
-    ],
-    "file": "p6.drawio"
-  },
-  {
-    "name": "Unquote",
-    "children": [
-      {
-        "name": ":$ pbp/t2t.bash . ./pbp scm.ohm unquote.rwr empty.js -",
-        "id": 5
-      }
-    ],
-    "connections": [
-      {
-        "dir": 0,
-        "source_port": "",
-        "target_port": "",
-        "target": {
-          "name": ":$ pbp/t2t.bash . ./pbp scm.ohm unquote.rwr empty.js -",
-          "id": 5
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp scm.ohm unquote.rwr empty.js -",
-          "id": 5
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp scm.ohm unquote.rwr empty.js -",
-          "id": 5
-        }
-      }
-    ],
-    "file": "p6.drawio"
-  },
-  {
-    "name": "Rename",
-    "children": [
-      {
-        "name": ":$ pbp/t2t.bash . ./pbp rename.ohm rename.rwr empty.js -",
-        "id": 5
-      }
-    ],
-    "connections": [
-      {
-        "dir": 0,
-        "source_port": "",
-        "target_port": "",
-        "target": {
-          "name": ":$ pbp/t2t.bash . ./pbp rename.ohm rename.rwr empty.js -",
-          "id": 5
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp rename.ohm rename.rwr empty.js -",
-          "id": 5
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp rename.ohm rename.rwr empty.js -",
-          "id": 5
+          "name": "Unbq",
+          "id": 9
         }
       }
     ],
@@ -321,45 +97,6 @@
         "target_port": "✗",
         "source": {
           "name": ":$ pbp/t2t.bash . ./pbp unbq.ohm unbq.rwr empty.js -",
-          "id": 5
-        }
-      }
-    ],
-    "file": "p6.drawio"
-  },
-  {
-    "name": "Statements",
-    "children": [
-      {
-        "name": ":$ pbp/t2t.bash . ./pbp stmt.ohm stmt.rwr empty.js -",
-        "id": 5
-      }
-    ],
-    "connections": [
-      {
-        "dir": 0,
-        "source_port": "",
-        "target_port": "",
-        "target": {
-          "name": ":$ pbp/t2t.bash . ./pbp stmt.ohm stmt.rwr empty.js -",
-          "id": 5
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp stmt.ohm stmt.rwr empty.js -",
-          "id": 5
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp stmt.ohm stmt.rwr empty.js -",
           "id": 5
         }
       }

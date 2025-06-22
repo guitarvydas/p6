@@ -23,8 +23,6 @@ unq {
   List =
     | "(" ")" -- nil
     | "'" Sexpr -- quoted
-    | "`" Sexpr -- backquoted
-    | "," Sexpr -- commaexpanded
     | "(" Sexpr SpaceSexpr* "." SpaceSexpr ")" -- dotted
     | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
     | "(" SpaceSexpr ")" -- listOfOne

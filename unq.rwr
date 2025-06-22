@@ -20,9 +20,7 @@
   separator  [c] = ‛«c»’
 
   List_nil [lq rq] = ‛«lq»«rq»’
-  List_quoted [q sexpr] = ‛«q»«sexpr»’
-  List_backquoted [q sexpr] = ‛«q»«sexpr»’
-  List_commaexpanded [c sexpr] = ‛«c»«sexpr»’
+  List_quoted [q sexpr] = ‛(quote «sexpr»)’
   List_dotted [lp e0 e1+ _dot e2 rp] = ‛«lp»«e0»«e1» «_dot»«e2»«rp»’
   List_listMultiple [lp e0 e+ rp] = ‛«lp»«e0»«e»«rp»’
   List_listOfOne [lp e rp] = ‛«lp»«e»«rp»’

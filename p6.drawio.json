@@ -9,6 +9,10 @@
       {
         "name": "Unbq",
         "id": 9
+      },
+      {
+        "name": "Unquote",
+        "id": 13
       }
     ],
     "connections": [
@@ -35,6 +39,19 @@
         }
       },
       {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Unbq",
+          "id": 9
+        },
+        "target": {
+          "name": "Unquote",
+          "id": 13
+        }
+      },
+      {
         "dir": 2,
         "source_port": "✗",
         "target_port": "✗",
@@ -54,11 +71,20 @@
       },
       {
         "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Unquote",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
         "source_port": "",
         "target_port": "Javascript",
         "source": {
-          "name": "Unbq",
-          "id": 9
+          "name": "Unquote",
+          "id": 13
         }
       }
     ],
@@ -97,6 +123,45 @@
         "target_port": "✗",
         "source": {
           "name": ":$ pbp/t2t.bash . ./pbp unbq.ohm unbq.rwr empty.js -",
+          "id": 5
+        }
+      }
+    ],
+    "file": "p6.drawio"
+  },
+  {
+    "name": "Unquote",
+    "children": [
+      {
+        "name": ":$ pbp/t2t.bash . ./pbp unq.ohm unq.rwr empty.js -",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ pbp/t2t.bash . ./pbp unq.ohm unq.rwr empty.js -",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp unq.ohm unq.rwr empty.js -",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp unq.ohm unq.rwr empty.js -",
           "id": 5
         }
       }

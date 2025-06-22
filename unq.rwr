@@ -1,13 +1,12 @@
-% rewrite scm {
-  Program [TLSexpr+] = ‛«TLSexpr»’
-  TopLevelSexpr [x] = ‛\n«x»’
+% rewrite unq {
+  Program [Sexpr+] = ‛«Sexpr»’
   Sexpr [x] = ‛«x»’
 
-  Atom_false [x] = ‛«x»’
-  Atom_true [x] = ‛«x»’
-  Atom_integer [x] = ‛«x»’
-  Atom_string [x] = ‛«x»’
-  Atom_symbol [x] = ‛«x»’
+  Atom_false [x] = ‛ «x»’
+  Atom_true [x] = ‛ «x»’
+  Atom_integer [x] = ‛ «x»’
+  Atom_string [x] = ‛ «x»’
+  Atom_symbol [x] = ‛ «x»’
 
   integer [digit+] = ‛«digit»’
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
@@ -24,10 +23,7 @@
   List_backquoted [q sexpr] = ‛«q»«sexpr»’
   List_commaexpanded [c sexpr] = ‛«c»«sexpr»’
   List_dotted [lp e+ _dot e2 rp] = ‛«lp»«e»«_dot»«e2»«rp»’
-  List_listMultiple [lp e0 e+ rp] = ‛«lp»«e0»«e»«rp»’
-  List_listOfOne [lp e rp] = ‛«lp»«e»«rp»’
-
-  SpaceSexpr [e] = ‛ «e»’
+  List_list [lp e+ rp] = ‛«lp»«e»«rp»’
 
   comment [_semicolon cs* _nl] =‛«_semicolon»«cs»«_nl»’
   space [x] = ‛«x»’

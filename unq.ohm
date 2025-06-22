@@ -1,6 +1,5 @@
-scm {
- Program = TopLevelSexpr+
- TopLevelSexpr = Sexpr
+unq {
+ Program = Sexpr+
  Sexpr = List | Atom
 
   Atom =
@@ -26,10 +25,7 @@ scm {
     | "`" Sexpr -- backquoted
     | "," Sexpr -- commaexpanded
     | "(" Sexpr+ "." Sexpr ")" -- dotted
-    | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
-    | "(" Sexpr ")" -- listOfOne
-
-  SpaceSexpr = Sexpr
+    | "(" Sexpr+ ")" -- list
 
   comment = ";" (~"\n" any)* "\n"
   space += comment

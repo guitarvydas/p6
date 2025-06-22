@@ -1,1 +1,1 @@
-pbp/t2t.bash . ./pbp scm.ohm identity-scm.rwr empty.js -
+pbp/t2t.bash . ./pbp unq.ohm unq.rwr empty.js -

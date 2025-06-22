@@ -19,3 +19,4 @@
 (r . s)
 `,(p.q)
 `(r . s)
+(define L_l car)

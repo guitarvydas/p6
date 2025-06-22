@@ -1,6 +1,7 @@
 unq {
- Program = Sexpr+
- Sexpr = List | Atom
+  Program = TopLevelSexpr+
+  TopLevelSexpr = Sexpr
+  Sexpr = List | Atom
 
   Atom =
     | "#f" ~#id -- false
@@ -24,9 +25,12 @@ unq {
     | "'" Sexpr -- quoted
     | "`" Sexpr -- backquoted
     | "," Sexpr -- commaexpanded
-    | "(" Sexpr+ "." Sexpr ")" -- dotted
-    | "(" Sexpr+ ")" -- list
+    | "(" Sexpr SpaceSexpr* "." SpaceSexpr ")" -- dotted
+    | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
+    | "(" SpaceSexpr ")" -- listOfOne
 
+  SpaceSexpr= Sexpr
+  
   comment = ";" (~"\n" any)* "\n"
   space += comment
 }

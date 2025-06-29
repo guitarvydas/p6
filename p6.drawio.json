@@ -13,6 +13,10 @@
       {
         "name": "Unquote",
         "id": 13
+      },
+      {
+        "name": "Const",
+        "id": 17
       }
     ],
     "connections": [
@@ -52,6 +56,19 @@
         }
       },
       {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Unquote",
+          "id": 13
+        },
+        "target": {
+          "name": "Const",
+          "id": 17
+        }
+      },
+      {
         "dir": 2,
         "source_port": "✗",
         "target_port": "✗",
@@ -83,8 +100,17 @@
         "source_port": "",
         "target_port": "Javascript",
         "source": {
-          "name": "Unquote",
-          "id": 13
+          "name": "Const",
+          "id": 17
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Const",
+          "id": 17
         }
       }
     ],
@@ -162,6 +188,45 @@
         "target_port": "✗",
         "source": {
           "name": ":$ pbp/t2t.bash . ./pbp unq.ohm unq.rwr empty.js -",
+          "id": 5
+        }
+      }
+    ],
+    "file": "p6.drawio"
+  },
+  {
+    "name": "Const",
+    "children": [
+      {
+        "name": ":$ pbp/t2t.bash . ./pbp const.ohm const.rwr empty.js -",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ pbp/t2t.bash . ./pbp const.ohm const.rwr empty.js -",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp const.ohm const.rwr empty.js -",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp const.ohm const.rwr empty.js -",
           "id": 5
         }
       }

@@ -1,0 +1,59 @@
+scm {
+  Program = TopLevelSexpr+
+  TopLevelSexpr =
+    | "(" "define" "(" symbol symbol* ")" Body ")" -- functionDefinition
+    | "(" "define" symbol symbol ")" -- functionEquivalence
+    | "(" "define" symbol Body ")" -- global
+    | Sexpr                         -- other
+  Sexpr = List | atom
+
+  Body =
+    | atom Body? -- atom
+    | FunctionCall Body? -- call
+    | ListConstant -- listConstant
+
+  FunctionCall = "(" symbol Arg* ")"
+  
+  Arg =
+    | atom -- atom
+    | FunctionCall -- call
+
+  atom =
+    | "(" ")" -- nil
+    | "‹" symbol "›" -- symbolConstant
+    | "‹" integer "›" -- integerConstant
+    | "‹" string "›" -- stringConstant
+    | symbol -- variable
+
+  integer = digit+
+  string = "\"" (~"\"" any)* "\""
+  symbol = id ("." id)*
+  id = firstLetter followLetter*
+  firstLetter = letter | (~separator ~unprintable any)
+  followLetter = letter | digit | (~separator ~unprintable any)
+  special  = ";" | "#" | "(" | ")" | "‹" | "›" | "." | "⎨" | "⎬"
+  unprintable = ("\x00" .. "\x20") | "\x7F"
+  separator = space | special | end
+
+  List =
+    | ListConstant -- listConstant
+    | "(" Sexpr+ "." Sexpr ")" -- dotted
+    | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
+    | "(" Sexpr ")" -- listOfOne
+
+  ListConstant = 
+    | "⎨" Sexpr+ "." Sexpr "⎬"  -- dotted
+    | "⎨" Sexpr SpaceSexpr* "⎬" -- multiple
+
+  SpaceSexpr = Sexpr
+
+  comment = ";" (~"\n" any)* "\n"
+  space += comment
+}
+
+//+ (define (L_c x) (cadr (cddddr x)))
+//+ (define var ‹?›)
+//+ (define name cadr)
+//+ (define goals ⎨⎨‹path› ‹a› ‹f› ⎨‹?› ‹P›⎬⎬⎬)
+//+ (define db ⎨⎨⎨‹edge› ‹a› ‹b›⎬⎬ ⎨⎨‹edge› ‹a› ‹f›⎬⎬ ⎨⎨‹edge› ‹a› ‹g›⎬⎬ ⎨⎨‹edge› ‹b› ‹c›⎬⎬ ⎨⎨‹edge› ‹b› ‹d›⎬⎬ ⎨⎨‹edge› ‹c› ‹d›⎬⎬ ⎨⎨‹edge› ‹c› ‹e›⎬⎬ ⎨⎨‹edge› ‹g› ‹h›⎬⎬ ⎨⎨‹edge› ‹d› ‹h›⎬⎬ ⎨⎨‹edge› ‹h› ‹e›⎬⎬ ⎨⎨‹edge› ‹h› ‹f›⎬⎬ ⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬⎬⎬ ⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ . ⎨‹?› ‹CB›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹C›⎬⎬ ⎨‹path› ⎨‹?› ‹C›⎬ ⎨‹?› ‹B›⎬ ⎨‹?› ‹CB›⎬⎬⎬⎬)
+//+ (define sdb ⎨⎨⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ . ⎨‹?› ‹CB›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹C›⎬⎬ ⎨‹path› ⎨‹?› ‹C›⎬ ⎨‹?› ‹B›⎬ ⎨‹?› ‹CB›⎬⎬⎬⎬)

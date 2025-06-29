@@ -1,0 +1,64 @@
+const {
+  Program = TopLevelSexpr+
+  TopLevelSexpr = Sexpr
+  Sexpr = List | Atom
+  QuotedSexpr = QuotedList | QuotedAtom
+
+  Atom =
+    | "#f" ~#id -- false
+    | "#t" ~#id -- true
+    | #integer -- integer
+    | #string -- string
+    | #symbol -- symbol
+
+  QuotedAtom =
+    | "#f" ~#id -- false
+    | "#t" ~#id -- true
+    | #integer -- integer
+    | #string -- string
+    | #symbol -- symbol
+
+  integer = digit+
+  string = "\"" (~"\"" any)* "\""
+  symbol = id ("." id)*
+  id = firstLetter followLetter*
+  firstLetter = letter | (~separator ~unprintable any)
+  followLetter = letter | digit | (~separator ~unprintable any)
+  special  = ";" | "#" | "(" | ")" | "'" | "`" | "," | "."
+  unprintable = ("\x00" .. "\x20") | "\x7F"
+  separator = space | special | end
+
+  List =
+    | "(" ")" -- nil
+    | "(" "quote" QuotedSexpr ")" -- quoted
+    | "(" Sexpr SpaceSexpr* "." SpaceSexpr ")" -- dotted
+    | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
+    | "(" SpaceSexpr ")" -- listOfOne
+
+  QuotedList =
+    | "(" ")" -- nil
+    | "(" "quote" QuotedSexpr ")" -- quoted
+    | "(" QuotedSexpr SpaceQuotedSexpr* "." SpaceQuotedSexpr ")" -- dotted
+    | "(" QuotedSexpr SpaceQuotedSexpr+ ")" -- listMultiple
+    | "(" QuotedSexpr ")" -- listOfOne
+
+
+  SpaceSexpr= Sexpr
+  SpaceQuotedSexpr= QuotedSexpr
+  
+  comment = ";" (~"\n" any)* "\n"
+  space += comment
+}
+
+//+ a
+//+ b.c
+//+ ()
+//+ (d)
+//+ (e f)
+//+ 'g
+//+ '(h i)
+//+ `j
+//+ `(k l)
+//+ `(m ,n o)
+//+ ,p
+//+ (q r s t . u)

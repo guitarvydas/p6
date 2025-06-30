@@ -1,12 +1,17 @@
 % rewrite tojs {
   Program [TopLevelSexpr+] = ‛«TopLevelSexpr»’
-  TopLevelSexpr_functionDefinition [lp _define lp2 name formals* rp2 Body rp] = ‛«lp»«_define»«lp2»«name» «formals»«rp2»«Body»«rp»’
+  
+  TopLevelSexpr_functionDefinition [lp _define lp2 name formals* rp2 Body rp] = ‛
+function «name» («formals») {«Body»
+}’
+
   TopLevelSexpr_functionEquivalence [lp _define name name2 rp] = ‛«lp»«_define» «name» «name2»«rp»’
   TopLevelSexpr_global [lp _define name Body rp] = ‛«lp»«_define» «name» «Body»«rp»’
   TopLevelSexpr_other [Sexpr] = ‛«Sexpr»’
   Sexpr [x] = ‛«x»’
+  Formal [sym] = ‛«sym»’
 
-  Body [BodyItem Body?] = ‛«BodyItem»«Body»’
+  Body [BodyItem Body?] = ‛\n«BodyItem»«Body»’
 
   BodyItem_cond [lp _cond CondClause+ ElseClause? rp] = ‛«lp»«_cond»«CondClause»«ElseClause»«rp»’
   BodyItem_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛«lp»«_if»«Guard»«ThenExpr»«ElseExpr»«rp»’

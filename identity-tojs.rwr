@@ -5,6 +5,7 @@
   TopLevelSexpr_global [lp _define name Body rp] = ‛«lp»«_define» «name» «Body»«rp»’
   TopLevelSexpr_other [Sexpr] = ‛«Sexpr»’
   Sexpr [x] = ‛«x»’
+  Formal [sym] = ‛«sym»’
 
   Body [BodyItem Body?] = ‛«BodyItem»«Body»’
 

@@ -1,11 +1,12 @@
 tojs {
   Program = TopLevelSexpr+
   TopLevelSexpr =
-    | "(" "define" "(" symbol symbol* ")" Body ")" -- functionDefinition
+    | "(" "define" "(" symbol Formal* ")" Body ")" -- functionDefinition
     | "(" "define" symbol symbol ")" -- functionEquivalence
     | "(" "define" symbol Body ")" -- global
     | Sexpr                         -- other
   Sexpr = List | atom
+  Formal = symbol
 
   Body = BodyItem Body?
   

@@ -1,4 +1,4 @@
-scm {
+tojs {
   Program = TopLevelSexpr+
   TopLevelSexpr =
     | "(" "define" "(" symbol symbol* ")" Body ")" -- functionDefinition
@@ -11,7 +11,7 @@ scm {
   
   BodyItem =
     | "(" "cond" CondClause+ ElseClause? ")" -- cond
-    | "(" "if" Guard ThenExpr ElseExpr? ")" -- ifThenElse
+    | "(" "if" Guard ThenExpr ElseExpr ")" -- ifThenElse
     | "(" "if" Guard ThenExpr ")" -- ifThen
     | "(" "and" Body ")" -- and
     | "(" "let" symbol Bindings Body ")" -- letLoop

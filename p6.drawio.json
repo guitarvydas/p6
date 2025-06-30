@@ -17,6 +17,10 @@
       {
         "name": "Const",
         "id": 17
+      },
+      {
+        "name": "ToJS",
+        "id": 21
       }
     ],
     "connections": [
@@ -69,6 +73,19 @@
         }
       },
       {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Const",
+          "id": 17
+        },
+        "target": {
+          "name": "ToJS",
+          "id": 21
+        }
+      },
+      {
         "dir": 2,
         "source_port": "✗",
         "target_port": "✗",
@@ -97,8 +114,8 @@
       },
       {
         "dir": 2,
-        "source_port": "",
-        "target_port": "Javascript",
+        "source_port": "✗",
+        "target_port": "✗",
         "source": {
           "name": "Const",
           "id": 17
@@ -106,11 +123,20 @@
       },
       {
         "dir": 2,
+        "source_port": "",
+        "target_port": "Javascript",
+        "source": {
+          "name": "ToJS",
+          "id": 21
+        }
+      },
+      {
+        "dir": 2,
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": "Const",
-          "id": 17
+          "name": "ToJS",
+          "id": 21
         }
       }
     ],
@@ -227,6 +253,45 @@
         "target_port": "✗",
         "source": {
           "name": ":$ pbp/t2t.bash . ./pbp const.ohm const.rwr empty.js -",
+          "id": 5
+        }
+      }
+    ],
+    "file": "p6.drawio"
+  },
+  {
+    "name": "ToJS",
+    "children": [
+      {
+        "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
           "id": 5
         }
       }

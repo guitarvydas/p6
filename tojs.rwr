@@ -5,42 +5,46 @@
 function «name» («formals») {«Body»
 }’
 
-  TopLevelSexpr_functionEquivalence [lp _define name name2 rp] = ‛«lp»«_define» «name» «name2»«rp»’
-  TopLevelSexpr_global [lp _define name Body rp] = ‛«lp»«_define» «name» «Body»«rp»’
+  TopLevelSexpr_functionEquivalence [lp _define name name2 rp] = ‛\nlet «name» = «name2»;’
+  TopLevelSexpr_global [lp _define name BodyItem rp] = ‛\nlet «name» = «BodyItem»;’
+  TopLevelSexpr_call [f] = ‛\n«f»;’
   TopLevelSexpr_other [Sexpr] = ‛«Sexpr»’
   Sexpr [x] = ‛«x»’
   Formal [sym] = ‛«sym»’
 
-  Body [BodyItem Body?] = ‛\n«BodyItem»«Body»’
+  Body [BodyItem Body?] = ‛\n«BodyItem»;«Body»’
 
-  BodyItem_cond [lp _cond CondClause+ ElseClause? rp] = ‛«lp»«_cond»«CondClause»«ElseClause»«rp»’
-  BodyItem_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛«lp»«_if»«Guard»«ThenExpr»«ElseExpr»«rp»’
-  BodyItem_ifThen [lp _if Guard ThenExpr rp] = ‛«lp»«_if»«Guard»«ThenExpr»«rp»’
+  BodyItem_cond [lp _cond CondClause+ ElseClause? rp] = ‛if (false) {\n}«CondClause»«ElseClause»’
+  BodyItem_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»}’
+  BodyItem_ifThen [lp _if Guard ThenExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}’
   BodyItem_and [lp _and Body rp] = ‛«lp»«_and»«Body»«rp»’
   BodyItem_letLoop [lp _let symbol Bindings Body rp] = ‛«lp»«_let»«symbol»«Bindings»«Body»«rp»’
-  BodyItem_let [lp _let Bindings Body rp] = ‛«lp»«_let»«Bindings»«Body»«rp»’
+  BodyItem_let [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
   BodyItem_atom [a] =‛«a»’
   BodyItem_call [f] =‛«f»’
   BodyItem_listConstant [k] =‛«k»’
 
-  FunctionCall [lp symbol Arg* rp] = ‛«lp»«symbol»«Arg»«rp»’
-  CondClause [lp Guard Body rp] = ‛«lp»«Guard»«Body»«rp»’
-  ElseClause [lp _else Body rp] = ‛«lp»«_else»«Body»«rp»’
+  FunctionCall [lp symbol Arg* rp] = ‛«symbol» («Arg»)’
+  CondClause [lp Guard Body rp] = ‛\nelse if («Guard») {\n«Body»}’
+  ElseClause [lp _else Body rp] = ‛\nelse {\n«Body»}’
   ThenExpr [i] = ‛«i»’
   ElseExpr [i] = ‛«i»’
 
-  Guard [l] = ‛«l»’  
+  Guard [e] = ‛«e»’  
+  Expr_and [lp _and Body rp] = ‛«lp»«_and»«Body»«rp»’
+  Expr_atom [a] = ‛«a»’
+  Expr_call [f] = ‛«f»’
 
   Bindings [lp Binding+ rp] = ‛«lp»«Binding»«rp»’
-  Binding [lp symbol BodyItem rp] = ‛«lp»«symbol»«BodyItem»«rp»’
+  Binding [lp symbol BodyItem rp] = ‛\nlet «symbol» = «BodyItem»⦚’
 
-  Arg_atom [a] = ‛«a»’   
-  Arg_call [f] = ‛«f»’   
+  Arg_atom [a] = ‛«a», ’   
+  Arg_call [f] = ‛«f», ’   
 
-  atom_nil [lp rp] = ‛«lp»«rp»’
-  atom_symbolConstant [lb symbol rb] = ‛«lb»«symbol»«rb»’
-  atom_integerConstant [lb i rb] = ‛«lb»«i»«rb»’
-  atom_stringConstant [lb s rb] = ‛«lb»«s»«rb»’
+  atom_nil [lp rp] = ‛null’
+  atom_symbolConstant [lb symbol rb] = ‛"«symbol»"’
+  atom_integerConstant [lb i rb] = ‛«i»’
+  atom_stringConstant [lb s rb] = ‛«s»’
   atom_variable [s] = ‛«s»’
 
   integer [d+] = ‛«d»’
@@ -54,13 +58,13 @@ function «name» («formals») {«Body»
 
   List_listConstant [k] = ‛«k»’
   List_dotted [lp es+ _dot e rp] = ‛«lp»«es»«_dot»«e»«rp»’
-  List_listMultiple [lp e es+ rp] = ‛«lp»«e»«es»«rp»’
-  List_listOfOne [lp e rp] = ‛«lp»«e»«rp»’
+  List_listMultiple [lp e es+ rp] = ‛\n[«e»«es»]’
+  List_listOfOne [lp e rp] = ‛\n[«e»]’
 
   ListConstant_dotted [lb es+ _dot e rb] = ‛«lb»«es»«_dot»«e»«rb»’
-  ListConstant_multiple [lb e es* rb] = ‛«lb»«e»«es»«rb»’
+  ListConstant_multiple [lb e es* rb] = ‛\n[«e», «es»]’
 
-  SpaceSexpr [e] = ‛«e»’
+  SpaceSexpr [e] = ‛«e», ’
 
   comment [_semi cs* nl] = ‛«_semi»«cs»«nl»’
   space [s] = ‛«s»’

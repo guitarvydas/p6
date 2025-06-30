@@ -7,12 +7,29 @@ scm {
     | Sexpr                         -- other
   Sexpr = List | atom
 
-  Body =
-    | atom Body? -- atom
-    | FunctionCall Body? -- call
+  Body = BodyItem Body?
+  
+  BodyItem =
+    | "(" "cond" CondClause+ ElseClause? ")" -- cond
+    | "(" "if" Guard ThenExpr ElseExpr? ")" -- ifThenElse
+    | "(" "if" Guard ThenExpr ")" -- ifThen
+    | "(" "and" Body ")" -- and
+    | "(" "let" symbol Bindings Body ")" -- letLoop
+    | "(" "let" Bindings Body ")" -- let
+    | atom -- atom
+    | FunctionCall -- call
     | ListConstant -- listConstant
 
   FunctionCall = "(" symbol Arg* ")"
+  CondClause = "(" Guard Body ")"
+  ElseClause = "(" "else" Body ")"
+  ThenExpr = BodyItem
+  ElseExpr = BodyItem
+  
+  Guard = List
+
+  Bindings = "(" Binding+ ")"
+  Binding = "(" symbol BodyItem ")"
   
   Arg =
     | atom -- atom
@@ -57,3 +74,6 @@ scm {
 //+ (define goals ⎨⎨‹path› ‹a› ‹f› ⎨‹?› ‹P›⎬⎬⎬)
 //+ (define db ⎨⎨⎨‹edge› ‹a› ‹b›⎬⎬ ⎨⎨‹edge› ‹a› ‹f›⎬⎬ ⎨⎨‹edge› ‹a› ‹g›⎬⎬ ⎨⎨‹edge› ‹b› ‹c›⎬⎬ ⎨⎨‹edge› ‹b› ‹d›⎬⎬ ⎨⎨‹edge› ‹c› ‹d›⎬⎬ ⎨⎨‹edge› ‹c› ‹e›⎬⎬ ⎨⎨‹edge› ‹g› ‹h›⎬⎬ ⎨⎨‹edge› ‹d› ‹h›⎬⎬ ⎨⎨‹edge› ‹h› ‹e›⎬⎬ ⎨⎨‹edge› ‹h› ‹f›⎬⎬ ⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬⎬⎬ ⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ . ⎨‹?› ‹CB›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹C›⎬⎬ ⎨‹path› ⎨‹?› ‹C›⎬ ⎨‹?› ‹B›⎬ ⎨‹?› ‹CB›⎬⎬⎬⎬)
 //+ (define sdb ⎨⎨⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ . ⎨‹?› ‹CB›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹C›⎬⎬ ⎨‹path› ⎨‹?› ‹C›⎬ ⎨‹?› ‹B›⎬ ⎨‹?› ‹CB›⎬⎬⎬⎬)
+//+ (define (prove3 g e n)  (cond ((null? g)          (print-frame e))        (else          (try g db e n))))
+//+ (define (var? x)  xs  (and (pair? x)       (eq? var (car x))))
+//+ (define (print-frame e)  (newline)  (let loop ((ee e))    (cond ((pair? (cdr ee))            (cond ((null? (time (caar ee)))                    (display (cadaar ee))                    (display " = ")                    (display (resolve (caar ee) e))                    (newline)))       (loop (cdr ee))))))

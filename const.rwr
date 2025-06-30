@@ -32,7 +32,7 @@
   List_listMultiple [lp e0 e+ rp] = ‛«lp»«e0»«e»«rp»’
   List_listOfOne [lp e rp] = ‛«lp»«e»«rp»’
 
-  QuotedList_nil [lq rq] = ‛«lq»«rq»’
+  QuotedList_nil [lq rq] = ‛⎨⎬’
   QuotedList_quoted [lp _quote sexpr rp] = ‛???«sexpr»???’
   QuotedList_dotted [lp e0 e1+ _dot e2 rp] = ‛⎨«e0»«e1» «_dot»«e2»⎬’
   QuotedList_listMultiple [lp e0 e+ rp] = ‛⎨«e0»«e»⎬’

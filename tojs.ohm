@@ -3,30 +3,38 @@ tojs {
   TopLevelSexpr =
     | "(" "define" "(" symbol Formal* ")" Body ")" -- functionDefinition
     | "(" "define" symbol symbol ")" -- functionEquivalence
-    | "(" "define" symbol BodyItem ")" -- global
+    | "(" "define" symbol BodyItem<Body> ")" -- global
     | FunctionCall -- call
     | Sexpr                         -- other
   Sexpr = List | atom
   Formal = symbol
 
-  Body = BodyItem Body?
+  Body = BodyItem<Body> Body?
   
-  BodyItem =
+  BodyItem<Bod>=
     | "(" "cond" CondClause+ ElseClause? ")" -- cond
     | "(" "if" Guard ThenExpr ElseExpr ")" -- ifThenElse
     | "(" "if" Guard ThenExpr ")" -- ifThen
-    | "(" "and" Body ")" -- and
-    | "(" "let" symbol Bindings Body ")" -- letLoop
-    | "(" "let" Bindings Body ")" -- let
+    | "(" "and" AndBody ")" -- and
+    | "(" "let*" Bindings Bod ")" -- letAsterisk
+    | "(" "let" symbol Bindings Bod ")" -- letLoop
+    | "(" "let" Bindings Bod ")" -- let
     | atom -- atom
     | FunctionCall -- call
     | ListConstant -- listConstant
 
-  FunctionCall = "(" symbol Arg* ")"
+  AndBody =
+    | BodyItem<AndBody> AndBody -- compound
+    | BodyItem<AndBody> -- single
+  AndBodyItem<Bod> = BodyItem<Bod>  
+
+  FunctionCall = 
+    | "(" "+" atom atom ")" -- plus
+    | "(" symbol Arg* ")" -- other
   CondClause = "(" Guard Body ")"
   ElseClause = "(" "else" Body ")"
-  ThenExpr = BodyItem
-  ElseExpr = BodyItem
+  ThenExpr = BodyItem<Body>
+  ElseExpr = BodyItem<Body>
   
   Guard = Expr
   Expr =
@@ -35,7 +43,7 @@ tojs {
     | FunctionCall -- call
 
   Bindings = "(" Binding+ ")"
-  Binding = "(" symbol BodyItem ")"
+  Binding = "(" symbol BodyItem<Body> ")"
   
   Arg =
     | atom -- atom
@@ -43,17 +51,26 @@ tojs {
 
   atom =
     | "(" ")" -- nil
-    | "‹" symbol "›" -- symbolConstant
     | "‹" integer "›" -- integerConstant
     | "‹" string "›" -- stringConstant
+    | "‹" symbol "›" -- symbolConstant
+    | applySyntactic<ListConstant> -- listConstant
     | symbol -- variable
 
   integer = digit+
   string = "\"" (~"\"" any)* "\""
   symbol = id ("." id)*
-  id = firstLetter followLetter*
-  firstLetter = letter | (~separator ~unprintable any)
-  followLetter = letter | digit | (~separator ~unprintable any)
+  id =
+    | "try" -- try
+    | "not" -- not
+    | firstLetter followLetter* -- other
+  firstLetter = jsletter | (~separator ~unprintable any)
+  followLetter = jsletter | digit | (~separator ~unprintable any)
+  jsletter =
+    | "*" -- asterisk
+    | "!" -- bang
+    | "?" -- questionMark
+    | letter -- other
   special  = ";" | "#" | "(" | ")" | "‹" | "›" | "." | "⎨" | "⎬"
   unprintable = ("\x00" .. "\x20") | "\x7F"
   separator = space | special | end
@@ -67,6 +84,7 @@ tojs {
   ListConstant = 
     | "⎨" Sexpr+ "." Sexpr "⎬"  -- dotted
     | "⎨" Sexpr SpaceSexpr* "⎬" -- multiple
+    | "⎨" "⎬"  -- nil
 
   SpaceSexpr = Sexpr
 

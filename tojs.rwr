@@ -27,7 +27,7 @@ return RESULT;
   BodyItem_listConstant [k] =‛RESULT = «k»’
 
   AndBody_compound [item more] = ‛«item» && «more»’
-  AndBody_single [item] = ‛«item»’
+  AndBody_single [item] = ‛(«item»)’
   AndBodyItem [i] = ‛«i»’
   FunctionCall_plus [lp _plus Arg1 Arg2 rp] = ‛(RESULT = «Arg1» + «Arg2»)’
   FunctionCall_other [lp symbol Arg* rp] = ‛(RESULT = «symbol» («Arg»))’
@@ -37,7 +37,7 @@ return RESULT;
   ElseExpr [i] = ‛«i»’
 
   Guard [e] = ‛«e»’  
-  Expr_and [lp _and Body rp] = ‛«lp»«_and»«Body»«rp»’
+  Expr_and [lp _and AndBody rp] = ‛«AndBody»’
   Expr_atom [a] = ‛(RESULT = «a»)’
   Expr_call [f] = ‛(RESULT = «f»)’
 

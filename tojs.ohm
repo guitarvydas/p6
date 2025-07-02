@@ -38,7 +38,7 @@ tojs {
   
   Guard = Expr
   Expr =
-    | "(" "and" Body ")" -- and
+    | "(" "and" AndBody ")" -- and
     | atom -- atom
     | FunctionCall -- call
 

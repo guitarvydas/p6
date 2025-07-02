@@ -13,7 +13,7 @@ return RESULT;
   Sexpr [x] = ‛«x»’
   Formal [sym] = ‛«sym», ’
 
-  Body [BodyItem Body?] = ‛\nRESULT = «BodyItem»;«Body»’
+  Body [BodyItem Body?] = ‛\n«BodyItem»;«Body»’
 
   BodyItem_cond [lp _cond CondClause+ ElseClause? rp] = ‛if (false) {\n}«CondClause»«ElseClause»’
   BodyItem_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»}’
@@ -22,9 +22,9 @@ return RESULT;
   BodyItem_letLoop [lp _let symbol Bindings Body rp] = ‛«lp»«_let»«symbol»«Bindings»«Body»«rp»’
   BodyItem_letAsterisk [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
   BodyItem_let [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
-  BodyItem_atom [a] =‛«a»’
-  BodyItem_call [f] =‛«f»’
-  BodyItem_listConstant [k] =‛«k»’
+  BodyItem_atom [a] =‛RESULT = «a»’
+  BodyItem_call [f] =‛RESULT = «f»’
+  BodyItem_listConstant [k] =‛RESULT = «k»’
 
   AndBody_compound [item more] = ‛«item» && «more»’
   AndBody_single [item] = ‛«item»’

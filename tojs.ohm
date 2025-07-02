@@ -31,7 +31,7 @@ tojs {
   FunctionCall = 
     | "(" "+" atom atom ")" -- plus
     | "(" symbol Arg* ")" -- other
-  CondClause = "(" Guard Body ")"
+  CondClause = "(" ~"else" Guard Body ")"
   ElseClause = "(" "else" Body ")"
   ThenExpr = BodyItem<Body>
   ElseExpr = BodyItem<Body>

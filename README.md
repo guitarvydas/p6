@@ -15,4 +15,6 @@ To test `lisp.js` (concatenates `lisp.js` and `testlisp.js` into `temp.js`, then
 Early sanity test: just run `test.scm` through transpiler and expect the output to be the same as the input (reveals silly errors in workflow)
 `$ make identity`
 (N.B. this was used early in the development workflow and may fail due to incremental changes to the main workflow)
-
+## scheme
+To see the modified Scheme code run:
+`$ make scm` 

@@ -11,3 +11,7 @@ testlisp:
 	cat lisp.js testlisp.js >temp.js
 	node temp.js
 
+scm:
+	mit-scheme --load "prolog-6-modified"
+
+

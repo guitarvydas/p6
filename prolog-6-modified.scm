@@ -208,13 +208,13 @@
      (edge (? A) (? C))
      (path (? C) (? B) (? CB)))))
 
-(define goals '((path a f (? P))))
+(define goals1 '((path a f (? P))))
 
 ; recursive PROVE
-(prove3 db1 goals empty 1)
+(prove3 db1 goals1 empty 1)
 
 ; 6-slide PROVE
-(prove5 db1 '() goals db1 empty 1)
+(prove5 db1 '() goals1 db1 empty 1)
 
 ;; Negation as failure
 
@@ -230,10 +230,10 @@
 
     ((neq (? X) (? Y)))))
 
-(define goals '((some (? X))
+(define goals2 '((some (? X))
                 (some (? Y))
                 (neq (? X) (? Y))))
 
 ; 9-slide PROVE
-(prove6 db2 '() goals db2 empty 1 '())
+(prove6 db2 '() goals2 db2 empty 1 '())
 

@@ -12,6 +12,6 @@ testlisp:
 	node temp.js
 
 scm:
-	mit-scheme --load "prolog-6-modified"
+	mit-scheme --silent --load "prolog-6-modified"
 
 

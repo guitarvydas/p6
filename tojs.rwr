@@ -88,7 +88,7 @@ return RESULT;
   List_listMultiple [lp e es+ rp] = ‛\n[«e»«es»]’
   List_listOfOne [lp e rp] = ‛\n[«e»]’
 
-  ListConstant_nil [lb rb] = ‛nil’
+  ListConstant_nil [lb rb] = ‛null’
   ListConstant_dotted [lb es+ _dot e rb] = ‛[«es», «e»]’
   ListConstant_multiple [lb e es* rb] = ‛\n[«e», «es»]’
 

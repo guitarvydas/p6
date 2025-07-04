@@ -138,6 +138,9 @@ function filterList(predicate, list) {
     }
 }
 
+function caar (list) {
+    return car (car (list));
+}
 function cadr (list) {
     return car (cdr (list));
 }
@@ -153,6 +156,9 @@ function cddr (list) {
 function cdddr (list) {
     return cdr (cdr (cdr (list)));
 }
+function cddddr (list) {
+    return cdr (cdr (cdr (cdr (list))));
+}
 
 function null_Q (list) {
     return list == [] || list == null;
@@ -167,4 +173,12 @@ function eq_Q (x, y) {
 }
 function eqv_Q (x, y) {
     return Object.is (x, y);
+}
+
+function newline () {
+    console.log ("");
+}
+
+function display (x) {
+    console.log (x.tostring ());
 }

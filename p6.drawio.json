@@ -23,7 +23,7 @@
         "id": 21
       },
       {
-        "name": ":?const",
+        "name": ":?front",
         "id": 25
       }
     ],
@@ -98,7 +98,7 @@
           "id": 17
         },
         "target": {
-          "name": ":?const",
+          "name": ":?front",
           "id": 25
         }
       },
@@ -280,8 +280,12 @@
     "name": "ToJS",
     "children": [
       {
-        "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
+        "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr support.js -",
         "id": 5
+      },
+      {
+        "name": ":$ sed 's/, )/)/g'",
+        "id": 9
       }
     ],
     "connections": [
@@ -290,7 +294,29 @@
         "source_port": "",
         "target_port": "",
         "target": {
-          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
+          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr support.js -",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr support.js -",
+          "id": 5
+        },
+        "target": {
+          "name": ":$ sed 's/, )/)/g'",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr support.js -",
           "id": 5
         }
       },
@@ -299,8 +325,8 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
-          "id": 5
+          "name": ":$ sed 's/, )/)/g'",
+          "id": 9
         }
       },
       {
@@ -308,8 +334,8 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": ":$ pbp/t2t.bash . ./pbp tojs.ohm tojs.rwr empty.js -",
-          "id": 5
+          "name": ":$ sed 's/, )/)/g'",
+          "id": 9
         }
       }
     ],

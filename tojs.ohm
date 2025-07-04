@@ -17,7 +17,7 @@ tojs {
     | "(" "if" Guard ThenExpr ")" -- ifThen
     | "(" "and" AndBody ")" -- and
     | "(" "let*" Bindings Bod ")" -- letAsterisk
-    | "(" "let" symbol Bindings Bod ")" -- letLoop
+    | "(" "let" "loop" NamedLetBindings Bod ")" -- letLoop
     | "(" "let" Bindings Bod ")" -- let
     | atom -- atom
     | FunctionCall -- call
@@ -30,6 +30,7 @@ tojs {
 
   FunctionCall = 
     | "(" "+" atom atom ")" -- plus
+    | "(" "loop" Arg* ")" -- loop
     | "(" symbol Arg* ")" -- other
   CondClause = "(" ~"else" Guard Body ")"
   ElseClause = "(" "else" Body ")"
@@ -44,6 +45,7 @@ tojs {
 
   Bindings = "(" Binding+ ")"
   Binding = "(" symbol BodyItem<Body> ")"
+  NamedLetBindings = "(" "(" symbol BodyItem<Body> ")" ")"
   
   Arg =
     | atom -- atom
@@ -61,8 +63,9 @@ tojs {
   string = "\"" (~"\"" any)* "\""
   symbol = id ("." id)*
   id =
-    | "try" -- try
-    | "not" -- not
+    | "try" ~id -- try
+    | "var" ~id -- var
+    | "not" ~id -- not
     | firstLetter followLetter* -- other
   firstLetter = jsletter | (~separator ~unprintable any)
   followLetter = jsletter | digit | (~separator ~unprintable any)
@@ -70,6 +73,7 @@ tojs {
     | "*" -- asterisk
     | "!" -- bang
     | "?" -- questionMark
+    | "-" -- dash
     | letter -- other
   special  = ";" | "#" | "(" | ")" | "‹" | "›" | "." | "⎨" | "⎬"
   unprintable = ("\x00" .. "\x20") | "\x7F"

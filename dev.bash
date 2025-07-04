@@ -13,8 +13,8 @@ if [ "$SIZE" -gt 2 ]; then
     echo '** Messages **'
     cat out.md
 else
-    echo '** input ***'
-    cat test.scm
-    echo '** transpiled to Javascript **'
+    # echo '** input ***'
+    # cat test.scm
+    # echo '** transpiled to Javascript **'
     cat prolog.js
 fi

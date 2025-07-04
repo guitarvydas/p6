@@ -1,3 +1,4 @@
+% parameter namedLetExpr
 % rewrite tojs {
   Program [TopLevelSexpr+] = ‛«TopLevelSexpr»’
   
@@ -19,7 +20,10 @@ return RESULT;
   BodyItem_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»}’
   BodyItem_ifThen [lp _if Guard ThenExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}’
   BodyItem_and [lp _and AndBody rp] = ‛RESULT = «AndBody»’
-  BodyItem_letLoop [lp _let symbol Bindings Body rp] = ‛«lp»«_let»«symbol»«Bindings»«Body»«rp»’
+
+  BodyItem_letLoop [lp _let symbol NamedLetParameter Body rp] = 
+    ‛function loop (⎨firstPart ‛«NamedLetParameter»’⎬) {\nlet RESULT = undefined;«Body»\nreturn RESULT;\n}\nRESULT = loop (⎨secondPart ‛«NamedLetParameter»’⎬)’
+
   BodyItem_letAsterisk [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
   BodyItem_let [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
   BodyItem_atom [a] =‛RESULT = «a»’
@@ -30,9 +34,10 @@ return RESULT;
   AndBody_single [item] = ‛(«item»)’
   AndBodyItem [i] = ‛«i»’
   FunctionCall_plus [lp _plus Arg1 Arg2 rp] = ‛(RESULT = «Arg1» + «Arg2»)’
+  FunctionCall_loop [lp _loop Arg* rp] = ‛«Arg»\nNEXT = RESULT’
   FunctionCall_other [lp symbol Arg* rp] = ‛(RESULT = «symbol» («Arg»))’
-  CondClause [lp Guard Body rp] = ‛\nelse if («Guard») {\n«Body»}’
-  ElseClause [lp _else Body rp] = ‛\nelse {\n«Body»}’
+  CondClause [lp Guard Body rp] = ‛\nelse if («Guard») {\n«Body»\n}’
+  ElseClause [lp _else Body rp] = ‛\nelse {\n«Body»\n}’
   ThenExpr [i] = ‛«i»’
   ElseExpr [i] = ‛«i»’
 
@@ -43,6 +48,7 @@ return RESULT;
 
   Bindings [lp Binding+ rp] = ‛«Binding»’
   Binding [lp symbol BodyItem rp] = ‛\nlet «symbol» = «BodyItem»;’
+  NamedLetBindings [lp lp2 v e rp2 rp] = ‛«v»~«e»’
 
   Arg_atom [a] = ‛«a», ’   
   Arg_call [f] = ‛«f», ’   
@@ -58,6 +64,7 @@ return RESULT;
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
   symbol [id _dot* id2*] = ‛«id»«_dot»«id2»’
   id_try [x] = ‛ftry’
+  id_var [x] = ‛vvar’
   id_not [x] = ‛!’
   id_other [c cs*] = ‛«c»«cs»’
   firstLetter [c] = ‛«c»’
@@ -65,17 +72,18 @@ return RESULT;
   jsletter_asterisk [c] = ‛_A’
   jsletter_bang [c] = ‛_B’
   jsletter_questionMark [c] = ‛_Q’
+  jsletter_dash [c] = ‛__’
   jsletter_other [c] = ‛«c»’
   special [c] = ‛«c»’
   separator [c] = ‛«c»’
 
   List_listConstant [k] = ‛«k»’
-  List_dotted [lp es+ _dot e rp] = ‛«lp»«es»«_dot»«e»«rp»’
+  List_dotted [lp es+ _dot e rp] = ‛[«es», «e»]’
   List_listMultiple [lp e es+ rp] = ‛\n[«e»«es»]’
   List_listOfOne [lp e rp] = ‛\n[«e»]’
 
   ListConstant_nil [lb rb] = ‛nil’
-  ListConstant_dotted [lb es+ _dot e rb] = ‛«lb»«es»«_dot»«e»«rb»’
+  ListConstant_dotted [lb es+ _dot e rb] = ‛[«es», «e»]’
   ListConstant_multiple [lb e es* rb] = ‛\n[«e», «es»]’
 
   SpaceSexpr [e] = ‛«e», ’

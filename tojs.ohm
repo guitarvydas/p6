@@ -16,6 +16,7 @@ tojs {
     | "(" "if" Guard ThenExpr ElseExpr ")" -- ifThenElse
     | "(" "if" Guard ThenExpr ")" -- ifThen
     | "(" "and" AndBody ")" -- and
+    | "(" "or" OrBody ")" -- or
     | "(" "let*" Bindings Bod ")" -- letAsterisk
     | "(" "let" "loop" NamedLetBindings Bod ")" -- letLoop
     | "(" "let" Bindings Bod ")" -- let
@@ -27,6 +28,11 @@ tojs {
     | BodyItem<AndBody> AndBody -- compound
     | BodyItem<AndBody> -- single
   AndBodyItem<Bod> = BodyItem<Bod>  
+
+  OrBody =
+    | BodyItem<OrBody> OrBody -- compound
+    | BodyItem<OrBody> -- single
+  OrBodyItem<Bod> = BodyItem<Bod>  
 
   FunctionCall = 
     | "(" "+" atom atom ")" -- plus
@@ -40,6 +46,7 @@ tojs {
   Guard = Expr
   Expr =
     | "(" "and" AndBody ")" -- and
+    | "(" "or" OrBody ")" -- or
     | atom -- atom
     | FunctionCall -- call
 

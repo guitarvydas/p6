@@ -20,6 +20,7 @@ return RESULT;
   BodyItem_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»}’
   BodyItem_ifThen [lp _if Guard ThenExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}’
   BodyItem_and [lp _and AndBody rp] = ‛RESULT = «AndBody»’
+  BodyItem_or [lp _or OrBody rp] = ‛RESULT = «OrBody»’
 
   BodyItem_letLoop [lp _let symbol NamedLetParameter Body rp] = 
     ‛function loop (⎨firstPart ‛«NamedLetParameter»’⎬) {\nlet RESULT = undefined;«Body»\nreturn RESULT;\n}\nRESULT = loop (⎨secondPart ‛«NamedLetParameter»’⎬)’
@@ -33,6 +34,10 @@ return RESULT;
   AndBody_compound [item more] = ‛«item» && «more»’
   AndBody_single [item] = ‛(«item»)’
   AndBodyItem [i] = ‛«i»’
+  OrBody_compound [item more] = ‛«item» || «more»’
+  OrBody_single [item] = ‛(«item»)’
+  OrBodyItem [i] = ‛«i»’
+
   FunctionCall_plus [lp _plus Arg1 Arg2 rp] = ‛(RESULT = «Arg1» + «Arg2»)’
   FunctionCall_loop [lp _loop Arg* rp] = ‛«Arg»\nNEXT = RESULT’
   FunctionCall_other [lp symbol Arg* rp] = ‛(RESULT = «symbol» («Arg»))’
@@ -43,6 +48,7 @@ return RESULT;
 
   Guard [e] = ‛«e»’  
   Expr_and [lp _and AndBody rp] = ‛«AndBody»’
+  Expr_or [lp _and OrBody rp] = ‛«OrBody»’
   Expr_atom [a] = ‛(RESULT = «a»)’
   Expr_call [f] = ‛(RESULT = «f»)’
 

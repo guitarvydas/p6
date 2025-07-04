@@ -1,5 +1,4 @@
-(define db
-  '(((edge a b))
-    ((path (? A) (? B) ((? A) . (? CB)))
-     (edge (? A) (? C))
-     (path (? C) (? B) (? CB)))))
+(define (unify xx yy e)
+  (cond
+      ((or (not (pair? x))
+           (not (pair? y))) #f)))

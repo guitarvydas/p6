@@ -180,9 +180,21 @@ function newline () {
 }
 
 function display (x) {
-    if (x == null) {
-	process.stdout.write ("null");
-    } else {
-	process.stdout.write (x.toString ());
-    }
+    console.log (x.tostring ());
 }
+
+
+
+
+
+console.log (`pair? '() ${pair_Q(null)}`);
+console.log (`null? '() ${null_Q(null)}`);
+console.log (`(car '(a b c)) ${car (listify (["a", "b", "c"]))}`);
+console.log (`(cdr '(a b c)) ${cdr (listify (["a", "b", "c"]))}`);
+
+// (pair? '())      ; #f - NOT a pair!
+// (null? '())      ; #t - IS the empty list
+// (list? '())      ; #t - IS a valid list
+
+// (pair? '(a))     ; #t - the cons cell IS a pair
+// (pair? (cdr '(a))) ; #f - cdr is '(), not a pair

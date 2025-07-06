@@ -138,6 +138,9 @@ function filterList(predicate, list) {
     }
 }
 
+function caar (list) {
+    return car (car (list));
+}
 function cadr (list) {
     return car (cdr (list));
 }
@@ -152,6 +155,9 @@ function cddr (list) {
 }
 function cdddr (list) {
     return cdr (cdr (cdr (list)));
+}
+function cddddr (list) {
+    return cdr (cdr (cdr (cdr (list))));
 }
 
 function null_Q (list) {
@@ -168,8 +174,21 @@ function eq_Q (x, y) {
 function eqv_Q (x, y) {
     return Object.is (x, y);
 }
+
+function newline () {
+    console.log ("");
+}
+
+function display (x) {
+    if (x == null) {
+	console.log ("nil");
+    } else { 
+	console.log (x.toString ());
+    }
+}
 function ftry (db, g, r, e, n) {
 let RESULT = undefined;
+RESULT = (RESULT = display (g));
 if ((RESULT = (RESULT = null_Q (r)))) {
 RESULT = "false"
 }
@@ -185,6 +204,7 @@ return RESULT;
 }
 function prove3 (db, g, e, n) {
 let RESULT = undefined;
+RESULT = (RESULT = display (g));
 if (false) {
 }
 else if ((RESULT = (RESULT = null_Q (g)))) {
@@ -254,7 +274,7 @@ return RESULT;
 function clear_r (x) {
 let RESULT = undefined;
 RESULT = (RESULT = set__car_B ((RESULT = cddr (x)), 
-[nil, ]));
+[null, ]));
 return RESULT;
 }
 function back6 (db, l, g, r, e, n, c) {
@@ -310,10 +330,10 @@ RESULT = (RESULT = back6 (db, l, g, r, e, n, c))};;
 };
 return RESULT;
 }
-let empty = RESULT = 
+let empty = listify (RESULT = 
 [
-["bottom", ], ];
-let vvar = RESULT = "_Q";
+["bottom", ], ]);
+let vvar = listify (RESULT = "_Q");
 let name = cadr;
 let time = cddr;
 function var_Q (x) {
@@ -387,36 +407,37 @@ RESULT = (RESULT = cons ((RESULT = list (x, y)), e));
 return RESULT;
 }
 function unify (xx, yy, e) {
-let RESULT = undefined;
-
-let x = RESULT = (RESULT = value (xx, e));
-let y = RESULT = (RESULT = value (yy, e));
-if (false) {
+    let RESULT = undefined;
+    
+    let x = RESULT = (RESULT = value (xx, e));
+    let y = RESULT = (RESULT = value (yy, e));
+    if (false) {
+    }
+    else if ((RESULT = (RESULT = eq_Q (x, y)))) {
+	
+	RESULT = e;
+    }
+    else if ((RESULT = (RESULT = var_Q (x)))) {
+	
+	RESULT = (RESULT = bind (x, y, e));
+    }
+    else if ((RESULT = (RESULT = var_Q (y)))) {
+	
+	RESULT = (RESULT = bind (y, x, e));
+    }
+    else if (RESULT = (RESULT = ! ((RESULT = pair_Q (x)))) || (RESULT = (RESULT = ! ((RESULT = pair_Q (y)))))) {
+	
+	RESULT = "false";
+    }
+    else {
+	
+	
+	let e_A = RESULT = (RESULT = unify ((RESULT = car (x)), (RESULT = car (y)), e));
+	RESULT = RESULT = e_A && (RESULT = (RESULT = unify ((RESULT = cdr (x)), (RESULT = cdr (y)), e_A)));;
+    };;
+    return RESULT;
 }
-else if ((RESULT = (RESULT = eq_Q (x, y)))) {
 
-RESULT = e;
-}
-else if ((RESULT = (RESULT = var_Q (x)))) {
-
-RESULT = (RESULT = bind (x, y, e));
-}
-else if ((RESULT = (RESULT = var_Q (y)))) {
-
-RESULT = (RESULT = bind (y, x, e));
-}
-else if (RESULT = (RESULT = ! ((RESULT = pair_Q (x)))) || (RESULT = (RESULT = ! ((RESULT = pair_Q (y)))))) {
-
-RESULT = "false";
-}
-else {
-
-
-let e_A = RESULT = (RESULT = unify ((RESULT = car (x)), (RESULT = car (y)), e));
-RESULT = RESULT = e_A && (RESULT = (RESULT = unify ((RESULT = cdr (x)), (RESULT = cdr (y)), e_A)));;
-};;
-return RESULT;
-}
 function resolve (x, e) {
 let RESULT = undefined;
 if (false) {
@@ -442,57 +463,36 @@ RESULT = (RESULT = cons ((RESULT = resolve ((RESULT = car (x)), e)), (RESULT = r
 return RESULT;
 }
 function print__frame (e) {
-    let RESULT = undefined;
-    RESULT = (RESULT = newline ());
-    function loop (ee) {
-	let RESULT = undefined;
-	if (false) {
-	}
-	else if ((RESULT = (RESULT = pair_Q ((RESULT = cdr (ee)))))) {
-	    
-	    if (false) {
-	    }
-	    else if ((RESULT = (RESULT = null_Q ((RESULT = time ((RESULT = caar (ee)))))))) {
-		
-		RESULT = (RESULT = display ((RESULT = cadaar (ee))));
-		RESULT = (RESULT = display (" = "));
-		RESULT = (RESULT = display ((RESULT = resolve ((RESULT = caar (ee)), e))));
-		RESULT = (RESULT = newline ());
-	    };
-	    RESULT = (RESULT = cdr (ee)), 
-	    NEXT = RESULT;
-	};
-	return RESULT;
-    }
-    RESULT = loop (RESULT = e);
-    return RESULT;
+let RESULT = undefined;
+RESULT = (RESULT = newline ());
+function loop (ee) {
+let RESULT = undefined;
+if (false) {
 }
+else if ((RESULT = (RESULT = pair_Q ((RESULT = cdr (ee)))))) {
 
-let db1 = RESULT = 
+if (false) {
+}
+else if ((RESULT = (RESULT = null_Q ((RESULT = time ((RESULT = caar (ee)))))))) {
+
+RESULT = (RESULT = display ((RESULT = cadaar (ee))));
+RESULT = (RESULT = display (" = "));
+RESULT = (RESULT = display ((RESULT = resolve ((RESULT = caar (ee)), e))));
+RESULT = (RESULT = newline ());
+};
+RESULT = (RESULT = cdr (ee)), 
+NEXT = RESULT;
+};
+return RESULT;
+}
+RESULT = loop (RESULT = e);
+return RESULT;
+}
+let db0 = listify (RESULT = 
 [
 [
 ["edge", "a", "b", ], ], 
 [
-["edge", "a", "f", ], ], 
-[
-["edge", "a", "g", ], ], 
-[
-["edge", "b", "c", ], ], 
-[
-["edge", "b", "d", ], ], 
-[
-["edge", "c", "d", ], ], 
-[
-["edge", "c", "e", ], ], 
-[
-["edge", "g", "h", ], ], 
-[
-["edge", "d", "h", ], ], 
-[
-["edge", "h", "e", ], ], 
-[
-["edge", "h", "f", ], ], 
-[
 ["path", 
 ["_Q", "A", ], 
 ["_Q", "B", ], 
@@ -501,56 +501,14 @@ let db1 = RESULT =
 ["_Q", "B", ], ], ], 
 ["edge", 
 ["_Q", "A", ], 
-["_Q", "B", ], ], ], 
+["_Q", "B", ], ], ], ]);
+let goals0 = listify (RESULT = 
 [
-["path", 
-["_Q", "A", ], 
-["_Q", "B", ], [
-["_Q", "A", ], 
-["_Q", "CB", ]], ], 
-["edge", 
-["_Q", "A", ], 
-["_Q", "C", ], ], 
-["path", 
-["_Q", "C", ], 
-["_Q", "B", ], 
-["_Q", "CB", ], ], ], ];
-let goals1 = RESULT = 
-[
-["path", "a", "f", 
-["_Q", "P", ], ], ];
-(RESULT = prove3 (db1, goals1, empty, 1));
-(RESULT = prove5 (db1, nil, goals1, db1, empty, 1));
-let db2 = RESULT = 
-[
-[
-["some", "foo", ], ], 
-[
-["some", "bar", ], ], 
-[
-["some", "baz", ], ], 
-[
-["eq", 
-["_Q", "X", ], 
-["_Q", "X", ], ], ], 
-[
-["neq", 
-["_Q", "X", ], 
-["_Q", "Y", ], ], 
-["eq", 
-["_Q", "X", ], 
-["_Q", "Y", ], ], "_B", "fail", ], 
-[
-["neq", 
-["_Q", "X", ], 
-["_Q", "Y", ], ], ], ];
-let goals2 = RESULT = 
-[
-["some", 
-["_Q", "X", ], ], 
-["some", 
-["_Q", "Y", ], ], 
-["neq", 
-["_Q", "X", ], 
-["_Q", "Y", ], ], ];
-(RESULT = prove6 (db2, nil, goals2, db2, empty, 1, nil));
+["path", "a", "b", 
+["_Q", "P", ], ], ]);
+(RESULT = display ((RESULT = unify ("a", "a", empty))));
+(RESULT = newline ());
+(RESULT = display ("testA"));
+(RESULT = newline ());
+(RESULT = display ((RESULT = unify ("a", 
+["_Q", "X", ], empty))));

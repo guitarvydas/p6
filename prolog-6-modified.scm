@@ -1,5 +1,6 @@
 
 (define (try db g r e n)
+  (display g)
   (if (null? r)
       #f
       (let* ((a  (copy (car r) (list n)))
@@ -9,6 +10,7 @@
         (try db g (cdr r) e n))))
 
 (define (prove3 db g e n)
+  (display g)
   (cond ((null? g)
           (print-frame e))
         (else
@@ -149,6 +151,13 @@
   (cons (list x y) e))
 
 (define (unify xx yy e)
+  (newline)
+  (display xx)
+  (newline)
+  (display yy)
+  (newline)
+  (display e)
+  (newline)
   (let ((x (value xx e))
         (y (value yy e)))
     (cond
@@ -186,6 +195,7 @@
             (loop (cdr ee))))))
 
 
+
 ;; Graph example from section 1
 
 (define db1
@@ -209,6 +219,7 @@
      (path (? C) (? B) (? CB)))))
 
 (define goals1 '((path a f (? P))))
+(prove3 db1 goals1 empty 1)
 
 ; recursive PROVE
 (prove3 db1 goals1 empty 1)

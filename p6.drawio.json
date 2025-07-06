@@ -21,10 +21,6 @@
       {
         "name": "ToJS",
         "id": 21
-      },
-      {
-        "name": ":?front",
-        "id": 25
       }
     ],
     "connections": [
@@ -87,19 +83,6 @@
         "target": {
           "name": "ToJS",
           "id": 21
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": "Const",
-          "id": 17
-        },
-        "target": {
-          "name": ":?front",
-          "id": 25
         }
       },
       {

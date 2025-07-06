@@ -14,6 +14,5 @@ if [ "$SIZE" -gt 2 ]; then
     cat out.md
 else
     echo '** transpiled to Javascript **'
-    cat prolog.js
     node prolog.js
 fi

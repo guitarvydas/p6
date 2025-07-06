@@ -8,7 +8,7 @@ return RESULT;
 }’
 
   TopLevelSexpr_functionEquivalence [lp _define name name2 rp] = ‛\nlet «name» = «name2»;’
-  TopLevelSexpr_global [lp _define name BodyItem rp] = ‛\nlet «name» = «BodyItem»;’
+  TopLevelSexpr_global [lp _define name BodyItem rp] = ‛\nlet «name» = listify («BodyItem»);’
   TopLevelSexpr_call [f] = ‛\n«f»;’
   TopLevelSexpr_other [Sexpr] = ‛«Sexpr»’
   Sexpr [x] = ‛«x»’

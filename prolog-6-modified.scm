@@ -1,6 +1,5 @@
 
 (define (try db g r e n)
-  (display g)
   (if (null? r)
       #f
       (let* ((a  (copy (car r) (list n)))
@@ -10,7 +9,6 @@
         (try db g (cdr r) e n))))
 
 (define (prove3 db g e n)
-  (display g)
   (cond ((null? g)
           (print-frame e))
         (else
@@ -151,13 +149,6 @@
   (cons (list x y) e))
 
 (define (unify xx yy e)
-  (newline)
-  (display xx)
-  (newline)
-  (display yy)
-  (newline)
-  (display e)
-  (newline)
   (let ((x (value xx e))
         (y (value yy e)))
     (cond

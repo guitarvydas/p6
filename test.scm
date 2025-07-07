@@ -205,77 +205,15 @@
      (edge (? A) (? B)))
 ))
 
-;;(display `((path a b (? P))))
+
+
+
 
 (define goals0 '((path a b (? P))))
 
-;; (display goals0)
-
+;; (display (unify 'a 'a empty))
 ;; (newline)
-;; (newline)
-;; (display 'a)
-;; (newline)
-;; (display '())
-;; (newline)
+;; (display 'testA) (newline)
+;; (display (unify 'a '(? X) empty))
 
-(display (unify 'a 'a empty))
-(newline)
-(display 'testA) (newline)
-(display (unify 'a '(? X) empty))
-;;  (newline)
-;;(display (unify '(path a b z) (car goals0) empty))
-;;(newline)
-;; (display 'testB) (newline)
-;; (display (prove3 db0 '(path a b (? P)) empty 1))
-;; (newline)
-
-;; (define db1
-;;   '(((edge a b))
-;;     ((edge a f))
-;;     ((edge a g))
-;;     ((edge b c))
-;;     ((edge b d))
-;;     ((edge c d))
-;;     ((edge c e))
-;;     ((edge g h))
-;;     ((edge d h))
-;;     ((edge h e))
-;;     ((edge h f))
-
-;;     ((path (? A) (? B) ((? A) (? B)))
-;;      (edge (? A) (? B)))
-
-;;     ((path (? A) (? B) ((? A) . (? CB)))
-;;      (edge (? A) (? C))
-;;      (path (? C) (? B) (? CB)))))
-
-;(define goals1 '((path a f (? P))))
-;(prove3 db1 goals1 empty 1)
-
-;; ; recursive PROVE
-;; (prove3 db1 goals1 empty 1)
-
-;; ; 6-slide PROVE
-;; (prove5 db1 '() goals1 db1 empty 1)
-
-;; ;; Negation as failure
-
-;; (define db2
-;;   '(((some foo))
-;;     ((some bar))
-;;     ((some baz))
-
-;;     ((eq (? X) (? X)))
-
-;;     ((neq (? X) (? Y))
-;;      (eq (? X) (? Y)) ! fail)
-
-;;     ((neq (? X) (? Y)))))
-
-;; (define goals2 '((some (? X))
-;;                 (some (? Y))
-;;                 (neq (? X) (? Y))))
-
-;; ; 9-slide PROVE
-;; (prove6 db2 '() goals2 db2 empty 1 '())
-
+(display '(? X))

@@ -1,0 +1,78 @@
+tojs {
+  Program = Sexpr+
+  Sexpr =
+    | Special -- special
+    | ListConstant -- listConstant
+    | atom -- atom
+    | FunctionCall -- call
+  Special =
+    | "(" "define" "(" symbol Formal* ")" Sexpr ")" -- functionDefinition
+    | "(" "define" symbol symbol ")" -- functionEquivalence
+    | "(" "define" symbol Sexpr ")" -- global
+    | "(" "cond" CondClause+ ElseClause? ")" -- cond
+    | "(" "if" Guard ThenExpr ElseExpr ")" -- ifThenElse
+    | "(" "if" Guard ThenExpr ")" -- ifThen
+    | "(" "and" AndSexprs ")" -- and
+    | "(" "or" OrSexprs ")" -- or
+    | "(" "let*" Bindings Sexprs ")" -- letAsterisk
+    | "(" "let" "loop" NamedLetBindings Sexprs ")" -- letLoop
+    | "(" "let" Bindings Sexprs ")" -- let
+    | "(" "quote" Sexpr ")" -- quote
+    | "(" "+" Sexpr+ ")" -- plus
+
+  Sexprs = Sexpr Sexprs?
+  AndSexprs = Sexprs
+  OrSexprs = Sexprs
+  Formal = symbol
+  Guard = Sexpr
+  ThenExpr = Sexpr
+  ElseExpr = Sexpr
+  CondClause = "(" ~"else" Sexpr Sexprs ")"
+  ElseClause = "(" "else" Sexprs ")"
+  Bindings = "(" Binding+ ")"
+  Binding = "(" symbol Sexpr ")"
+  NamedLetBindings = Bindings
+
+  ListConstant = 
+    | "⎨" Constant "." Constant "⎬"  -- dotted
+    | "⎨" Constant Constant "⎬" -- multiple
+    | "⎨" Constant "⎬" -- single
+    | "⎨" "⎬"  -- nil
+
+  Constant = Sexpr
+
+  atom =
+    | "(" ")" -- nil
+    | "#f" -- false
+    | "#t" -- true
+    | "‹" integer "›" -- integerConstant
+    | "‹" string "›" -- stringConstant
+    | "‹" symbol "›" -- symbolConstant
+    | applySyntactic<ListConstant> -- listConstant
+    | symbol -- variable
+
+  integer = digit+
+  string = "\"" (~"\"" any)* "\""
+  symbol = id ("." id)*
+  id =
+    | "try" ~id -- try
+    | "var" ~id -- var
+    | "not" ~id -- not
+    | firstLetter followLetter* -- other
+  firstLetter = jsletter | (~separator ~unprintable any)
+  followLetter = jsletter | digit | (~separator ~unprintable any)
+  jsletter =
+    | "*" -- asterisk
+    | "!" -- bang
+    | "?" -- questionMark
+    | "-" -- dash
+    | letter -- other
+  special  = ";" | "#" | "(" | ")" | "‹" | "›" | "." | "⎨" | "⎬"
+  unprintable = ("\x00" .. "\x20") | "\x7F"
+  separator = space | special | end
+
+  FunctionCall = "(" symbol Sexpr* ")"
+  
+  comment = ";" (~"\n" any)* "\n"
+  space += comment
+}

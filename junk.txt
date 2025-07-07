@@ -1,1 +1,1 @@
-sed 's/, )/)/g'
+pbp/t2t.bash . ./pbp const.ohm const.rwr empty.js -

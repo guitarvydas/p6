@@ -20,6 +20,7 @@ tojs {
     | "(" "let*" Bindings Bod ")" -- letAsterisk
     | "(" "let" "loop" NamedLetBindings Bod ")" -- letLoop
     | "(" "let" Bindings Bod ")" -- let
+    | "(" "quote" Bod ")" -- quote
     | atom -- atom
     | FunctionCall -- call
     | ListConstant -- listConstant
@@ -88,13 +89,14 @@ tojs {
 
   List =
     | ListConstant -- listConstant
-    | "(" Sexpr+ "." Sexpr ")" -- dotted
-    | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
+    | "(" Sexpr "." Sexpr ")" -- dotted
+    | "(" Sexpr Sexpr ")" -- listMultiple
     | "(" Sexpr ")" -- listOfOne
 
   ListConstant = 
-    | "⎨" Sexpr+ "." Sexpr "⎬"  -- dotted
-    | "⎨" Sexpr SpaceSexpr* "⎬" -- multiple
+    | "⎨" Sexpr "." Sexpr "⎬"  -- dotted
+    | "⎨" Sexpr Sexpr "⎬" -- multiple
+    | "⎨" Sexpr "⎬" -- single
     | "⎨" "⎬"  -- nil
 
   SpaceSexpr = Sexpr

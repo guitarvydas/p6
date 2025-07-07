@@ -1,0 +1,275 @@
+function ftry (dbgren) {
+    let RESULT = undefined;
+    display (g);
+    if (null_Q (r)) {
+	"false"
+    }
+    else {
+
+	let a = copy (car (r), list (n));
+	let ne = unify (car (g), car (a), e);if (ne) {
+	    prove3 (db, append (cdr (a), cdr (g)), ne, 1n)
+	};
+	ftry (db, g, cdr (r), e, n);};
+    return RESULT;
+}
+function prove3 (dbgen) {
+    let RESULT = undefined;
+    display (g);
+    if (false) {
+    }
+    else if (null_Q (g)) {
+	print__frame (e);
+    }
+    else {
+	ftry (db, g, db, e, n);
+    };
+    return RESULT;
+}
+let link = list;
+let L_l = car;
+let L_g = cadr;
+let L_r = caddr;
+let L_e = cadddr;
+function L_n (x) {
+    let RESULT = undefined;
+    car (cddddr (x));
+    return RESULT;
+}
+function back5 (dblgren) {
+    let RESULT = undefined;
+    if (RESULT = pair_Q (g);
+	pair_Q (r);) {
+	prove5 (db, l, g, cdr (r), e, n)
+    }
+    else {
+	prove5 (db, L_l (l), L_g (l), cdr (L_r (l)), L_e (l), L_n (l))};
+    return RESULT;
+}
+function prove5 (dblgren) {
+    let RESULT = undefined;
+    if (false) {
+    }
+    else if (null_Q (g)) {
+	print__frame (e);
+	back5 (db, l, g, r, e, n);
+    }
+    else if (null_Q (r)) {
+	if (null_Q (l)) {
+	    "true"
+	}
+	else {
+	    back5 (db, l, g, r, e, n)};
+    }
+    else {
+
+	let a = copy (car (r), n);
+	let e_A = unify (car (a), car (g), e);if (e_A) {
+	    prove5 (db, link (l, g, r, e, n), append (cdr (a), cdr (g)), db, e_A, 1n)
+	}
+	else {
+	    back5 (db, l, g, r, e, n)};;
+    };
+    return RESULT;
+}
+function L_c (x) {
+    let RESULT = undefined;
+    cadr (cddddr (x));
+    return RESULT;
+}
+function clear_r (x) {
+    let RESULT = undefined;
+    set__car_B (cddr (x), new Pair (null, null));
+    return RESULT;
+}
+function back6 (dblgrenc) {
+    let RESULT = undefined;
+    if (false) {
+    }
+    else if (RESULT = pair_Q (g);
+	     pair_Q (r);) {
+	prove6 (db, l, g, cdr (r), e, n, c);
+    }
+    else if (pair_Q (l)) {
+	prove6 (db, L_l (l), L_g (l), cdr (L_r (l)), L_e (l), L_n (l), L_c (l));
+    };
+    return RESULT;
+}
+function prove6 (dblgrenc) {
+    let RESULT = undefined;
+    if (false) {
+    }
+    else if (null_Q (g)) {
+	print__frame (e);
+	back6 (db, l, g, r, e, n, c);
+    }
+    else if (eq_Q ("_B", car (g))) {
+	clear_r (c);
+	prove6 (db, c, cdr (g), r, e, n, c);
+    }
+    else if (eq_Q ("r_B", car (g))) {
+	prove6 (db, l, cddr (g), r, e, n, cadr (g));
+    }
+    else if (null_Q (r)) {
+	if (null_Q (l)) {
+	    "true"
+	}
+	else {
+	    back6 (db, l, g, r, e, n, c)};
+    }
+    else {
+
+	let a = copy (car (r), n);
+	let e_A = unify (car (a), car (g), e);if (e_A) {
+	    prove6 (db, link (l, g, r, e, n, c), append (cdr (a), list ("r_B", "l"), cdr (g)), db, e_A, 1n, l)
+	}
+	else {
+	    back6 (db, l, g, r, e, n, c)};;
+    };
+    return RESULT;
+}
+let empty = listify (new Pair (new Pair ("bottom", null), null));
+let vvar = listify ("_Q");
+let name = cadr;
+let time = cddr;
+function var_Q (x) {
+    let RESULT = undefined;
+    RESULT = pair_Q (x);
+    eq_Q (vvar, car (x));;
+    return RESULT;
+}
+function lookup (ve) {
+    let RESULT = undefined;
+
+    let id = name (v);
+    let t = time (v);function loop (
+	let e = e;) {
+	let RESULT = undefined;if (false) {
+	}
+	else if (! (pair_Q (caar (e)))) {
+	    "false";
+	}
+	else if (RESULT = eq_Q (id, name (caar (e)));
+		 eqv_Q (t, time (caar (e)));) {
+	    car (e);
+	}
+	else {
+	    loop (cdr (e));
+	};
+	return RESULT;
+    }
+    RESULT = loop (undefined);;
+    return RESULT;
+}
+function value (xe) {
+    let RESULT = undefined;
+    if (var_Q (x)) {
+
+	let v = lookup (x, e);if (v) {
+	    value (cadr (v), e)
+	}
+	else {
+	    x};
+    }
+    else {
+	x};
+    return RESULT;
+}
+function copy (xn) {
+    let RESULT = undefined;
+    if (false) {
+    }
+    else if (! (pair_Q (x))) {
+	x;
+    }
+    else if (var_Q (x)) {
+	append (x, n);
+    }
+    else {
+	cons (copy (car (x), n), copy (cdr (x), n));
+    };
+    return RESULT;
+}
+function bind (xye) {
+    let RESULT = undefined;
+    cons (list (x, y), e);
+    return RESULT;
+}
+function unify (xxyye) {
+    let RESULT = undefined;
+    newline ();
+    display (xx);
+    newline ();
+    display (yy);
+    newline ();
+    display (e);
+    newline ();
+
+    let x = value (xx, e);
+    let y = value (yy, e);if (false) {
+    }
+    else if (eq_Q (x, y)) {
+	e;
+    }
+    else if (var_Q (x)) {
+	bind (x, y, e);
+    }
+    else if (var_Q (y)) {
+	bind (y, x, e);
+    }
+    else if (RESULT = ! (pair_Q (x));
+	     ! (pair_Q (y));) {
+	"false";
+    }
+    else {
+
+	let e_A = unify (car (x), car (y), e);RESULT = e_A;
+	unify (cdr (x), cdr (y), e_A);;;
+    };;
+    return RESULT;
+}
+function resolve (xe) {
+    let RESULT = undefined;
+    if (false) {
+    }
+    else if (! (pair_Q (x))) {
+	x;
+    }
+    else if (var_Q (x)) {
+
+	let v = value (x, e);if (var_Q (v)) {
+	    v
+	}
+	else {
+	    resolve (v, e)};;
+    }
+    else {
+	cons (resolve (car (x), e), resolve (cdr (x), e));
+    };
+    return RESULT;
+}
+function print__frame (e) {
+    let RESULT = undefined;
+    newline ();
+    function loop (
+	let ee = e;) {
+	let RESULT = undefined;if (false) {
+	}
+	else if (pair_Q (cdr (ee))) {
+	    if (false) {
+	    }
+	    else if (null_Q (time (caar (ee)))) {
+		display (cadaar (ee));
+		display (" = ");
+		display (resolve (caar (ee), e));
+		newline ();
+	    };
+	    loop (cdr (ee));
+	};
+	return RESULT;
+    }
+    RESULT = loop (undefined);
+    return RESULT;
+}
+let db0 = listify (new Pair (new Pair (new Pair ("edge", "a""b"), null), new Pair (new Pair ("path", new Pair ("_Q", "A")new Pair ("_Q", "B")new Pair (new Pair ("_Q", "A"), new Pair ("_Q", "B"))), new Pair ("edge", new Pair ("_Q", "A")new Pair ("_Q", "B")))));
+let goals0 = listify (new Pair (new Pair ("path", "a""b"new Pair ("_Q", "P")), null));display (new Pair ("_Q", "X"))

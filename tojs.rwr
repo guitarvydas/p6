@@ -1,65 +1,51 @@
-% parameter namedLetExpr
 % rewrite tojs {
-  Program [TopLevelSexpr+] = ‛«TopLevelSexpr»’
-  
-  TopLevelSexpr_functionDefinition [lp _define lp2 name formals* rp2 Body rp] = ‛
-function «name» («formals») {\nlet RESULT = undefined;«Body»
+  Program [es+] = ‛«es»’
+  Sexpr[e] = ‛«e»’
+
+  Special_functionDefinition [lp _define lp2 name formals* rp2 Body rp] = ‛
+function «name» («formals») {\nlet RESULT = undefined;\n«Body»
 return RESULT;
 }’
 
-  TopLevelSexpr_functionEquivalence [lp _define name name2 rp] = ‛\nlet «name» = «name2»;’
-  TopLevelSexpr_global [lp _define name BodyItem rp] = ‛\nlet «name» = listify («BodyItem»);’
-  TopLevelSexpr_call [f] = ‛\n«f»;’
-  TopLevelSexpr_other [Sexpr] = ‛«Sexpr»’
-  Sexpr [x] = ‛«x»’
-  Formal [sym] = ‛«sym», ’
-
-  Body [BodyItem Body?] = ‛\n«BodyItem»;«Body»’
-
-  BodyItem_cond [lp _cond CondClause+ ElseClause? rp] = ‛if (false) {\n}«CondClause»«ElseClause»’
-  BodyItem_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»}’
-  BodyItem_ifThen [lp _if Guard ThenExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}’
-  BodyItem_and [lp _and AndBody rp] = ‛RESULT = «AndBody»’
-  BodyItem_or [lp _or OrBody rp] = ‛RESULT = «OrBody»’
-
-  BodyItem_letLoop [lp _let symbol NamedLetParameter Body rp] = 
+  Special_functionEquivalence [lp _define name name2 rp] = ‛\nlet «name» = «name2»;’
+  Special_global [lp _define name BodyItem rp] = ‛\nlet «name» = listify («BodyItem»);’
+  Special_cond [lp _cond CondClause+ ElseClause? rp] = ‛if (false) {\n}«CondClause»«ElseClause»’
+  Special_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»}’
+  Special_ifThen [lp _if Guard ThenExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}’
+  Special_and [lp _and AndBody rp] = ‛RESULT = «AndBody»’
+  Special_or [lp _or OrBody rp] = ‛RESULT = «OrBody»’
+  Special_letAsterisk [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
+  Special_letLoop [lp _let symbol NamedLetParameter Body rp] = 
     ‛function loop (⎨firstPart ‛«NamedLetParameter»’⎬) {\nlet RESULT = undefined;«Body»\nreturn RESULT;\n}\nRESULT = loop (⎨secondPart ‛«NamedLetParameter»’⎬)’
+  Special_let [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
+  Special_quote [lp _quote e rp] = ‛"«e»"’
+  Special_plus [lp _plus es+ rp] = ‛«es»’
 
-  BodyItem_letAsterisk [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
-  BodyItem_let [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
-  BodyItem_atom [a] =‛RESULT = «a»’
-  BodyItem_call [f] =‛RESULT = «f»’
-  BodyItem_listConstant [k] =‛RESULT = «k»’
-
-  AndBody_compound [item more] = ‛«item» && «more»’
-  AndBody_single [item] = ‛(«item»)’
-  AndBodyItem [i] = ‛«i»’
-  OrBody_compound [item more] = ‛«item» || «more»’
-  OrBody_single [item] = ‛(«item»)’
-  OrBodyItem [i] = ‛«i»’
-
-  FunctionCall_plus [lp _plus Arg1 Arg2 rp] = ‛(RESULT = «Arg1» + «Arg2»)’
-  FunctionCall_loop [lp _loop Arg* rp] = ‛«Arg»\nNEXT = RESULT’
-  FunctionCall_other [lp symbol Arg* rp] = ‛(RESULT = «symbol» («Arg»))’
-  CondClause [lp Guard Body rp] = ‛\nelse if («Guard») {\n«Body»\n}’
-  ElseClause [lp _else Body rp] = ‛\nelse {\n«Body»\n}’
-  ThenExpr [i] = ‛«i»’
-  ElseExpr [i] = ‛«i»’
-
-  Guard [e] = ‛«e»’  
-  Expr_and [lp _and AndBody rp] = ‛«AndBody»’
-  Expr_or [lp _and OrBody rp] = ‛«OrBody»’
-  Expr_atom [a] = ‛(RESULT = «a»)’
-  Expr_call [f] = ‛(RESULT = «f»)’
-
+  Sexprs_multiple [e es] = ‛(RESULT = «e»);\n«es»’
+  Sexprs_single [e] = ‛(RESULT = «e»);’
+  AndSexprs [es] = ‛«es»’
+  OrSexprs [es] = ‛«es»’
+  Formal [sym] = ‛«sym»’
+  Guard [e] = ‛«e»’
+  ThenExpr [e] = ‛«e»’
+  ElseExpr [e] = ‛«e»’
+  CondClause [lp e es rp] = ‛\nelse if («e») {\n«es»\n}’
+  ElseClause [lp _else es rp] = ‛\nelse {\n«es»\n}’
   Bindings [lp Binding+ rp] = ‛«Binding»’
   Binding [lp symbol BodyItem rp] = ‛\nlet «symbol» = «BodyItem»;’
-  NamedLetBindings [lp lp2 v e rp2 rp] = ‛«v»~«e»’
+  NamedLetBindings [bs] = ‛«bs»’
 
-  Arg_atom [a] = ‛«a», ’   
-  Arg_call [f] = ‛«f», ’   
+  ListConstant_dotted [lb c1 _dot c2 rp] = ‛new Pair («c1», «c2»)’
+  ListConstant_multiple [lb c rec rb] = ‛new Pair («c», «rec»)’
+  ListConstant_single [lb c rb] = ‛new Pair («c», null)’
+  ListConstant_nil [lb rb] = ‛null’
+
+  Constant [e] = ‛«e»’
+  Constants [c rec?] = ‛«c»«rec»’
 
   atom_nil [lp rp] = ‛null’
+  atom_false [_f] = ‛false’
+  atom_true [_t] = ‛true’
   atom_integerConstant [lb i rb] = ‛«i»’
   atom_stringConstant [lb s rb] = ‛«s»’
   atom_symbolConstant [lb symbol rb] = ‛"«symbol»"’
@@ -81,18 +67,11 @@ return RESULT;
   jsletter_dash [c] = ‛__’
   jsletter_other [c] = ‛«c»’
   special [c] = ‛«c»’
+  unprintable [c] = ‛«c»’
   separator [c] = ‛«c»’
 
-  List_listConstant [k] = ‛«k»’
-  List_dotted [lp es+ _dot e rp] = ‛[«es», «e»]’
-  List_listMultiple [lp e es+ rp] = ‛\n[«e»«es»]’
-  List_listOfOne [lp e rp] = ‛\n[«e»]’
-
-  ListConstant_nil [lb rb] = ‛null’
-  ListConstant_dotted [lb es+ _dot e rb] = ‛\nnew Pair (first=«es», rest=«e»)’
-  ListConstant_multiple [lb e es* rb] = ‛\nlistify ([«e», «es»])’
-
-  SpaceSexpr [e] = ‛«e», ’
+  FunctionCall [lp sym arg* rp] = ‛«sym» («arg»)’
+  Arg [e] = ‛«e», ’
 
   comment [_semi cs* nl] = ‛«_semi»«cs»«nl»’
   space [s] = ‛«s»’

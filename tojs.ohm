@@ -1,66 +1,53 @@
 tojs {
-  Program = TopLevelSexpr+
-  TopLevelSexpr =
-    | "(" "define" "(" symbol Formal* ")" Body ")" -- functionDefinition
-    | "(" "define" symbol symbol ")" -- functionEquivalence
-    | "(" "define" symbol BodyItem<Body> ")" -- global
+  Program = Sexpr+
+  Sexpr =
+    | Special -- special
+    | ListConstant -- listConstant
+    | atom -- atom
     | FunctionCall -- call
-    | Sexpr                         -- other
-  Sexpr = List | atom
-  Formal = symbol
-
-  Body = BodyItem<Body> Body?
-  
-  BodyItem<Bod>=
+  Special =
+    | "(" "define" "(" symbol Formal* ")" Sexprs ")" -- functionDefinition
+    | "(" "define" symbol symbol ")" -- functionEquivalence
+    | "(" "define" symbol Sexpr ")" -- global
     | "(" "cond" CondClause+ ElseClause? ")" -- cond
     | "(" "if" Guard ThenExpr ElseExpr ")" -- ifThenElse
     | "(" "if" Guard ThenExpr ")" -- ifThen
-    | "(" "and" AndBody ")" -- and
-    | "(" "or" OrBody ")" -- or
-    | "(" "let*" Bindings Bod ")" -- letAsterisk
-    | "(" "let" "loop" NamedLetBindings Bod ")" -- letLoop
-    | "(" "let" Bindings Bod ")" -- let
-    | "(" "quote" Bod ")" -- quote
-    | atom -- atom
-    | FunctionCall -- call
-    | ListConstant -- listConstant
+    | "(" "and" AndSexprs ")" -- and
+    | "(" "or" OrSexprs ")" -- or
+    | "(" "let*" Bindings Sexprs ")" -- letAsterisk
+    | "(" "let" "loop" NamedLetBindings Sexprs ")" -- letLoop
+    | "(" "let" Bindings Sexprs ")" -- let
+    | "(" "quote" Sexpr ")" -- quote
+    | "(" "+" Sexpr+ ")" -- plus
 
-  AndBody =
-    | BodyItem<AndBody> AndBody -- compound
-    | BodyItem<AndBody> -- single
-  AndBodyItem<Bod> = BodyItem<Bod>  
-
-  OrBody =
-    | BodyItem<OrBody> OrBody -- compound
-    | BodyItem<OrBody> -- single
-  OrBodyItem<Bod> = BodyItem<Bod>  
-
-  FunctionCall = 
-    | "(" "+" atom atom ")" -- plus
-    | "(" "loop" Arg* ")" -- loop
-    | "(" symbol Arg* ")" -- other
-  CondClause = "(" ~"else" Guard Body ")"
-  ElseClause = "(" "else" Body ")"
-  ThenExpr = BodyItem<Body>
-  ElseExpr = BodyItem<Body>
-  
-  Guard = Expr
-  Expr =
-    | "(" "and" AndBody ")" -- and
-    | "(" "or" OrBody ")" -- or
-    | atom -- atom
-    | FunctionCall -- call
-
+  Sexprs =
+    | Sexpr Sexprs -- multiple
+    | Sexpr -- single
+  AndSexprs = Sexprs
+  OrSexprs = Sexprs
+  Formal = symbol
+  Guard = Sexpr
+  ThenExpr = Sexpr
+  ElseExpr = Sexpr
+  CondClause = "(" ~"else" Sexpr Sexprs ")"
+  ElseClause = "(" "else" Sexprs ")"
   Bindings = "(" Binding+ ")"
-  Binding = "(" symbol BodyItem<Body> ")"
-  NamedLetBindings = "(" "(" symbol BodyItem<Body> ")" ")"
-  
-  Arg =
-    | atom -- atom
-    | FunctionCall -- call
+  Binding = "(" symbol Sexpr ")"
+  NamedLetBindings = Bindings
+
+  ListConstant = 
+    | "⎨" Constants "." Constant "⎬"  -- dotted
+    | "⎨" Constant Constants "⎬" -- multiple
+    | "⎨" Constant "⎬" -- single
+    | "⎨" "⎬"  -- nil
+
+  Constant = Sexpr
+  Constants = Constant Constants?
 
   atom =
     | "(" ")" -- nil
+    | "#f" -- false
+    | "#t" -- true
     | "‹" integer "›" -- integerConstant
     | "‹" string "›" -- stringConstant
     | "‹" symbol "›" -- symbolConstant
@@ -87,30 +74,9 @@ tojs {
   unprintable = ("\x00" .. "\x20") | "\x7F"
   separator = space | special | end
 
-  List =
-    | ListConstant -- listConstant
-    | "(" Sexpr "." Sexpr ")" -- dotted
-    | "(" Sexpr Sexpr ")" -- listMultiple
-    | "(" Sexpr ")" -- listOfOne
-
-  ListConstant = 
-    | "⎨" Sexpr "." Sexpr "⎬"  -- dotted
-    | "⎨" Sexpr Sexpr "⎬" -- multiple
-    | "⎨" Sexpr "⎬" -- single
-    | "⎨" "⎬"  -- nil
-
-  SpaceSexpr = Sexpr
+  FunctionCall = "(" symbol Arg* ")"
+  Arg = Sexpr
 
   comment = ";" (~"\n" any)* "\n"
   space += comment
 }
-
-//+ (define (L_c x) (cadr (cddddr x)))
-//+ (define var ‹?›)
-//+ (define name cadr)
-//+ (define goals ⎨⎨‹path› ‹a› ‹f› ⎨‹?› ‹P›⎬⎬⎬)
-//+ (define db ⎨⎨⎨‹edge› ‹a› ‹b›⎬⎬ ⎨⎨‹edge› ‹a› ‹f›⎬⎬ ⎨⎨‹edge› ‹a› ‹g›⎬⎬ ⎨⎨‹edge› ‹b› ‹c›⎬⎬ ⎨⎨‹edge› ‹b› ‹d›⎬⎬ ⎨⎨‹edge› ‹c› ‹d›⎬⎬ ⎨⎨‹edge› ‹c› ‹e›⎬⎬ ⎨⎨‹edge› ‹g› ‹h›⎬⎬ ⎨⎨‹edge› ‹d› ‹h›⎬⎬ ⎨⎨‹edge› ‹h› ‹e›⎬⎬ ⎨⎨‹edge› ‹h› ‹f›⎬⎬ ⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬⎬⎬ ⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ . ⎨‹?› ‹CB›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹C›⎬⎬ ⎨‹path› ⎨‹?› ‹C›⎬ ⎨‹?› ‹B›⎬ ⎨‹?› ‹CB›⎬⎬⎬⎬)
-//+ (define sdb ⎨⎨⎨⎨‹path› ⎨‹?› ‹A›⎬ ⎨‹?› ‹B›⎬ ⎨⎨‹?› ‹A›⎬ . ⎨‹?› ‹CB›⎬⎬⎬ ⎨‹edge› ⎨‹?› ‹A›⎬ ⎨‹?› ‹C›⎬⎬ ⎨‹path› ⎨‹?› ‹C›⎬ ⎨‹?› ‹B›⎬ ⎨‹?› ‹CB›⎬⎬⎬⎬)
-//+ (define (prove3 g e n)  (cond ((null? g)          (print-frame e))        (else          (try g db e n))))
-//+ (define (var? x)  xs  (and (pair? x)       (eq? var (car x))))
-//+ (define (print-frame e)  (newline)  (let loop ((ee e))    (cond ((pair? (cdr ee))            (cond ((null? (time (caar ee)))                    (display (cadaar ee))                    (display " = ")                    (display (resolve (caar ee) e))                    (newline)))       (loop (cdr ee))))))

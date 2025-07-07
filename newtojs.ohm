@@ -35,7 +35,7 @@ tojs {
 
   ListConstant = 
     | "⎨" Constant "." Constant "⎬"  -- dotted
-    | "⎨" Constant Constant "⎬" -- multiple
+    | "⎨" Constant Constant+ "⎬" -- multiple
     | "⎨" Constant "⎬" -- single
     | "⎨" "⎬"  -- nil
 

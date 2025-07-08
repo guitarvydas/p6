@@ -43,13 +43,14 @@ tojs {
   NamedLetBindings = "(" "(" symbol Sexpr ")" ")"
 
   ListConstant = 
-    | "⎨" Constants "." Constant "⎬"  -- dotted
-    | "⎨" Constant Constants "⎬" -- multiple
-    | "⎨" Constant "⎬" -- single
+    | "⎨" HeadElement TailElement+ "." Sexpr "⎬"  -- dottedMultiple
+    | "⎨" HeadElement "." Sexpr "⎬"  -- dottedSingle
+    | "⎨" HeadElement TailElement+ "⎬" -- multiple
+    | "⎨" HeadElement "⎬" -- single
     | "⎨" "⎬"  -- nil
 
-  Constant = Sexpr
-  Constants = Constant Constants?
+  HeadElement = Sexpr
+  TailElement = Sexpr
 
   atom =
     | "(" ")" -- nil

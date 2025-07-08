@@ -40,11 +40,10 @@ return POP ();
   NamedLetBindings [lp lp2 v e rp2 rp] = ‛«v»~«e»’
 
   ListConstant_dotted [lb c1 _dot c2 rp] = ‛new Pair («c1», «c2»)’
-  ListConstant_multiple [lb c rec rb] = ‛new Pair («c», «rec»)’
-  ListConstant_single [lb c rb] = ‛new Pair («c», null)’
+  ListConstant_multiple [lb cs rb] = ‛«cs»’
+  ListConstant_single [lb e rb] = ‛new Pair («e», null)’
   ListConstant_nil [lb rb] = ‛null’
 
-  Constant [e] = ‛«e»’
   Constants [c rec?] = ‛new Pair («c», «rec»)’
 
   atom_nil [lp rp] = ‛SET (null)’
@@ -53,7 +52,6 @@ return POP ();
   atom_integerConstant [lb i rb] = ‛SET («i»)’
   atom_stringConstant [lb s rb] = ‛SET («s»)’
   atom_symbolConstant [lb symbol rb] = ‛SET ("«symbol»")’
-  atom_listConstant [k] = ‛SET («k»)’
   atom_variable [s] = ‛SET («s»)’
 
   integer [d+] = ‛«d»’

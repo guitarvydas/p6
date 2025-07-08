@@ -212,3 +212,4 @@
 
 (display '(? X))
 (display '(a b c))
+(display '(x . y))

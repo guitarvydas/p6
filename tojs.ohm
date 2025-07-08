@@ -43,15 +43,15 @@ tojs {
   NamedLetBindings = "(" "(" symbol Sexpr ")" ")"
 
   ListConstant = 
-    | "⎨" HeadElement TailElementRecursive "." Sexpr "⎬"  -- dottedMultiple
+    | "⎨" HeadElement TailElements "." Sexpr "⎬"  -- dottedMultiple
     | "⎨" HeadElement "." Sexpr "⎬"  -- dottedSingle
-    | "⎨" HeadElement TailElementRecursive "⎬" -- multiple
+    | "⎨" HeadElement TailElements "⎬" -- multiple
     | "⎨" HeadElement "⎬" -- single
     | "⎨" "⎬"  -- nil
 
   HeadElement = Sexpr
-  TailElementRecursive =
-    | Sexpr TailElementRecursive -- multiple
+  TailElements =
+    | Sexpr TailElements -- multiple
     | Sexpr -- single
 
   atom =

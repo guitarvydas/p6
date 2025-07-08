@@ -74,7 +74,7 @@ return POP ();
   unprintable [c] = ‛«c»’
   separator [c] = ‛«c»’
 
-  FunctionCall [lp sym args rp] = ‛«sym» («args»)’
+  FunctionCall [lp sym args? rp] = ‛«sym» («args»)’
   Args_multiple [e args] = ‛«e», «args»’
   Args_single [e] = ‛«e»’
 

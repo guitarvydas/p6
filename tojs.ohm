@@ -81,7 +81,7 @@ tojs {
   unprintable = ("\x00" .. "\x20") | "\x7F"
   separator = space | special | end
 
-  FunctionCall = "(" symbol Args ")"
+  FunctionCall = "(" symbol Args? ")"
   Args =
     | Sexpr Args -- multiple
     | Sexpr -- single

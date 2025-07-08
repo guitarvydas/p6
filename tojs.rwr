@@ -44,7 +44,7 @@ return POP ();
   ListConstant_single [lb c rb] = ‛new Pair («c», null)’
   ListConstant_nil [lb rb] = ‛null’
 
-  Constant [e] = ‛new Pair («e», null)’
+  Constant [e] = ‛«e»’
   Constants [c rec?] = ‛new Pair («c», «rec»)’
 
   atom_nil [lp rp] = ‛SET (null)’

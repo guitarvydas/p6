@@ -18,13 +18,20 @@ tojs {
     | "(" "let" "loop" NamedLetBindings Sexprs ")" -- letLoop
     | "(" "let" Bindings Sexprs ")" -- let
     | "(" "quote" Sexpr ")" -- quote
-    | "(" "+" Sexpr+ ")" -- plus
+    | "(" "+" PlusSexprs ")" -- plus
 
   Sexprs =
     | Sexpr Sexprs -- multiple
     | Sexpr -- single
-  AndSexprs = Sexprs
-  OrSexprs = Sexprs
+  PlusSexprs =
+    | Sexpr PlusSexprs -- multiple
+    | Sexpr -- single
+  AndSexprs =
+    | Sexpr AndSexprs -- multiple
+    | Sexpr -- single
+  OrSexprs =
+    | Sexpr OrSexprs -- multiple
+    | Sexpr -- single
   Formal = symbol
   Guard = Sexpr
   ThenExpr = Sexpr
@@ -33,7 +40,7 @@ tojs {
   ElseClause = "(" "else" Sexprs ")"
   Bindings = "(" Binding+ ")"
   Binding = "(" symbol Sexpr ")"
-  NamedLetBindings = Bindings
+  NamedLetBindings = "(" "(" symbol Sexpr ")" ")"
 
   ListConstant = 
     | "⎨" Constants "." Constant "⎬"  -- dotted
@@ -74,8 +81,10 @@ tojs {
   unprintable = ("\x00" .. "\x20") | "\x7F"
   separator = space | special | end
 
-  FunctionCall = "(" symbol Arg* ")"
-  Arg = Sexpr
+  FunctionCall = "(" symbol Args ")"
+  Args =
+    | Sexpr Args -- multiple
+    | Sexpr -- single
 
   comment = ";" (~"\n" any)* "\n"
   space += comment

@@ -3,28 +3,32 @@
   Sexpr[e] = ‛«e»’
 
   Special_functionDefinition [lp _define lp2 name formals* rp2 Body rp] = ‛
-function «name» («formals») {\nlet RESULT = undefined;\n«Body»
-return RESULT;
+function «name» («formals») {\nPUSH ();\n«Body»
+return POP ();
 }’
 
   Special_functionEquivalence [lp _define name name2 rp] = ‛\nlet «name» = «name2»;’
-  Special_global [lp _define name BodyItem rp] = ‛\nlet «name» = listify («BodyItem»);’
-  Special_cond [lp _cond CondClause+ ElseClause? rp] = ‛if (false) {\n}«CondClause»«ElseClause»’
-  Special_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»}’
-  Special_ifThen [lp _if Guard ThenExpr rp] = ‛if («Guard») {\n«ThenExpr»\n}’
-  Special_and [lp _and AndBody rp] = ‛RESULT = «AndBody»’
-  Special_or [lp _or OrBody rp] = ‛RESULT = «OrBody»’
-  Special_letAsterisk [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
+  Special_global [lp _define name BodyItem rp] = ‛\nlet «name» = «BodyItem»;’
+  Special_cond [lp _cond CondClause+ ElseClause? rp] = ‛PUSH ();\nif (false) {\n}«CondClause»«ElseClause»\nMERGE ();’
+  Special_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛PUSH ();\nif («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»\n}\nMERGE ()’
+  Special_ifThen [lp _if Guard ThenExpr rp] = ‛PUSH ();\nif («Guard») {\n«ThenExpr»\n}\nMERGE ();’
+  Special_and [lp _and AndBody rp] = ‛SET («AndBody»)’
+  Special_or [lp _or OrBody rp] = ‛SET («OrBody»)’
+  Special_letAsterisk [lp _let Bindings Body rp] = ‛PUSH ();\n«Bindings»«Body»\nMERGE ();’
   Special_letLoop [lp _let symbol NamedLetParameter Body rp] = 
-    ‛function loop (⎨firstPart ‛«NamedLetParameter»’⎬) {\nlet RESULT = undefined;«Body»\nreturn RESULT;\n}\nRESULT = loop (⎨secondPart ‛«NamedLetParameter»’⎬)’
-  Special_let [lp _let Bindings Body rp] = ‛«Bindings»«Body»’
-  Special_quote [lp _quote e rp] = ‛"«e»"’
-  Special_plus [lp _plus es+ rp] = ‛«es»’
+    ‛function loop (⎨firstPart ‛«NamedLetParameter»’⎬) {PUSH ();\n«Body»\nMERGE ();}\nSET (loop (⎨secondPart ‛«NamedLetParameter»’⎬))’
+  Special_let [lp _let Bindings Body rp] = ‛PUSH ();«Bindings»«Body»\nMERGE ();’
+  Special_quote [lp _quote e rp] = ‛SET ("«e»")’
+  Special_plus [lp _plus es rp] = ‛SET («es»)’
 
-  Sexprs_multiple [e es] = ‛(RESULT = «e»);\n«es»’
-  Sexprs_single [e] = ‛(RESULT = «e»);’
-  AndSexprs [es] = ‛«es»’
-  OrSexprs [es] = ‛«es»’
+  Sexprs_multiple [e es] = ‛«e»;\n«es»’
+  Sexprs_single [e] = ‛«e»;’
+  PlusSexprs_multiple [e es] = ‛«e» + «es»’
+  PlusSexprs_single [e] = ‛«e»’
+  AndSexprs_multiple [e es] = ‛«e» && «es»’
+  AndSexprs_single [e] = ‛«e»’
+  OrSexprs_multiple [e es] = ‛«e» || «es»’
+  OrSexprs_single [e] = ‛«e»’
   Formal [sym] = ‛«sym»’
   Guard [e] = ‛«e»’
   ThenExpr [e] = ‛«e»’
@@ -33,24 +37,24 @@ return RESULT;
   ElseClause [lp _else es rp] = ‛\nelse {\n«es»\n}’
   Bindings [lp Binding+ rp] = ‛«Binding»’
   Binding [lp symbol BodyItem rp] = ‛\nlet «symbol» = «BodyItem»;’
-  NamedLetBindings [bs] = ‛«bs»’
+  NamedLetBindings [lp lp2 v e rp2 rp] = ‛«v»~«e»’
 
   ListConstant_dotted [lb c1 _dot c2 rp] = ‛new Pair («c1», «c2»)’
   ListConstant_multiple [lb c rec rb] = ‛new Pair («c», «rec»)’
   ListConstant_single [lb c rb] = ‛new Pair («c», null)’
   ListConstant_nil [lb rb] = ‛null’
 
-  Constant [e] = ‛«e»’
-  Constants [c rec?] = ‛«c»«rec»’
+  Constant [e] = ‛new Pair («e», null)’
+  Constants [c rec?] = ‛new Pair («c», «rec»)’
 
-  atom_nil [lp rp] = ‛null’
-  atom_false [_f] = ‛false’
-  atom_true [_t] = ‛true’
-  atom_integerConstant [lb i rb] = ‛«i»’
-  atom_stringConstant [lb s rb] = ‛«s»’
-  atom_symbolConstant [lb symbol rb] = ‛"«symbol»"’
-  atom_listConstant [k] = ‛«k»’
-  atom_variable [s] = ‛«s»’
+  atom_nil [lp rp] = ‛SET (null)’
+  atom_false [_f] = ‛SET (false)’
+  atom_true [_t] = ‛SET (true)’
+  atom_integerConstant [lb i rb] = ‛SET («i»)’
+  atom_stringConstant [lb s rb] = ‛SET («s»)’
+  atom_symbolConstant [lb symbol rb] = ‛SET ("«symbol»")’
+  atom_listConstant [k] = ‛SET («k»)’
+  atom_variable [s] = ‛SET («s»)’
 
   integer [d+] = ‛«d»’
   string [lq cs* rq] = ‛«lq»«cs»«rq»’
@@ -70,8 +74,9 @@ return RESULT;
   unprintable [c] = ‛«c»’
   separator [c] = ‛«c»’
 
-  FunctionCall [lp sym arg* rp] = ‛«sym» («arg»)’
-  Arg [e] = ‛«e», ’
+  FunctionCall [lp sym args rp] = ‛«sym» («args»)’
+  Args_multiple [e args] = ‛«e», «args»’
+  Args_single [e] = ‛«e»’
 
   comment [_semi cs* nl] = ‛«_semi»«cs»«nl»’
   space [s] = ‛«s»’

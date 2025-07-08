@@ -1,10 +1,2 @@
-(define (print-frame e)
-  (newline)
-  (let loop ((ee e))
-    (cond ((pair? (cdr ee))
-            (cond ((null? (time (caar ee)))
-                    (display (cadaar ee))
-                    (display " = ")
-                    (display (resolve (caar ee) e))
-                    (newline)))
-            (loop (cdr ee))))))
+
+(define db0  '((edge a b)))

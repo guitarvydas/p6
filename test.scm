@@ -211,3 +211,4 @@
 ;; (display (unify 'a '(? X) empty))
 
 (display '(? X))
+(display '(a b c))

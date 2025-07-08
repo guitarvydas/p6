@@ -58,7 +58,6 @@ tojs {
     | "‹" integer "›" -- integerConstant
     | "‹" string "›" -- stringConstant
     | "‹" symbol "›" -- symbolConstant
-    | applySyntactic<ListConstant> -- listConstant
     | symbol -- variable
 
   integer = digit+

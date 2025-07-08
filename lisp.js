@@ -186,3 +186,9 @@ function display (x) {
 	process.stdout.write (x.toString ());
     }
 }
+
+let RESULT_STACK = [];
+function PUSH () { RESULT_STACK.push (undefined); }
+function POP () { return RESULT_STACK.pop (); }
+function SET (x) { RESULT_STACK.pop (); RESULT_STACK.push (x); return x;}
+function MERGE () { let v = RESULT_STACK.pop (); SET (v); return v; }

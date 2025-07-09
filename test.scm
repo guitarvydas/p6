@@ -211,5 +211,8 @@
 ;; (display (unify 'a '(? X) empty))
 
 (display '(? X))
+(newline)
 (display '(a b c))
+(newline)
 (display '(x . y))
+(newline)

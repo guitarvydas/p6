@@ -33,17 +33,27 @@ class Pair {
     toString() {
         const elements = [];
         let current = this;
+	let dotted = false;
+	let dottedtail = null; // for handling dotted pair
         
-        while (current !== null) {
+        while (!dotted && current !== null) {
             if (current.first instanceof Pair) {
                 elements.push(current.first.toString());
             } else {
                 elements.push(current.first);
             }
             current = current.rest;
+	    if (current && (! (current instanceof Pair))) {
+		dotted = true;
+		dottedtail = current.toString ();
+	    }
         }
         
-        return `(${elements.join(' ')})`;
+	if (dotted) {
+            return `(${elements.join(' ')} . ${dottedtail})`;
+	} else {
+            return `(${elements.join(' ')})`;
+	}
     }
 }
 

@@ -33,7 +33,7 @@ return POP ();
   AndSexprs_single [e] = ‛«e»’
   OrSexprs_multiple [e es] = ‛«e» || «es»’
   OrSexprs_single [e] = ‛«e»’
-  Formal [sym] = ‛«sym»’
+  Formal [sym] = ‛«sym», ’
   Guard [e] = ‛«e»’
   ThenExpr [e] = ‛«e»’
   ElseExpr [e] = ‛«e»’
@@ -79,7 +79,7 @@ return POP ();
   unprintable [c] = ‛«c»’
   separator [c] = ‛«c»’
 
-  FunctionCall [lp sym args? rp] = ‛«sym» («args»)’
+  FunctionCall [lp sym args? rp] = ‛SET («sym» («args»))’
   Args_multiple [e args] = ‛«e», «args»’
   Args_single [e] = ‛«e»’
 

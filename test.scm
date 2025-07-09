@@ -1,7 +1,6 @@
 
 
 (define (try db g r e n)
-  (display g)
   (if (null? r)
       #f
       (let* ((a  (copy (car r) (list n)))
@@ -11,7 +10,6 @@
         (try db g (cdr r) e n))))
 
 (define (prove3 db g e n)
-  (display g)
   (cond ((null? g)
           (print-frame e))
         (else
@@ -203,16 +201,24 @@
 
 
 
-(define goals0 '((path a b (? P))))
-
-;; (display (unify 'a 'a empty))
-;; (newline)
-;; (display 'testA) (newline)
-;; (display (unify 'a '(? X) empty))
-
 (display '(? X))
 (newline)
 (display '(a b c))
 (newline)
 (display '(x . y))
 (newline)
+
+(define goals0 '((path a b (? P))))
+;; (display (unify 'a 'a empty))
+;; (newline)
+;; (display 'testA) (newline)
+;; (display (unify 'a '(? X) empty))
+(display goals0)
+(newline)
+(newline)
+(display "prove3")
+(newline)
+(prove3 db0 goals0 empty 1)
+(newline)
+
+

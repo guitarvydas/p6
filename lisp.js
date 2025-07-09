@@ -151,6 +151,9 @@ function filterList(predicate, list) {
 function caar (list) {
     return car (car (list));
 }
+function cadaar (list) {
+    return car (cdr (car (car (list))));
+}
 function cadr (list) {
     return car (cdr (list));
 }
@@ -197,7 +200,7 @@ function display (x) {
     }
 }
 
-let RESULT_STACK = [];
+let RESULT_STACK = [null];
 function PUSH () { RESULT_STACK.push (undefined); }
 function POP () { return RESULT_STACK.pop (); }
 function SET (x) { RESULT_STACK.pop (); RESULT_STACK.push (x); return x;}

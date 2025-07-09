@@ -1,5 +1,9 @@
 % rewrite tojs {
   Program [es+] = ‛«es»’
+  TopLevelSexpr_special [e] = ‛«e»’
+  TopLevelSexpr_listConstant [e] = ‛«e»’
+  TopLevelSexpr_atom [e] = ‛«e»’
+  TopLevelSexpr_call [e] = ‛\n«e»’
   Sexpr[e] = ‛«e»’
 
   Special_functionDefinition [lp _define lp2 name formals* rp2 Body rp] = ‛
@@ -39,12 +43,15 @@ return POP ();
   Binding [lp symbol BodyItem rp] = ‛\nlet «symbol» = «BodyItem»;’
   NamedLetBindings [lp lp2 v e rp2 rp] = ‛«v»~«e»’
 
-  ListConstant_dotted [lb c1 _dot c2 rp] = ‛new Pair («c1», «c2»)’
-  ListConstant_multiple [lb cs rb] = ‛«cs»’
+  ListConstant_dottedMultiple [lb h ts _dot e rp] = ‛new Pair (new Pair («h», «ts»), «e»)’
+  ListConstant_dottedSingle [lb h _dot e rp] = ‛new Pair («h», «e»)’
+  ListConstant_multiple [lb h ts rb] = ‛new Pair («h», «ts»)’
   ListConstant_single [lb e rb] = ‛new Pair («e», null)’
   ListConstant_nil [lb rb] = ‛null’
 
-  Constants [c rec?] = ‛new Pair («c», «rec»)’
+  HeadElement [e] = ‛«e»’
+  TailElements_multiple [e ts] = ‛new Pair («e», «ts»)’
+  TailElements_single [e] = ‛new Pair («e», null)’
 
   atom_nil [lp rp] = ‛SET (null)’
   atom_false [_f] = ‛SET (false)’

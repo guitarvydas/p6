@@ -1,5 +1,10 @@
 tojs {
-  Program = Sexpr+
+  Program = TopLevelSexpr+
+  TopLevelSexpr =
+    | Special -- special
+    | ListConstant -- listConstant
+    | atom -- atom
+    | FunctionCall -- call
   Sexpr =
     | Special -- special
     | ListConstant -- listConstant

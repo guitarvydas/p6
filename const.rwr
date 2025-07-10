@@ -4,14 +4,14 @@
   Sexpr [x] = ‛«x»’
   QuotedSexpr [x] = ‛«x»’
 
-  Atom_false [x] = ‛‹false›’
-  Atom_true [x] = ‛‹true›’
+  Atom_false [x] = ‛‹#f›’
+  Atom_true [x] = ‛‹#t›’
   Atom_integer [x] = ‛‹«x»›’
   Atom_string [x] = ‛‹«x»›’
   Atom_symbol [x] = ‛«x»’
 
-  QuotedAtom_false [x] = ‛‹false›’
-  QuotedAtom_true [x] = ‛‹true›’
+  QuotedAtom_false [x] = ‛‹#f›’
+  QuotedAtom_true [x] = ‛‹#t›’
   QuotedAtom_integer [x] = ‛‹«x»›’
   QuotedAtom_string [x] = ‛‹«x»›’
   QuotedAtom_symbol [x] = ‛‹«x»›’

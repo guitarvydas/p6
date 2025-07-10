@@ -13,15 +13,15 @@ return POP ();
 
   Special_functionEquivalence [lp _define name name2 rp] = ‛\nlet «name» = «name2»;’
   Special_global [lp _define name BodyItem rp] = ‛\nlet «name» = «BodyItem»;’
-  Special_cond [lp _cond CondClause+ ElseClause? rp] = ‛PUSH ();\nif (false) {\n}«CondClause»«ElseClause»\nMERGE ();’
-  Special_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛PUSH ();\nif («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»\n}\nMERGE ()’
+  Special_cond [lp _cond CondClause+ ElseClause? rp] = ‛\nPUSH ();\nif (false) {\n}«CondClause»«ElseClause»\nMERGE ();’
+  Special_ifThenElse [lp _if Guard ThenExpr ElseExpr rp] = ‛\nPUSH ();\nif («Guard») {\n«ThenExpr»\n}\nelse {\n«ElseExpr»\n}\nMERGE ()’
   Special_ifThen [lp _if Guard ThenExpr rp] = ‛PUSH ();\nif («Guard») {\n«ThenExpr»\n}\nMERGE ();’
   Special_and [lp _and AndBody rp] = ‛SET («AndBody»)’
   Special_or [lp _or OrBody rp] = ‛SET («OrBody»)’
-  Special_letAsterisk [lp _let Bindings Body rp] = ‛PUSH ();\n«Bindings»«Body»\nMERGE ();’
+  Special_letAsterisk [lp _let Bindings Body rp] = ‛\nPUSH ();\n«Bindings»«Body»\nMERGE ();’
   Special_letLoop [lp _let symbol NamedLetParameter Body rp] = 
-    ‛function loop (⎨firstPart ‛«NamedLetParameter»’⎬) {PUSH ();\n«Body»\nMERGE ();}\nSET (loop (⎨secondPart ‛«NamedLetParameter»’⎬))’
-  Special_let [lp _let Bindings Body rp] = ‛PUSH ();«Bindings»«Body»\nMERGE ();’
+    ‛\nfunction loop (⎨firstPart ‛«NamedLetParameter»’⎬) {\nPUSH ();\n«Body»\nMERGE ();}\nSET (loop (⎨secondPart ‛«NamedLetParameter»’⎬))’
+  Special_let [lp _let Bindings Body rp] = ‛\nPUSH ();«Bindings»«Body»\nMERGE ();’
   Special_quote [lp _quote e rp] = ‛SET ("«e»")’
   Special_plus [lp _plus es rp] = ‛SET («es»)’
 

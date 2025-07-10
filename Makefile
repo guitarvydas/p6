@@ -5,6 +5,9 @@ dev:
 	mit-scheme --silent --load "test.scm" --eval "(exit)"
 	./dev.bash
 
+devscm:
+	mit-scheme --silent --load "test.scm" --eval "(exit)"
+
 identity:
 	./identity.bash
 

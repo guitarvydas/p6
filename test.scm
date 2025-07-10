@@ -10,7 +10,12 @@
         (try db g (cdr r) e n))))
 
 (define (prove3 db g e n)
+  (display "** enter prove3")
+  (display g)
+  (newline)
   (cond ((null? g)
+	 (display "** prove3 calling print-frame")
+	 (display e)
           (print-frame e))
         (else
           (try db g db e n))))
@@ -216,7 +221,7 @@
 (display goals0)
 (newline)
 (newline)
-(display "prove3")
+(display "*** prove3 ***")
 (newline)
 (prove3 db0 goals0 empty 1)
 (newline)

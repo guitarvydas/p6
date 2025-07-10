@@ -196,7 +196,8 @@ function display (x) {
     if (x == null) {
 	process.stdout.write ("null");
     } else {
-	process.stdout.write (x.toString ());
+	let s = x.toString ().replace(/_Q/g, '?');
+	process.stdout.write (s);
     }
 }
 

@@ -1,22 +1,42 @@
 
 
 (define (try db g r e n)
+  (display " *** enter try")
+  (newline)
+  (display g)
+  (newline)
+  (display r)
+  (newline)
   (if (null? r)
       #f
       (let* ((a  (copy (car r) (list n)))
              (ne (unify (car g) (car a) e)))
         (if ne
-            (prove3 db (append (cdr a) (cdr g)) ne (+ 1 n)))
+	    (let ((appnd (append (cdr a) (cdr g))))
+	      (display "-- a")
+	      (newline)
+	      (display a)
+	      (newline)
+	      (display "-- ne")
+	      (newline)
+	      (display ne)
+	      (newline)
+              (prove3 db appnd ne (+ 1 n))))
         (try db g (cdr r) e n))))
 
 (define (prove3 db g e n)
   (display "** enter prove3")
+  (newline)
   (display g)
+  (newline)
+  (display e)
   (newline)
   (cond ((null? g)
 	 (display "** prove3 calling print-frame")
+	 (newline)
 	 (display e)
-          (print-frame e))
+	 (newline)
+         (print-frame e))
         (else
           (try db g db e n))))
 
@@ -157,13 +177,16 @@
 (define (unify xx yy e)
   (let ((x (value xx e))
         (y (value yy e)))
+    (display "unify x") (display x) (newline)
+    (display "unify y") (display x) (newline)
     (cond
-      ((eq? x y) e)
-      ((var? x) (bind x y e))
-      ((var? y) (bind y x e))
+      ((eq? x y) (display "unify 1") (newline) e)
+      ((var? x) (display "unify 2") (newline) (bind x y e))
+      ((var? y) (display "unify 3") (newline) (bind y x e))
       ((or (not (pair? x))
-           (not (pair? y))) #f)
+           (not (pair? y))) (display "unify 4") (newline) #f)
       (else
+       (display "unify 5") (newline)
         (let ((e* (unify (car x) (car y) e)))
           (and e* (unify (cdr x) (cdr y) e*)))))))
 
@@ -181,7 +204,6 @@
             (resolve (cdr x) e)))))
 
 (define (print-frame e)
-  (newline)
   (let loop ((ee e))
     (cond ((pair? (cdr ee))
             (cond ((null? (time (caar ee)))

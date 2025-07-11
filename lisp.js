@@ -181,13 +181,6 @@ function pair_Q (list) {
     return isPair (list);
 }
 
-function eq_Q (x, y) {
-    return x === y;
-}
-function eqv_Q (x, y) {
-    return Object.is (x, y);
-}
-
 function newline () {
     console.log ("");
 }
@@ -206,3 +199,28 @@ function PUSH () { RESULT_STACK.push (undefined); }
 function POP () { return RESULT_STACK.pop (); }
 function SET (x) { RESULT_STACK.pop (); RESULT_STACK.push (x); return x;}
 function MERGE () { let v = RESULT_STACK.pop (); SET (v); return v; }
+
+// JavaScript implementation of Scheme eq? and eqv?
+
+// eq? - Object identity comparison (same memory location)
+function eq_Q(a, b) {
+    // In Scheme, eq? tests if two objects are the same object in memory
+    // JavaScript === is the closest equivalent
+    return a === b;
+}
+
+// eqv? - Like eq? but also handles numbers and characters by value
+function eqv_Q(a, b) {
+    // Handle NaN case - in Scheme, (eqv? +nan.0 +nan.0) is #t
+    if (Number.isNaN(a) && Number.isNaN(b)) {
+        return true;
+    }
+    
+    // Handle signed zeros - in Scheme, (eqv? +0.0 -0.0) is #f
+    if (a === 0 && b === 0) {
+        return Object.is(a, b);  // Distinguishes +0 from -0
+    }
+    
+    // For everything else, use strict equality (like eq?)
+    return a === b;
+}

@@ -297,3 +297,6 @@
 
 (define goals1 '((path a f (? P))))
 (prove3 db1 goals1 empty 1)
+
+; 6-slide PROVE
+(prove5 db1 '() goals1 db1 empty 1)

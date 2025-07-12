@@ -82,30 +82,53 @@
 
 
 (define (prove6 db l g r e n c)
+  (display "prove6 ") (display '!) (display " g=") (display g) (newline)
   (cond
-    ((null? g)
+   ((null? g)
+    (display "prove6 A") (newline)
       (print-frame e)
       (back6 db l g r e n c))
     ((eq? '! (car g))
+     (display "prove6 B") (newline)
       (clear_r c)
       (prove6 db c (cdr g) r e n c))
     ((eq? 'r! (car g))
+     (display "prove6 C") (newline)
       (prove6 db l (cddr g) r e n (cadr g)))
     ((null? r)
+     (display "prove6 D") (newline)
       (if (null? l)
           #t
           (back6 db l g r e n c)))
     (else
+     (display "prove6 E") (newline)
       (let* ((a  (copy (car r) n))
              (e* (unify (car a) (car g) e)))
+	(display "prove6 ... ") (display e*) (newline)
         (if e*
-            (prove6 db
-		    (link l g r e n c)
-                    (append (cdr a) `(r! ,l) (cdr g))
-                    db
-                    e*
-                    (+ 1 n)
-                    l)
+	    (let ()
+	      (display " arg2=") 
+	      (display (link l g r e n c))
+	      (newline)
+	      (display " (cdr g)=") 
+	      (display (cdr g))
+	      (newline)
+	      (display " `(r! ,l)=") 
+	      (display `(r! ,l)) 
+	      (newline)
+	      (display " 1st append=") 
+	      (append `(r! ,l) (cdr g))
+	      (newline)
+	      (display " 2nd append=")
+	      (display (append (cdr a) (append `(r! ,l) (cdr g))))
+	      (newline)
+              (prove6 db
+		      (link l g r e n c)
+                      (append (cdr a) (append `(r! ,l) (cdr g)))
+                      db
+                      e*
+                      (+ 1 n)
+                      l))
             (back6 db l g r e n c))))))
 
 
@@ -196,6 +219,7 @@
             (resolve (cdr x) e)))))
 
 (define (print-frame e)
+  (display "print-frame ") (display e) (newline)
   (let loop ((ee e))
     (cond ((pair? (cdr ee))
             (cond ((null? (time (caar ee)))

@@ -1,0 +1,26 @@
+./dev.bash
+Created: p6.drawio.json
+Created file: out.ir
+Created file: out.js
+prove6 _B g=((some (? X)) (some (? Y)) (neq (? X) (? Y)))
+prove6 E
+prove6 ... (((? X) foo) (bottom))
+/Users/paultarvydas/GitRepos/p6/prolog.js:415
+SET (let (SET (null), SET (display (SET (" arg2="))), SET (display (SET (link (SET (l), SET (g), SET (r), SET (e), SET (n), SET (c))))), SET (newline ()), SET (display (SET (" (cdr g)="))), SET (display (SET (cdr (SET (g))))), SET (newline ()), SET (display (SET (" `(r! ,l)="))), SET (display (SET (list (SET ("r_B"), SET ("l"))))), SET (newline ()), SET (display (SET (" 1st append="))), SET (append (SET (list (SET ("r_B"), SET ("l"))), SET (cdr (SET (g))))), SET (newline ()), SET (display (SET (" 2nd append="))), SET (display (SET (append (SET (cdr (SET (a))), SET (append (SET (list (SET ("r_B"), SET ("l"))), SET (cdr (SET (g))))))))), SET (newline ()), SET (prove6 (SET (db), SET (link (SET (l), SET (g), SET (r), SET (e), SET (n), SET (c))), SET (append (SET (cdr (SET (a))), SET (append (SET (list (SET ("r_B"), SET ("l"))), SET (cdr (SET (g))))))), SET (db), SET (e_A), SET (SET (1) + SET (n)), SET (l)))))
+^
+
+ReferenceError: let is not defined
+    at prove6 (/Users/paultarvydas/GitRepos/p6/prolog.js:415:1)
+    at Object.<anonymous> (/Users/paultarvydas/GitRepos/p6/prolog.js:606:6)
+    at Module._compile (node:internal/modules/cjs/loader:1734:14)
+    at Object..js (node:internal/modules/cjs/loader:1899:10)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Module._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:152:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.2.0
+make: *** [dev] Error 1
+$ 

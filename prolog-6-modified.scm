@@ -99,7 +99,7 @@
         (if e*
             (prove6 db
 		    (link l g r e n c)
-                    (append (cdr a) `(r! ,l) (cdr g))
+                    (append (cdr a) (append `(r! ,l) (cdr g))) ;; mod
                     db
                     e*
                     (+ 1 n)

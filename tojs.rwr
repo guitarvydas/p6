@@ -45,7 +45,7 @@ return POP ();
   ElseExpr [e] = ‛«e»’
   CondClause [lp e es rp] = ‛\nelse if («e») {\n«es»\n}’
   ElseClause [lp _else es rp] = ‛\nelse {\n«es»\n}’
-  Bindings [lp Binding+ rp] = ‛«Binding»’
+  Bindings [lp Binding* rp] = ‛«Binding»’
   Binding [lp symbol BodyItem rp] = ‛\nlet «symbol» = «BodyItem»;’
   NamedLetBindings [lp lp2 v e rp2 rp] = ‛«v»~«e»’
 

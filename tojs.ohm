@@ -43,7 +43,7 @@ tojs {
   ElseExpr = Sexpr
   CondClause = "(" ~"else" Sexpr Sexprs ")"
   ElseClause = "(" "else" Sexprs ")"
-  Bindings = "(" Binding+ ")"
+  Bindings = "(" Binding* ")"
   Binding = "(" symbol Sexpr ")"
   NamedLetBindings = "(" "(" symbol Sexpr ")" ")"
 

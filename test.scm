@@ -272,3 +272,28 @@
 ;; (newline)
 (prove3 db0 goals0 empty 1)
 (newline)
+
+;; Graph example from section 1
+
+(define db1
+  '(((edge a b))
+    ((edge a f))
+    ((edge a g))
+    ((edge b c))
+    ((edge b d))
+    ((edge c d))
+    ((edge c e))
+    ((edge g h))
+    ((edge d h))
+    ((edge h e))
+    ((edge h f))
+
+    ((path (? A) (? B) ((? A) (? B)))
+     (edge (? A) (? B)))
+
+    ((path (? A) (? B) ((? A) . (? CB)))
+     (edge (? A) (? C))
+     (path (? C) (? B) (? CB)))))
+
+(define goals1 '((path a f (? P))))
+(prove3 db1 goals1 empty 1)

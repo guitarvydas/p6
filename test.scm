@@ -1,41 +1,17 @@
 
 
 (define (try db g r e n)
-  (display " *** enter try")
-  (newline)
-  (display g)
-  (newline)
-  (display r)
-  (newline)
   (if (null? r)
       #f
       (let* ((a  (copy (car r) (list n)))
              (ne (unify (car g) (car a) e)))
         (if ne
 	    (let ((appnd (append (cdr a) (cdr g))))
-	      (display "-- a")
-	      (newline)
-	      (display a)
-	      (newline)
-	      (display "-- ne")
-	      (newline)
-	      (display ne)
-	      (newline)
               (prove3 db appnd ne (+ 1 n))))
         (try db g (cdr r) e n))))
 
 (define (prove3 db g e n)
-  (display "** enter prove3")
-  (newline)
-  (display g)
-  (newline)
-  (display e)
-  (newline)
   (cond ((null? g)
-	 (display "** prove3 calling print-frame")
-	 (newline)
-	 (display e)
-	 (newline)
          (print-frame e))
         (else
           (try db g db e n))))
@@ -144,6 +120,7 @@
        (eq? var (car x))))
 
 (define (lookup v e)
+					;(display "lookup v=") (display v) (display " e=") (display e) (newline)
   (let ((id (name v))
         (t  (time v)))
     (let loop ((e e))
@@ -155,7 +132,24 @@
             (else
               (loop (cdr e)))))))
 
+;; ;; manually rewritten named let
+;; (define (lookup_loop e id tm)
+;;     (cond ((not (pair? (caar e)))
+;; 	   #f)
+;; 	  ((and (eq? id (name (caar e)))
+;; 		(eqv? tm (time (caar e))))
+;; 	   (car e))
+;; 	  (else
+;; 	   (lookup_loop (cdr e) id tm))))
+
+;; (define (lookup v e)
+;;     (let ((id (name v))
+;;           (tm  (time v)))
+;;       (lookup_loop e id tm)))
+;; ;;; end rewrite
+
 (define (value x e)
+					;(display "value x=") (display x) (display " e=") (display e) (newline)
   (if (var? x)
       (let ((v (lookup x e)))
         (if v
@@ -175,18 +169,16 @@
   (cons (list x y) e))
 
 (define (unify xx yy e)
+  ;(display "unify (xx yy e)") (display xx) (display " ") (display yy) (display " ") (display e) (newline)
   (let ((x (value xx e))
         (y (value yy e)))
-    (display "unify x") (display x) (newline)
-    (display "unify y") (display x) (newline)
     (cond
-      ((eq? x y) (display "unify 1") (newline) e)
-      ((var? x) (display "unify 2") (newline) (bind x y e))
-      ((var? y) (display "unify 3") (newline) (bind y x e))
+      ((eq? x y) e)
+      ((var? x) (bind x y e))
+      ((var? y) (bind y x e))
       ((or (not (pair? x))
-           (not (pair? y))) (display "unify 4") (newline) #f)
+           (not (pair? y))) #f)
       (else
-       (display "unify 5") (newline)
         (let ((e* (unify (car x) (car y) e)))
           (and e* (unify (cdr x) (cdr y) e*)))))))
 
@@ -213,6 +205,43 @@
                     (newline)))
             (loop (cdr ee))))))
 
+;; ;; manually rewritten named lambda 
+;; (define (has_bindings_Q_ ee)
+;;   (pair? (cdr ee)))
+
+;; (define (get_var_name_from_binding ee)
+;;   (cadaar ee))
+
+;; (define (get_binding_value_from_binding ee e)
+;;   (resolve (caar ee) e))
+
+;; (define (no_timestamp_binding_Q_ ee)
+;;   (null? (time (caar ee))))
+
+;; (define (get_rest_of_bindings ee)
+;;   (cdr ee))
+
+;; (define (print_frame_helper ee all_bindings accumulator)
+;;   (cond ((has_bindings_Q_ ee)
+;; 	 (let ((var_name (get_var_name_from_binding ee))
+;; 	       (binding_value (get_binding_value_from_binding ee all_bindings))
+;; 	       (remaining_bindings (get_rest_of_bindings ee)))
+;;            (cond ((no_timestamp_binding_Q_ ee)
+;; 		  (print_frame_helper remaining_bindings 
+;; 				      all_bindings 
+;; 				      (cons 
+;; 				       (cons var_name binding_value)
+;; 				       accumulator)))
+;; 		 (else 
+;; 		  (print_frame_helper remaining_bindings 
+;; 				      all_bindings 
+;; 				      accumulator)))))
+;;         (else accumulator)))
+
+;; (define (print-frame e)
+;;   (let ((final_result (print_frame_helper e e '())))
+;;     final_result))
+
 
 
 ;; Graph example from section 1
@@ -228,24 +257,18 @@
 
 
 
-(display '(? X))
-(newline)
-(display '(a b c))
-(newline)
-(display '(x . y))
-(newline)
 
-(define goals0 '((path a b (? P))))
-;; (display (unify 'a 'a empty))
+
+
+;; (display (value '(? a 1) '(((? p) ((? a 1) (? b 1))) ((? b 1) b) ((? a 1) a) (bottom))))
 ;; (newline)
-;; (display 'testA) (newline)
-;; (display (unify 'a '(? X) empty))
-(display goals0)
-(newline)
-(newline)
-(display "*** prove3 ***")
-(newline)
+;; (display (value 'a '(((? p) ((? a 1) (? b 1))) ((? b 1) b) ((? a 1) a) (bottom))))
+;; (newline)
+(define goals0 '((path a b (? P))))
+;; (display goals0)
+;; (newline)
+;; (newline)
+;; (display "*** prove3 ***")
+;; (newline)
 (prove3 db0 goals0 empty 1)
 (newline)
-
-

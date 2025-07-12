@@ -19,8 +19,14 @@ return POP ();
   Special_and [lp _and AndBody rp] = ‛SET («AndBody»)’
   Special_or [lp _or OrBody rp] = ‛SET («OrBody»)’
   Special_letAsterisk [lp _let Bindings Body rp] = ‛\nPUSH ();\n«Bindings»«Body»\nMERGE ();’
-  Special_letLoop [lp _let symbol NamedLetParameter Body rp] = 
-    ‛\nfunction loop (⎨firstPart ‛«NamedLetParameter»’⎬) {\nPUSH ();\n«Body»\nMERGE ();}\nSET (loop (⎨secondPart ‛«NamedLetParameter»’⎬))’
+  Special_letLoop [lp _let symbol NamedLetParameter Body rp] = ‛
+    function loop (⎨firstPart ‛«NamedLetParameter»’⎬) {
+      PUSH ();
+      «Body»
+      MERGE ();
+      return POP ();
+    }
+    SET (loop (⎨secondPart ‛«NamedLetParameter»’⎬))’
   Special_let [lp _let Bindings Body rp] = ‛\nPUSH ();«Bindings»«Body»\nMERGE ();’
   Special_quote [lp _quote e rp] = ‛SET ("«e»")’
   Special_plus [lp _plus es rp] = ‛SET («es»)’

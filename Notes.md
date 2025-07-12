@@ -4,3 +4,5 @@
 [x] must SET result of fn call
 [x] prove3 going into infinite loop
 [ ] prove3 wrong answer
+	- truthiness issue with ne in try?
+	- named let unwinding? << trying

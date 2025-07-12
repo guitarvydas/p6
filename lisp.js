@@ -182,16 +182,21 @@ function pair_Q (list) {
 }
 
 function newline () {
-    console.log ("");
+//    process.stdout.write ("\n");
+    console.log ();
+    return "\n";
 }
 
 function display (x) {
     if (x == null) {
 	process.stdout.write ("null");
+//	console.log ("null");
     } else {
 	let s = x.toString ().replace(/_Q/g, '?');
 	process.stdout.write (s);
+//	console.log (s);
     }
+    return x;
 }
 
 let RESULT_STACK = [null];

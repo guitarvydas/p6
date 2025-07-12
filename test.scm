@@ -244,59 +244,81 @@
 
 
 
-;; Graph example from section 1
+;; ;; Graph example from section 1
 
-(define db0
-  '(((edge a b))
+;; (define db0
+;;   '(((edge a b))
 
-    ((path (? A) (? B) ((? A) (? B)))
-     (edge (? A) (? B)))
-))
-
-
+;;     ((path (? A) (? B) ((? A) (? B)))
+;;      (edge (? A) (? B)))
+;; ))
 
 
 
 
 
 
-;; (display (value '(? a 1) '(((? p) ((? a 1) (? b 1))) ((? b 1) b) ((? a 1) a) (bottom))))
+
+
+;; ;; (display (value '(? a 1) '(((? p) ((? a 1) (? b 1))) ((? b 1) b) ((? a 1) a) (bottom))))
+;; ;; (newline)
+;; ;; (display (value 'a '(((? p) ((? a 1) (? b 1))) ((? b 1) b) ((? a 1) a) (bottom))))
+;; ;; (newline)
+;; (define goals0 '((path a b (? P))))
+;; ;; (display goals0)
+;; ;; (newline)
+;; ;; (newline)
+;; ;; (display "*** prove3 ***")
+;; ;; (newline)
+;; (prove3 db0 goals0 empty 1)
 ;; (newline)
-;; (display (value 'a '(((? p) ((? a 1) (? b 1))) ((? b 1) b) ((? a 1) a) (bottom))))
-;; (newline)
-(define goals0 '((path a b (? P))))
-;; (display goals0)
-;; (newline)
-;; (newline)
-;; (display "*** prove3 ***")
-;; (newline)
-(prove3 db0 goals0 empty 1)
-(newline)
 
-;; Graph example from section 1
+;; ;; Graph example from section 1
 
-(define db1
-  '(((edge a b))
-    ((edge a f))
-    ((edge a g))
-    ((edge b c))
-    ((edge b d))
-    ((edge c d))
-    ((edge c e))
-    ((edge g h))
-    ((edge d h))
-    ((edge h e))
-    ((edge h f))
+;; (define db1
+;;   '(((edge a b))
+;;     ((edge a f))
+;;     ((edge a g))
+;;     ((edge b c))
+;;     ((edge b d))
+;;     ((edge c d))
+;;     ((edge c e))
+;;     ((edge g h))
+;;     ((edge d h))
+;;     ((edge h e))
+;;     ((edge h f))
 
-    ((path (? A) (? B) ((? A) (? B)))
-     (edge (? A) (? B)))
+;;     ((path (? A) (? B) ((? A) (? B)))
+;;      (edge (? A) (? B)))
 
-    ((path (? A) (? B) ((? A) . (? CB)))
-     (edge (? A) (? C))
-     (path (? C) (? B) (? CB)))))
+;;     ((path (? A) (? B) ((? A) . (? CB)))
+;;      (edge (? A) (? C))
+;;      (path (? C) (? B) (? CB)))))
 
-(define goals1 '((path a f (? P))))
-(prove3 db1 goals1 empty 1)
+;; (define goals1 '((path a f (? P))))
+;; (prove3 db1 goals1 empty 1)
 
-; 6-slide PROVE
-(prove5 db1 '() goals1 db1 empty 1)
+;; ; 6-slide PROVE
+;; (prove5 db1 '() goals1 db1 empty 1)
+
+;; Negation as failure
+
+(define db2
+  '(((some foo))
+    ((some bar))
+    ((some baz))
+
+    ((eq (? X) (? X)))
+
+    ((neq (? X) (? Y))
+     (eq (? X) (? Y)) ! fail)
+
+    ((neq (? X) (? Y)))))
+
+(define goals2 '((some (? X))
+                (some (? Y))
+                (neq (? X) (? Y))))
+
+; 9-slide PROVE
+(prove6 db2 '() goals2 db2 empty 1 '())
+

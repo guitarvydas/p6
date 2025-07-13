@@ -30,7 +30,45 @@ class Pair {
     }
     
     toString () {
-	return tostr (this);
+	let car = this.first;
+	let cdr = this.rest;
+	// unfortunate special case, null.toString() doesn't exist, so we need to pre-weed it out here
+	let carstring = undefined;
+	if (car == null) {
+	    carstring = "()";
+	} else {
+	    carstring = car.toString ();
+	}
+	let cdrstring = undefined;
+	if (cdr == null) {
+	    cdrstring = "";
+	    return `(${carstring})`;
+	} else if (cdr instanceof Pair) {
+	    return `(${carstring} ${cdr.rest_toString ()})`;
+	} else {
+	    return `(${carstring} . ${cdr.toString ()})`;
+	}
+    }
+    rest_toString () {
+	// string of atoms separated by spaces or a dot, no parens
+	let car = this.first;
+	let cdr = this.rest;
+	// unfortunate special case, null.toString() doesn't exist, so we need to pre-weed it out here
+	let carstring = undefined;
+	if (car == null) {
+	    carstring = "()";
+	} else {
+	    carstring = car.toString ();
+	}
+	let cdrstring = undefined;
+	if (cdr == null) {
+	    cdrstring = "";
+	    return `${carstring}`;
+	} else if (cdr instanceof Pair) {
+	    return `${carstring} ${cdr.rest_toString ()}`;
+	} else {
+	    return `${carstring} . ${cdr.toString ()}`;
+	}
     }
 }
 
@@ -206,11 +244,45 @@ function eqv_Q(a, b) {
     // For everything else, use strict equality (like eq?)
     return a === b;
 }
-
-function strcat (s1, s2) {
-    return `${s1}${s2}`;
-}
-
 function stringify (x) {
-    return `${x}`;
+PUSH ();
+SET (format (SET (false), SET ("~a"), SET (x)));
+return POP ();
 }
+function strcat (s1, s2) {
+PUSH ();
+SET (string__append (SET (s1), SET (s2)));
+return POP ();
+}
+function tostr (x) {
+PUSH ();
+
+PUSH ();
+if (false) {
+}
+else if (SET (null_Q (SET (x)))) {
+SET ("");
+}
+else if (SET (pair_Q (SET (x)))) {
+
+PUSH ();
+if (false) {
+}
+else if (SET (null_Q (SET (cdr (SET (x)))))) {
+SET ("");
+}
+else if (SET (pair_Q (SET (cdr (SET (x)))))) {
+SET (strcat (SET (stringify (SET (car (SET (x))))), SET (tostr (SET (cdr (SET (x)))))));
+}
+else {
+SET (strcat (SET (tostr (SET (car (SET (x))))), SET (strcat (SET (" . "), SET (stringify (SET (cdr (SET (x)))))))));
+}
+MERGE ();;
+}
+else {
+SET (stringify (SET (x)));
+}
+MERGE ();;
+return POP ();
+}
+SET (display (SET (tostr (SET ("a")))))

@@ -393,5 +393,11 @@
                 (neq (? X) (? Y))))
 
 ; 9-slide PROVE
-(prove6 db2 '() goals2 db2 empty 1 '())
+;(prove6 db2 '() goals2 db2 empty 1 '())
+
+(let ((x 7))
+  (display (list 'r! x))
+  (newline)
+  (display `(r! ,x))
+  (newline))
 

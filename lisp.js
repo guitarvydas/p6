@@ -29,30 +29,45 @@ class Pair {
         return count;
     }
     
-    // toString for easier debugging - handles nested Pairs recursively
-    toString() {
-        const elements = [];
-        let current = this;
-	let dotted = false;
-	let dottedtail = null; // for handling dotted pair
-        
-        while (!dotted && current !== null) {
-            if (current.first instanceof Pair) {
-                elements.push(current.first.toString());
-            } else {
-                elements.push(current.first);
-            }
-            current = current.rest;
-	    if (current && (! (current instanceof Pair))) {
-		dotted = true;
-		dottedtail = current.toString ();
-	    }
-        }
-        
-	if (dotted) {
-            return `(${elements.join(' ')} . ${dottedtail})`;
+    toString () {
+	let car = this.first;
+	let cdr = this.rest;
+	// unfortunate special case, null.toString() doesn't exist, so we need to pre-weed it out here
+	let carstring = undefined;
+	if (car == null) {
+	    carstring = "()";
 	} else {
-            return `(${elements.join(' ')})`;
+	    carstring = car.toString ();
+	}
+	let cdrstring = undefined;
+	if (cdr == null) {
+	    cdrstring = "";
+	    return `(${carstring})`;
+	} else if (cdr instanceof Pair) {
+	    return `(${carstring} ${cdr.rest_toString ()})`;
+	} else {
+	    return `(${carstring} . ${cdr.toString ()})`;
+	}
+    }
+    rest_toString () {
+	// string of atoms separated by spaces or a dot, no parens
+	let car = this.first;
+	let cdr = this.rest;
+	// unfortunate special case, null.toString() doesn't exist, so we need to pre-weed it out here
+	let carstring = undefined;
+	if (car == null) {
+	    carstring = "()";
+	} else {
+	    carstring = car.toString ();
+	}
+	let cdrstring = undefined;
+	if (cdr == null) {
+	    cdrstring = "";
+	    return `${carstring}`;
+	} else if (cdr instanceof Pair) {
+	    return `${carstring} ${cdr.rest_toString ()}`;
+	} else {
+	    return `${carstring} . ${cdr.toString ()}`;
 	}
     }
 }

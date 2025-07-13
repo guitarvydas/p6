@@ -46,28 +46,12 @@ function cons (x, y) {
     return new Pair(x, y);
 }
 
-function listify(arg) {
-    // 1. If not an array, return as is
-    if (!Array.isArray(arg)) {
-        return arg;
-    }
-    
-    // 3. If empty array, return null
-    if (arg.length === 0) {
-        return null;
-    }
-    
-    // 2. If array, return list of listified elements
-    let result = null;
-    for (let i = arg.length - 1; i >= 0; i--) {
-        result = cons(listify(arg[i]), result);  // Recursive call!
-    }
-    
-    return result;
-}
-
 function list (...args) {
-    return listify (args);
+    let result = null;
+    for (let i = args.length - 1; i >= 0; i--) { // from back to front
+        result = cons(args[i], result);
+    }
+    return result;
 }
     
 // Convert Pair list to JS array (already exists as toArray method)
@@ -213,4 +197,9 @@ function strcat (s1, s2) {
 
 function stringify (x) {
     return `${x}`;
+}
+
+function set__car_B (cell, v) {
+    cell.first = v;
+    return v;
 }

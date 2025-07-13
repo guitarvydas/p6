@@ -63,6 +63,7 @@
 
 
 (define (clear_r x)
+  (display x) (newline)
   (set-car! (cddr x) '(())))
 
 
@@ -89,7 +90,7 @@
       (print-frame e)
       (back6 db l g r e n c))
     ((eq? '! (car g))
-     (display "prove6 B") (newline)
+     (display "prove6 B, c=") (display c) (newline)
       (clear_r c)
       (prove6 db c (cdr g) r e n c))
     ((eq? 'r! (car g))

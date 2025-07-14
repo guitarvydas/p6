@@ -7,8 +7,8 @@ temp.*
 */.DS_Store
 out.*
 prolog.js
+*drawio.json
+junk.*
+*.bkp
 .#*
 #*
-*.drawio.json
-
-*.bkp

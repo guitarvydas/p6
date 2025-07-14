@@ -1,10 +1,17 @@
-unbq {
- Program = TopLevelSexpr+
- TopLevelSexpr = List
- Sexpr = List
- BQSexpr = BQList
+const {
+  Program = TopLevelSexpr+
+  TopLevelSexpr = Sexpr
+  Sexpr = List | Atom
+  QuotedSexpr = QuotedList | QuotedAtom
 
   Atom =
+    | "#f" ~#id -- false
+    | "#t" ~#id -- true
+    | #integer -- integer
+    | #string -- string
+    | #symbol -- symbol
+
+  QuotedAtom =
     | "#f" ~#id -- false
     | "#t" ~#id -- true
     | #integer -- integer
@@ -23,25 +30,21 @@ unbq {
 
   List =
     | "(" ")" -- nil
-    | "'" Sexpr -- quoted
-    | "`" BQSexpr -- backquoted
-    | "(" Sexpr+ "." SpaceSexpr ")" -- dotted
+    | "(" "quote" QuotedSexpr ")" -- quoted
+    | "(" Sexpr SpaceSexpr* "." SpaceSexpr ")" -- dotted
     | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
-    | "(" Sexpr ")" -- listOfOne
-    | Atom -- atom
+    | "(" SpaceSexpr ")" -- listOfOne
 
-  BQList =
+  QuotedList =
     | "(" ")" -- nil
-    | "'" BQSexpr -- quoted
-    | "`" BQSexpr -- backquoted
-    | ","   Sexpr -- commaexpanded
-    | "(" BQSexpr+ "." SpaceBQSexpr ")" -- dotted
-    | "(" BQSexpr SpaceBQSexpr+ ")" -- listMultiple
-    | "(" BQSexpr ")" -- listOfOne
-    | Atom -- atom
+    | "(" "quote" QuotedSexpr ")" -- quoted
+    | "(" QuotedSexpr SpaceQuotedSexpr* "." SpaceQuotedSexpr ")" -- dotted
+    | "(" QuotedSexpr SpaceQuotedSexpr+ ")" -- listMultiple
+    | "(" QuotedSexpr ")" -- listOfOne
 
-  SpaceSexpr = Sexpr
-  SpaceBQSexpr = BQSexpr
+
+  SpaceSexpr= Sexpr
+  SpaceQuotedSexpr= QuotedSexpr
   
   comment = ";" (~"\n" any)* "\n"
   space += comment

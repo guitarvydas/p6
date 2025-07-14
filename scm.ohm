@@ -1,33 +1,49 @@
 scm {
- program = scm+
- scm = applySyntactic<List> | atom
+ Program = TopLevelSexpr+
+ TopLevelSexpr = Sexpr
+ Sexpr = List | Atom
 
-  atom =
-    | "#f" -- false
-    | "#t" -- true
-    | integer -- int
-    | string -- string
-    | symbol -- symbol
+  Atom =
+    | "#f" ~#id -- false
+    | "#t" ~#id -- true
+    | #integer -- integer
+    | #string -- string
+    | #symbol -- symbol
 
   integer = digit+
   string = "\"" (~"\"" any)* "\""
-  symbol = symChar+
-  symChar = ~specialChar  any
-  specialChar = ";" | "#" | "(" | ")" | "'" | bq | comma | "." | space
+  symbol = id ("." id)*
+  id = firstLetter followLetter*
+  firstLetter = letter | (~separator ~unprintable any)
+  followLetter = letter | digit | (~separator ~unprintable any)
+  special  = ";" | "#" | "(" | ")" | "'" | "`" | "," | "."
+  unprintable = ("\x00" .. "\x20") | "\x7F"
+  separator = space | special | end
 
   List =
     | "(" ")" -- nil
-    | "'" scm -- quoted
-    | bq scm -- backquoted
-    | comma scm -- commaexpanded
-    | "(" scm+ Dotted ")" -- dotted
-    | "(" scm+ ")" -- list
+    | "'" Sexpr -- quoted
+    | "`" Sexpr -- backquoted
+    | "," Sexpr -- commaexpanded
+    | "(" Sexpr+ "." Sexpr ")" -- dotted
+    | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
+    | "(" Sexpr ")" -- listOfOne
 
-  Dotted = "." scm
-
-  bq = "`"
-  comma = ","
+  SpaceSexpr = Sexpr
 
   comment = ";" (~"\n" any)* "\n"
   space += comment
 }
+
+//+ a
+//+ b.c
+//+ ()
+//+ (d)
+//+ (e f)
+//+ 'g
+//+ '(h i)
+//+ `j
+//+ `(k l)
+//+ `(m ,n o)
+//+ ,p
+//+ (q r s t . u)

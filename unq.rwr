@@ -1,8 +1,7 @@
-% rewrite unbq {
+% rewrite scm {
   Program [TLSexpr+] = ‛«TLSexpr»’
   TopLevelSexpr [x] = ‛\n«x»’
   Sexpr [x] = ‛«x»’
-  BQSexpr [x] = ‛«x»’
 
   Atom_false [x] = ‛«x»’
   Atom_true [x] = ‛«x»’
@@ -21,24 +20,12 @@
   separator  [c] = ‛«c»’
 
   List_nil [lq rq] = ‛«lq»«rq»’
-  List_quoted [q sexpr] = ‛«q»«sexpr»’
-  List_backquoted [q sexpr] = ‛«sexpr»’
-  List_dotted [lp e+ _dot e2 rp] = ‛«lp»«e» «_dot»«e2»«rp»’
+  List_quoted [q sexpr] = ‛(quote «sexpr»)’
+  List_dotted [lp e0 e1+ _dot e2 rp] = ‛«lp»«e0»«e1» «_dot»«e2»«rp»’
   List_listMultiple [lp e0 e+ rp] = ‛«lp»«e0»«e»«rp»’
   List_listOfOne [lp e rp] = ‛«lp»«e»«rp»’
-  List_atom [a] = ‛«a»’
-
-  BQList_nil [lq rq] = ‛ nil ’
-  BQList_quoted [q sexpr] = ‛«q»«sexpr»’
-  BQList_backquoted [q sexpr] = ‛«q»«sexpr»’
-  BQList_commaexpanded [c sexpr] = ‛«sexpr»’
-  BQList_dotted [lp e+ _dot e2 rp] = ‛«lp»«e» «_dot»«e2»«rp»’
-  BQList_listMultiple [lp e0 e+ rp] = ‛«lp»list «e0»«e»«rp»’
-  BQList_listOfOne [lp e rp] = ‛«lp»list «e»«rp»’
-  BQList_atom [a] = ‛'«a»’
 
   SpaceSexpr [e] = ‛ «e»’
-  SpaceBQSexpr [e] = ‛ «e»’
 
   comment [_semicolon cs* _nl] =‛«_semicolon»«cs»«_nl»’
   space [x] = ‛«x»’

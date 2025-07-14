@@ -1,0 +1,50 @@
+peephole {
+  program = stuff+
+
+  stuff =
+    | applySyntactic<TopLevelSet> -- tlset
+    | applySyntactic<TopLevelCall> -- tlcall
+    | keyword -- keyword
+    | "{" -- openbrace
+    | any -- other
+
+  TopLevelSet = SetCall
+  SetCall = "SET" "(" parameter ")"
+  InnerSet = "SET" "(" parameter ")"
+
+  TopLevelCall = Call
+  Call = id "(" parameterList ")"
+  InnerCall = Call
+
+  parameter = parameterChar+
+
+  parameterChar =
+    | string -- string
+    | applySyntactic<InnerSet>-- set
+    | applySyntactic<InnerCall> -- call
+    | keyword -- keyword
+    | "{" -- openbrace
+    | ~"," ~"(" ~")" ~string any -- other
+
+  parameterList =
+    | parameter "," parameterList -- many
+    | parameter -- single
+
+
+  string = "\"" (~"\"" any)* "\""
+
+  id = firstLetter followLetter*
+  firstLetter = jsletter
+  followLetter = jsletter | digit
+  jsletter =
+    | "_" -- underscore
+    | letter -- other
+
+  keyword =
+    | "function" ~id
+    | "else" ~id
+    | "if" ~id
+    | "new" ~id
+    | "return" ~id
+    | "try" ~id
+}

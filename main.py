@@ -4,7 +4,7 @@ import kernel0d as zd
 
 try:
     [palette, env] = zd.initialize_from_files (sys.argv[1], sys.argv[4:])
-    zd.start (arg=sys.argv[2], Part_name=sys.argv[3], palette=palette, env=env)
+    zd.start (arg=sys.argv[2], part_name=sys.argv[3], palette=palette, env=env)
 except Exception as e:
     _, _, tb = sys.exc_info()
     while tb.tb_next:

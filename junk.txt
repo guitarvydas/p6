@@ -1,1 +1,0 @@
-pbp/t2t.bash . ./pbp stmt.ohm stmt.rwr empty.js -

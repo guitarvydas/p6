@@ -1,8 +1,7 @@
-unbq {
- Program = TopLevelSexpr+
- TopLevelSexpr = List
- Sexpr = List
- BQSexpr = BQList
+unq {
+  Program = TopLevelSexpr+
+  TopLevelSexpr = Sexpr
+  Sexpr = List | Atom
 
   Atom =
     | "#f" ~#id -- false
@@ -24,24 +23,11 @@ unbq {
   List =
     | "(" ")" -- nil
     | "'" Sexpr -- quoted
-    | "`" BQSexpr -- backquoted
-    | "(" Sexpr+ "." SpaceSexpr ")" -- dotted
+    | "(" Sexpr SpaceSexpr* "." SpaceSexpr ")" -- dotted
     | "(" Sexpr SpaceSexpr+ ")" -- listMultiple
-    | "(" Sexpr ")" -- listOfOne
-    | Atom -- atom
+    | "(" SpaceSexpr ")" -- listOfOne
 
-  BQList =
-    | "(" ")" -- nil
-    | "'" BQSexpr -- quoted
-    | "`" BQSexpr -- backquoted
-    | ","   Sexpr -- commaexpanded
-    | "(" BQSexpr+ "." SpaceBQSexpr ")" -- dotted
-    | "(" BQSexpr SpaceBQSexpr+ ")" -- listMultiple
-    | "(" BQSexpr ")" -- listOfOne
-    | Atom -- atom
-
-  SpaceSexpr = Sexpr
-  SpaceBQSexpr = BQSexpr
+  SpaceSexpr= Sexpr
   
   comment = ";" (~"\n" any)* "\n"
   space += comment

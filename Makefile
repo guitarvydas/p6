@@ -1,8 +1,5 @@
 all:
 	./make.bash
-dev:
-	./dev.bash
 
-bq:
-	./bq.bash
-
+scm:
+	mit-scheme --silent --load "prolog-6-modified" --eval "(exit)"

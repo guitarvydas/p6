@@ -1,0 +1,46 @@
+% rewrite const {
+  Program [TLSexpr+] = ‛«TLSexpr»’
+  TopLevelSexpr [x] = ‛\n«x»’
+  Sexpr [x] = ‛«x»’
+  QuotedSexpr [x] = ‛«x»’
+
+  Atom_false [x] = ‛‹#f›’
+  Atom_true [x] = ‛‹#t›’
+  Atom_integer [x] = ‛‹«x»›’
+  Atom_string [x] = ‛‹«x»›’
+  Atom_symbol [x] = ‛«x»’
+
+  QuotedAtom_false [x] = ‛‹#f›’
+  QuotedAtom_true [x] = ‛‹#t›’
+  QuotedAtom_integer [x] = ‛‹«x»›’
+  QuotedAtom_string [x] = ‛‹«x»›’
+  QuotedAtom_symbol [x] = ‛‹«x»›’
+
+  integer [digit+] = ‛«digit»’
+  string [lq cs* rq] = ‛«lq»«cs»«rq»’
+  symbol [id (_dot id2)*] = ‛«id»«_dot»«id2»’
+  id [firstLetter followLetter*] = ‛«firstLetter»«followLetter»’
+  firstLetter [c] = ‛«c»’
+  followLetter [c] = ‛«c»’
+  special  [c] = ‛«c»’
+  unprintable [c] = ‛«c»’
+  separator  [c] = ‛«c»’
+
+  List_nil [lq rq] = ‛«lq»«rq»’
+  List_quoted [lp _quote sexpr rp] = ‛«sexpr»’
+  List_dotted [lp e0 e1+ _dot e2 rp] = ‛«lp»«e0»«e1» «_dot»«e2»«rp»’
+  List_listMultiple [lp e0 e+ rp] = ‛«lp»«e0»«e»«rp»’
+  List_listOfOne [lp e rp] = ‛«lp»«e»«rp»’
+
+  QuotedList_nil [lq rq] = ‛⎨⎬’
+  QuotedList_quoted [lp _quote sexpr rp] = ‛???«sexpr»???’
+  QuotedList_dotted [lp e0 e1+ _dot e2 rp] = ‛⎨«e0»«e1» «_dot»«e2»⎬’
+  QuotedList_listMultiple [lp e0 e+ rp] = ‛⎨«e0»«e»⎬’
+  QuotedList_listOfOne [lp e rp] = ‛⎨«e»⎬’
+
+  SpaceSexpr [e] = ‛ «e»’
+  SpaceQuotedSexpr [e] = ‛ «e»’
+
+  comment [_semicolon cs* _nl] =‛«_semicolon»«cs»«_nl»’
+  space [x] = ‛«x»’
+}

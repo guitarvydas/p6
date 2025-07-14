@@ -9,5 +9,5 @@
 		- missing return in inner function
 [x] prove6 failing
 	- eq ("_B", car (g))???
-[ ] peephole		
+[x] peephole
 

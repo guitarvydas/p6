@@ -1,35 +1,38 @@
 % rewrite peephole {
   program [stuff+] = ‛«stuff»’
-  stuff_openbrace [lb] = ‛ {\n’
-  stuff_keyword [kw] = ‛«kw»’
   stuff_tlset [tls] = ‛«tls»’
-  stuff_tlset [tlc] = ‛«tlc»’
-  stuff_nested [lp stuff+ rp] = ‛«lp»«stuff»«rp»’
+  stuff_tlcall [tlc] = ‛«tlc»’
+  stuff_keyword [kw] = ‛«kw»’
+  stuff_openbrace [lb] = ‛ {\n’
   stuff_other [c] = ‛«c»’
 
-  SetCall [_SET lp parameter rp] = ‛«_SET» «lp»«parameter»«rp»’
   TopLevelSet [SetCall] = ‛«SetCall»’
+  SetCall [_SET lp parameter rp] = ‛«_SET» «lp»«parameter»«rp»’
   InnerSet [_SET lp parameter rp] = ‛«parameter»’
-  Call [id lp parameter* rp] = ‛«id» «lp»«parameter»«rp»’
+
   TopLevelCall [Call] = ‛«Call»’
+  Call [id lp parameterList rp] = ‛«id» «lp»«parameterList»«rp»’
   InnerCall [Call] = ‛«Call»’
 
-  parameter_keyword [x] = ‛«x»’
-  parameter_string [lq cs* rq] = ‛«lq»«cs»«rq»’
-  parameter_set [x] = ‛«x»’
-  parameter_call [x] = ‛«x»’
-  parameter_other [x] = ‛«x»’
-    
+  parameter [cs+] = ‛«cs»’
 
+  parameterChar_string [s] = ‛«s»’
+  parameterChar_set [x] = ‛«x»’
+  parameterChar_call [x] = ‛«x»’
+  parameterChar_keyword [kw] = ‛«kw»’
+  parameterChar_openbrace [b] = ‛ «b»\n’
+  parameterChar_other [c] = ‛«c»’
+
+  parameterList_many [p _comma more] = ‛«p»«_comma»«more»’
+  parameterList_single [p] = ‛«p»’
+
+  string [lq cs* rq] = ‛«lq»«cs»«rq»’
 
   id [c cs*] = ‛«c»«cs»’
   firstLetter [c] = ‛«c»’
   followLetter [c] = ‛«c»’
   jsletter_underscore [c] = ‛«c»’
   jsletter_other [c] = ‛«c»’
-  special [c] = ‛«c»’
-  unprintable [c] = ‛«c»’
-  separator [c] = ‛«c»’
 
   keyword [k] = ‛«k» ’
 }

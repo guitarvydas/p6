@@ -1,7 +1,7 @@
 peephole {
   program = stuff+
   stuff =
-    | "function " -- func
+    | keyword -- keyword
     | applySyntactic<TopLevelSet> -- tlset
     | applySyntactic<TopLevelCall> -- tlcall
     | "(" stuff+ ")" -- nested
@@ -15,6 +15,7 @@ peephole {
   InnerCall = Call
 
   parameter =
+    | keyword -- keyword
     | applySyntactic<InnerSet>-- set
     | applySyntactic<InnerCall> -- call
     | ~"(" ~")" any -- other
@@ -30,4 +31,12 @@ peephole {
   special  = ";" | "#" | "(" | ")" | "‹" | "›" | "." | "⎨" | "⎬"
   unprintable = ("\x00" .. "\x20") | "\x7F"
   separator = space | special | end
+
+  keyword =
+    | "function" ~id
+    | "else" ~id
+    | "if" ~id
+    | "new" ~id
+    | "return" ~id
+    | "try" ~id
 }

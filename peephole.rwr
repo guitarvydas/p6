@@ -1,6 +1,6 @@
 % rewrite peephole {
   program [stuff+] = ‛«stuff»’
-  stuff_func [f] = ‛«f»’
+  stuff_keyword [kw] = ‛«kw»’
   stuff_tlset [tls] = ‛«tls»’
   stuff_tlset [tlc] = ‛«tlc»’
   stuff_nested [lp stuff+ rp] = ‛«lp»«stuff»«rp»’
@@ -13,6 +13,7 @@
   TopLevelCall [Call] = ‛«Call»’
   InnerCall [Call] = ‛«Call»’
 
+  parameter_keyword [x] = ‛«x»’
   parameter_set [x] = ‛«x»’
   parameter_call [x] = ‛«x»’
   parameter_other [x] = ‛«x»’
@@ -27,4 +28,6 @@
   special [c] = ‛«c»’
   unprintable [c] = ‛«c»’
   separator [c] = ‛«c»’
+
+  keyword [k] = ‛«k» ’
 }

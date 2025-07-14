@@ -73,6 +73,19 @@
         }
       },
       {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Const",
+          "id": 18
+        },
+        "target": {
+          "name": "ToJS",
+          "id": 22
+        }
+      },
+      {
         "dir": 2,
         "source_port": "✗",
         "target_port": "✗",

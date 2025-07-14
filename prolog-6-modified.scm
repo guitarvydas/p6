@@ -99,7 +99,7 @@
         (if e*
             (prove6 db
 		    (link l g r e n c)
-                    (append (cdr a) `(r! ,l) (cdr g))
+                    (append (cdr a) (append `(r! ,l) (cdr g))) ;; mod
                     db
                     e*
                     (+ 1 n)
@@ -185,6 +185,43 @@
                     (newline)))
             (loop (cdr ee))))))
 
+
+;; manually added
+(define (tostr x)
+  (cond ((null? x) "")
+	((pair? x)
+	 (cond ((null? (cdr x))
+		(strcat "("
+			(strcat (stringify (car x))
+				")")))
+	       ((pair? (cdr x))
+		(strcat "("
+			(strcat (stringify (car x))
+				(strcat " "
+					(strcat (tailstr (cdr x))
+						")" )))))
+	       (else
+		(strcat "(" 
+			(strcat (tostr (car x))
+				(strcat " . "
+					(strcat (tostr (cdr x))
+						")")))))))
+	(else  (stringify x))))
+
+(define (tailstr x)
+  (cond ((null? x) "")
+	((pair? x)
+	 (cond ((null? (cdr x))
+		(stringify (car x)))
+	       ((pair? (cdr x))
+		(strcat (stringify (car x))
+			(strcat " "
+				(tailstr (cdr x)))))
+	       (else
+		(strcat (tostr (car x))
+			(strcat " . "
+				(tostr (cdr x)))))))
+	(else  (stringify x))))
 
 
 ;; Graph example from section 1

@@ -34,7 +34,7 @@ unbq {
     | "(" ")" -- nil
     | "'" BQSexpr -- quoted
     | "`" BQSexpr -- backquoted
-    | "," BQSexpr -- commaexpanded
+    | ","   Sexpr -- commaexpanded
     | "(" BQSexpr+ "." SpaceBQSexpr ")" -- dotted
     | "(" BQSexpr SpaceBQSexpr+ ")" -- listMultiple
     | "(" BQSexpr ")" -- listOfOne

@@ -30,7 +30,45 @@ class Pair {
     }
     
     toString () {
-	return tostr (this);
+	let car = this.first;
+	let cdr = this.rest;
+	// unfortunate special case, null.toString() doesn't exist, so we need to pre-weed it out here
+	let carstring = undefined;
+	if (car == null) {
+	    carstring = "()";
+	} else {
+	    carstring = car.toString ();
+	}
+	let cdrstring = undefined;
+	if (cdr == null) {
+	    cdrstring = "";
+	    return `(${carstring})`;
+	} else if (cdr instanceof Pair) {
+	    return `(${carstring} ${cdr.rest_toString ()})`;
+	} else {
+	    return `(${carstring} . ${cdr.toString ()})`;
+	}
+    }
+    rest_toString () {
+	// string of atoms separated by spaces or a dot, no parens
+	let car = this.first;
+	let cdr = this.rest;
+	// unfortunate special case, null.toString() doesn't exist, so we need to pre-weed it out here
+	let carstring = undefined;
+	if (car == null) {
+	    carstring = "()";
+	} else {
+	    carstring = car.toString ();
+	}
+	let cdrstring = undefined;
+	if (cdr == null) {
+	    cdrstring = "";
+	    return `${carstring}`;
+	} else if (cdr instanceof Pair) {
+	    return `${carstring} ${cdr.rest_toString ()}`;
+	} else {
+	    return `${carstring} . ${cdr.toString ()}`;
+	}
     }
 }
 
@@ -46,12 +84,28 @@ function cons (x, y) {
     return new Pair(x, y);
 }
 
-function list (...args) {
-    let result = null;
-    for (let i = args.length - 1; i >= 0; i--) { // from back to front
-        result = cons(args[i], result);
+function listify(arg) {
+    // 1. If not an array, return as is
+    if (!Array.isArray(arg)) {
+        return arg;
     }
+    
+    // 3. If empty array, return null
+    if (arg.length === 0) {
+        return null;
+    }
+    
+    // 2. If array, return list of listified elements
+    let result = null;
+    for (let i = arg.length - 1; i >= 0; i--) {
+        result = cons(listify(arg[i]), result);  // Recursive call!
+    }
+    
     return result;
+}
+
+function list (...args) {
+    return listify (args);
 }
     
 // Convert Pair list to JS array (already exists as toArray method)
@@ -190,16 +244,45 @@ function eqv_Q(a, b) {
     // For everything else, use strict equality (like eq?)
     return a === b;
 }
-
-function strcat (s1, s2) {
-    return `${s1}${s2}`;
-}
-
 function stringify (x) {
-    return `${x}`;
+PUSH ();
+SET (format (SET (false), SET ("~a"), SET (x)));
+return POP ();
 }
+function strcat (s1, s2) {
+PUSH ();
+SET (string__append (SET (s1), SET (s2)));
+return POP ();
+}
+function tostr (x) {
+PUSH ();
 
-function set__car_B (cell, v) {
-    cell.first = v;
-    return v;
+PUSH ();
+if (false) {
 }
+else if (SET (null_Q (SET (x)))) {
+SET ("");
+}
+else if (SET (pair_Q (SET (x)))) {
+
+PUSH ();
+if (false) {
+}
+else if (SET (null_Q (SET (cdr (SET (x)))))) {
+SET ("");
+}
+else if (SET (pair_Q (SET (cdr (SET (x)))))) {
+SET (strcat (SET (stringify (SET (car (SET (x))))), SET (tostr (SET (cdr (SET (x)))))));
+}
+else {
+SET (strcat (SET (tostr (SET (car (SET (x))))), SET (strcat (SET (" . "), SET (stringify (SET (cdr (SET (x)))))))));
+}
+MERGE ();;
+}
+else {
+SET (stringify (SET (x)));
+}
+MERGE ();;
+return POP ();
+}
+SET (display (SET (tostr (SET ("a")))))

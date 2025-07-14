@@ -84,7 +84,7 @@ return RESULT;
   separator [c] = ‛«c»’
 
   List_listConstant [k] = ‛«k»’
-  List_dotted [lp es+ _dot e rp] = ‛new Pair («es», «e»)’
+  List_dotted [lp es+ _dot e rp] = ‛[«es», «e»]’
   List_listMultiple [lp e es+ rp] = ‛\n[«e»«es»]’
   List_listOfOne [lp e rp] = ‛\n[«e»]’
 

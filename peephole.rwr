@@ -8,7 +8,7 @@
 
   SetCall [_SET lp parameter rp] = ‛«_SET»«lp»«parameter»«rp»’
   TopLevelSet [SetCall] = ‛«SetCall»’
-  InnerSet [_SET lp parameter rp] = ‛«_SET»«lp»«parameter»«rp»’
+  InnerSet [_SET lp parameter rp] = ‛«parameter»’
   Call [id lp parameter* rp] = ‛«id»«lp»«parameter»«rp»’
   TopLevelCall [Call] = ‛«Call»’
   InnerCall [Call] = ‛«Call»’

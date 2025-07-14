@@ -1,6 +1,6 @@
 % rewrite tojs {
   Program [es+] = ‛«es»’
-  TopLevelSexpr_special [e] = ‛«e»;’
+  TopLevelSexpr_special [e] = ‛«e»’
   TopLevelSexpr_listConstant [e] = ‛«e»;’
   TopLevelSexpr_atom [e] = ‛«e»;’
   TopLevelSexpr_call [e] = ‛\n«e»;’

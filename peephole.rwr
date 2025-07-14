@@ -1,0 +1,30 @@
+% rewrite peephole {
+  program [stuff+] = ‛«stuff»’
+  stuff_func [f] = ‛«f»’
+  stuff_tlset [tls] = ‛«tls»’
+  stuff_tlset [tlc] = ‛«tlc»’
+  stuff_nested [lp stuff+ rp] = ‛«lp»«stuff»«rp»’
+  stuff_other [c] = ‛«c»’
+
+  SetCall [_SET lp parameter rp] = ‛«_SET»«lp»«parameter»«rp»’
+  TopLevelSet [SetCall] = ‛«SetCall»’
+  InnerSet [_SET lp parameter rp] = ‛«_SET»«lp»«parameter»«rp»’
+  Call [id lp parameter* rp] = ‛«id»«lp»«parameter»«rp»’
+  TopLevelCall [Call] = ‛«Call»’
+  InnerCall [Call] = ‛«Call»’
+
+  parameter_set [x] = ‛«x»’
+  parameter_call [x] = ‛«x»’
+  parameter_other [x] = ‛«x»’
+    
+
+
+  id [c cs*] = ‛«c»«cs»’
+  firstLetter [c] = ‛«c»’
+  followLetter [c] = ‛«c»’
+  jsletter_underscore [c] = ‛«c»’
+  jsletter_other [c] = ‛«c»’
+  special [c] = ‛«c»’
+  unprintable [c] = ‛«c»’
+  separator [c] = ‛«c»’
+}

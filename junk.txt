@@ -1,1 +1,1 @@
-sed 's/, )/)/g'
+pbp/t2t.bash . ./pbp peephole.ohm peephole.rwr empty.js -

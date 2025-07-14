@@ -1,6 +1,7 @@
 peephole {
   program = stuff+
   stuff =
+    | "function " -- func
     | applySyntactic<TopLevelSet> -- tlset
     | applySyntactic<TopLevelCall> -- tlcall
     | "(" stuff+ ")" -- nested
@@ -29,6 +30,4 @@ peephole {
   special  = ";" | "#" | "(" | ")" | "‹" | "›" | "." | "⎨" | "⎬"
   unprintable = ("\x00" .. "\x20") | "\x7F"
   separator = space | special | end
-  comment = ";" (~"\n" any)* "\n"
-  space += comment
 }

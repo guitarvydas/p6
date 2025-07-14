@@ -1,0 +1,389 @@
+class Pair {
+    constructor (first, rest = null) {
+        this.first = first;
+        this.rest = rest;
+    }
+    
+    toArray () {
+        const result = [];
+        let current = this;
+        while (current !== null) {
+            if (current.first instanceof Pair) {
+                result.push(current.first.toArray());  // Recursive call!
+            } else {
+                result.push(current.first);
+            }
+            current = current.rest;
+        }
+        return result;
+    }
+    
+    // Get length
+    get length() {
+        let count = 0;
+        let current = this;
+        while (current !== null) {
+            count++;
+            current = current.rest;
+        }
+        return count;
+    }
+    
+    toString () {
+        return tostr (this);
+    }
+}
+
+function car (pair) {
+    return pair ? pair.first : null;
+}
+
+function cdr (pair) {
+    return pair ? pair.rest : null;
+}
+
+function cons (x, y) {
+    return new Pair(x, y);
+}
+
+function list (...args) {
+    let result = null;
+    for (let i = args.length - 1; i >= 0; i--) { // from back to front
+        result = cons(args[i], result);
+    }
+    return result;
+}
+
+// Convert Pair list to JS array (already exists as toArray method)
+function listToArray(list) {
+    return list ? list.toArray() : [];
+}
+
+// Additional utility functions
+
+// Check if something is a Pair (could be improper list)
+function isPair(obj) {
+    return obj instanceof Pair;
+}
+
+// List operations
+function append(list1, list2) {
+    if (list1 === null) return list2;
+    return cons(car(list1), append(cdr(list1), list2));
+}
+
+function reverse(list) {
+    let result = null;
+    let current = list;
+    while (current !== null) {
+        result = cons(car(current), result);
+        current = cdr(current);
+    }
+    return result;
+}
+
+
+// Mapcar - applies function to each ELEMENT, returns list of results
+function mapcar(fn, list) {
+    if (list === null) return null;
+    return cons(fn(car(list)), mapcar(fn, cdr(list)));
+}
+
+// Maplist - applies function to each SUBLIST (list and its successive tails)
+function maplist(fn, list) {
+    if (list === null) return null;
+    return cons(fn(list), maplist(fn, cdr(list)));
+}
+
+// Filter function over list
+function filterList(predicate, list) {
+    if (list === null) return null;
+    
+    const head = car(list);
+    const tail = filterList(predicate, cdr(list));
+    
+    if (predicate(head)) {
+        return cons(head, tail);
+    } else {
+        return tail;
+    }
+}
+
+function caar (list) {
+    return car (car (list));
+}
+function cadaar (list) {
+    return car (cdr (car (car (list))));
+}
+function cadr (list) {
+    return car (cdr (list));
+}
+function caddr (list) {
+    return car (cdr (cdr (list)));
+}
+function cadddr (list) {
+    return car (cdr (cdr (cdr (list))));
+}
+function cddr (list) {
+    return cdr (cdr (list));
+}
+function cdddr (list) {
+    return cdr (cdr (cdr (list)));
+}
+function cddddr (list) {
+    return cdr (cdr (cdr (cdr (list))));
+}
+
+function null_Q (list) {
+    return list == [] || list == null;
+}
+
+function pair_Q (list) {
+    return isPair (list);
+}
+
+function newline () {
+    //    process.stdout.write ("\n");
+    console.log ();
+    return "\n";
+}
+
+function display (x) {
+    if (x == null) {
+        process.stdout.write ("null");
+        //      console.log ("null");
+    } else {
+        let s = x.toString ().replace(/_Q/g, '?');
+        process.stdout.write (s);
+        //      console.log (s);
+    }
+    return x;
+}
+
+let RESULT_STACK = [null];
+function PUSH () { RESULT_STACK.push (undefined); }
+function POP () { return RESULT_STACK.pop (); }
+function SET (x) { RESULT_STACK.pop (); RESULT_STACK.push (x); return x;}
+function MERGE () { let v = RESULT_STACK.pop (); SET (v); return v; }
+
+// JavaScript implementation of Scheme eq? and eqv?
+
+// eq? - Object identity comparison (same memory location)
+function eq_Q(a, b) {
+    // In Scheme, eq? tests if two objects are the same object in memory
+    // JavaScript === is the closest equivalent
+    return a === b;
+}
+
+// eqv? - Like eq? but also handles numbers and characters by value
+function eqv_Q(a, b) {
+    // Handle NaN case - in Scheme, (eqv? +nan.0 +nan.0) is #t
+    if (Number.isNaN(a) && Number.isNaN(b)) {
+        return true;
+    }
+    
+    // Handle signed zeros - in Scheme, (eqv? +0.0 -0.0) is #f
+    if (a === 0 && b === 0) {
+        return Object.is(a, b);  // Distinguishes +0 from -0
+    }
+    
+    // For everything else, use strict equality (like eq?)
+    return a === b;
+}
+
+function strcat (s1, s2) {
+    return `${s1}${s2}`;
+}
+
+function stringify (x) {
+    return `${x}`;
+}
+
+function set__car_B (cell, v) {
+    cell.first = v;
+    return v;
+}
+function ftry (db,g,r,e,n){PUSH ();PUSH ();if (null_Q (r)){SET (false)}
+                           else  { PUSH ();
+
+                                   let a =SET (copy (car (r),list (n)));
+                                   let ne =SET (unify (car (g),car (a),e));PUSH ();if (SET (ne)){SET (prove3 (SET (db),append (cdr (a),cdr (g)),SET (ne),SET (1+n)))}MERGE ();;SET (ftry (SET (db),g,cdr (r),e,n));MERGE ();
+                                 }MERGE ();
+                           return POP ();
+                          }
+function prove3 (db,g,e,n){PUSH ();PUSH ();if (false){}
+                           else if (null_Q (g)){SET (print__frame (e));
+                                               }
+                           else  { SET (ftry (SET (db),g,SET (db),e,n));
+                                 }MERGE ();;
+                           return POP ();
+                          }
+let link = list;
+let L_l = car;
+let L_g = cadr;
+let L_r = caddr;
+let L_e = cadddr;
+function L_n (x){PUSH ();SET (car (cddddr (x)));
+                 return POP ();
+                }
+function back5 (db,l,g,r,e,n){PUSH ();PUSH ();if (SET (pair_Q (g)&&pair_Q (r))){SET (prove5 (SET (db),l,g,cdr (r),e,n))}
+                              else  { SET (prove5 (SET (db),L_l (l),L_g (l),cdr (L_r (l)),L_e (l),L_n (l)))}MERGE ();
+                              return POP ();
+                             }
+function prove5 (db,l,g,r,e,n){PUSH ();PUSH ();if (false){}
+                               else if (null_Q (g)){SET (print__frame (e));SET (back5 (SET (db),l,g,r,e,n));
+                                                   }
+                               else if (null_Q (r)){PUSH ();if (null_Q (l)){SET (true)}
+                                                    else  { SET (back5 (SET (db),l,g,r,e,n))}MERGE ();
+                                                   }
+                               else  { PUSH ();
+
+                                       let a =SET (copy (car (r),n));
+                                       let e_A =SET (unify (car (a),car (g),e));PUSH ();if (SET (e_A)){SET (prove5 (SET (db),link (l,g,r,e,n),append (cdr (a),cdr (g)),SET (db),SET (e_A),SET (1+n)))}
+                                       else  { SET (back5 (SET (db),l,g,r,e,n))}MERGE ();MERGE ();;
+                                     }MERGE ();;
+                               return POP ();
+                              }
+function L_c (x){PUSH ();SET (cadr (cddddr (x)));
+                 return POP ();
+                }
+function clear_r (x){PUSH ();SET (set__car_B (cddr (x),new Pair (null,null)));
+                     return POP ();
+                    }
+function back6 (db,l,g,r,e,n,c){PUSH ();PUSH ();if (false){}
+                                else if (SET (pair_Q (g)&&pair_Q (r))){SET (prove6 (SET (db),l,g,cdr (r),e,n,c));
+                                                                      }
+                                else if (pair_Q (l)){SET (prove6 (SET (db),L_l (l),L_g (l),cdr (L_r (l)),L_e (l),L_n (l),L_c (l)));
+                                                    }MERGE ();;
+                                return POP ();
+                               }
+function prove6 (db,l,g,r,e,n,c){PUSH ();PUSH ();if (false){}
+                                 else if (null_Q (g)){SET (print__frame (e));SET (back6 (SET (db),l,g,r,e,n,c));
+                                                     }
+                                 else if (eq_Q ("_B",car (g))){SET (clear_r (c));SET (prove6 (SET (db),c,cdr (g),r,e,n,c));
+                                                              }
+                                 else if (eq_Q ("r_B",car (g))){SET (prove6 (SET (db),l,cddr (g),r,e,n,cadr (g)));
+                                                               }
+                                 else if (null_Q (r)){PUSH ();if (null_Q (l)){SET (true)}
+                                                      else  { SET (back6 (SET (db),l,g,r,e,n,c))}MERGE ();
+                                                     }
+                                 else  { PUSH ();
+
+                                         let a =SET (copy (car (r),n));
+                                         let e_A =SET (unify (car (a),car (g),e));PUSH ();if (SET (e_A)){SET (prove6 (SET (db),link (l,g,r,e,n,c),append (cdr (a),append (list ("r_B",l),cdr (g))),SET (db),SET (e_A),SET (1+n),l))}
+                                         else  { SET (back6 (SET (db),l,g,r,e,n,c))}MERGE ();MERGE ();;
+                                       }MERGE ();;
+                                 return POP ();
+                                }
+let empty = new Pair (new Pair ("bottom",null),null);
+let vvar =SET ("_Q");
+let name = cadr;
+let time = cddr;
+function var_Q (x){PUSH ();SET (pair_Q (x)&&eq_Q (SET (vvar),car (x)));
+                   return POP ();
+                  }
+function lookup (v,e){PUSH ();PUSH ();
+                      let id =SET (name (v));
+                      let t =SET (time (v));
+                      function loop (e){PUSH ();PUSH ();if (false){}
+                                        else if (! (pair_Q (caar (e)))){SET (false);
+                                                                       }
+                                        else if (SET (eq_Q (SET (id),name (caar (e)))&&eqv_Q (t,time (caar (e))))){SET (car (e));
+                                                                                                                  }
+                                        else  { SET (loop (cdr (e)));
+                                              }MERGE ();;MERGE ();
+                                        return POP ();
+                                       }SET (loop (e));MERGE ();;
+                      return POP ();
+                     }
+function value (x,e){PUSH ();PUSH ();if (var_Q (x)){PUSH ();
+                                                    let v =SET (lookup (x,e));PUSH ();if (v){SET (value (cadr (v),e))}
+                                                    else  { SET (x)}MERGE ();MERGE ();
+                                                   }
+                     else  { SET (x)}MERGE ();
+                     return POP ();
+                    }
+function copy (x,n){PUSH ();PUSH ();if (false){}
+                    else if (! (pair_Q (x))){SET (x);
+                                            }
+                    else if (var_Q (x)){SET (append (x,n));
+                                       }
+                    else  { SET (cons (copy (car (x),n),copy (cdr (x),n)));
+                          }MERGE ();;
+                    return POP ();
+                   }
+function bind (x,y,e){PUSH ();SET (cons (list (x,y),e));
+                      return POP ();
+                     }
+function unify (xx,yy,e){PUSH ();PUSH ();
+                         let x =SET (value (SET (xx),e));
+                         let y =SET (value (SET (yy),e));PUSH ();if (false){}
+                         else if (eq_Q (x,y)){SET (e);
+                                             }
+                         else if (var_Q (x)){SET (bind (x,y,e));
+                                            }
+                         else if (var_Q (y)){SET (bind (y,x,e));
+                                            }
+                         else if (SET (! (pair_Q (x))||! (pair_Q (y)))){SET (false);
+                                                                       }
+                         else  { PUSH ();
+                                 let e_A =SET (unify (car (x),car (y),e));SET (SET (e_A)&&unify (cdr (x),cdr (y),SET (e_A)));MERGE ();;
+                               }MERGE ();;MERGE ();;
+                         return POP ();
+                        }
+function resolve (x,e){PUSH ();PUSH ();if (false){}
+                       else if (! (pair_Q (x))){SET (x);
+                                               }
+                       else if (var_Q (x)){PUSH ();
+                                           let v =SET (value (x,e));PUSH ();if (var_Q (v)){SET (v)}
+                                           else  { SET (resolve (v,e))}MERGE ();MERGE ();;
+                                          }
+                       else  { SET (cons (resolve (car (x),e),resolve (cdr (x),e)));
+                             }MERGE ();;
+                       return POP ();
+                      }
+function print__frame (e){PUSH ();SET (newline ());
+
+                          function loop (ee){PUSH ();PUSH ();if (false){}
+                                             else if (pair_Q (cdr (SET (ee)))){PUSH ();if (false){}
+                                                                               else if (null_Q (time (caar (SET (ee))))){SET (display (cadaar (SET (ee))));SET (display (" = "));SET (display (resolve (caar (SET (ee)),e)));SET (newline ());
+                                                                                                                        }MERGE ();;SET (loop (cdr (SET (ee))));
+                                                                              }MERGE ();;MERGE ();
+                                             return POP ();
+                                            }SET (loop (e));
+                          return POP ();
+                         }
+function tostr (x){PUSH ();PUSH ();if (false){}
+                   else if (null_Q (x)){SET ("");
+                                       }
+                   else if (pair_Q (x)){PUSH ();if (false){}
+                                        else if (null_Q (cdr (x))){SET (strcat ("(",strcat (stringify (car (x)),")")));
+                                                                  }
+                                        else if (pair_Q (cdr (x))){SET (strcat ("(",strcat (stringify (car (x)),strcat (" ",strcat (tailstr (cdr (x)),")")))));
+                                                                  }
+                                        else  { SET (strcat ("(",strcat (tostr (car (x)),strcat (" . ",strcat (tostr (cdr (x)),")")))));
+                                              }MERGE ();;
+                                       }
+                   else  { SET (stringify (x));
+                         }MERGE ();;
+                   return POP ();
+                  }
+function tailstr (x){PUSH ();PUSH ();if (false){}
+                     else if (null_Q (x)){SET ("");
+                                         }
+                     else if (pair_Q (x)){PUSH ();if (false){}
+                                          else if (null_Q (cdr (x))){SET (stringify (car (x)));
+                                                                    }
+                                          else if (pair_Q (cdr (x))){SET (strcat (stringify (car (x)),strcat (" ",tailstr (cdr (x)))));
+                                                                    }
+                                          else  { SET (strcat (tostr (car (x)),strcat (" . ",tostr (cdr (x)))));
+                                                }MERGE ();;
+                                         }
+                     else  { SET (stringify (x));
+                           }MERGE ();;
+                     return POP ();
+                    }
+let db1 = new Pair (new Pair (new Pair ("edge",new Pair ("a",new Pair ("b",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("a",new Pair ("f",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("a",new Pair ("g",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("b",new Pair ("c",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("b",new Pair ("d",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("c",new Pair ("d",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("c",new Pair ("e",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("g",new Pair ("h",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("d",new Pair ("h",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("h",new Pair ("e",null))),null),new Pair (new Pair (new Pair ("edge",new Pair ("h",new Pair ("f",null))),null),new Pair (new Pair (new Pair ("path",new Pair (new Pair ("_Q",new Pair ("A",null)),new Pair (new Pair ("_Q",new Pair ("B",null)),new Pair (new Pair (new Pair ("_Q",new Pair ("A",null)),new Pair (new Pair ("_Q",new Pair ("B",null)),null)),null)))),new Pair (new Pair ("edge",new Pair (new Pair ("_Q",new Pair ("A",null)),new Pair (new Pair ("_Q",new Pair ("B",null)),null))),null)),new Pair (new Pair (new Pair ("path",new Pair (new Pair ("_Q",new Pair ("A",null)),new Pair (new Pair ("_Q",new Pair ("B",null)),new Pair (new Pair (new Pair ("_Q",new Pair ("A",null)),new Pair ("_Q",new Pair ("CB",null))),null)))),new Pair (new Pair ("edge",new Pair (new Pair ("_Q",new Pair ("A",null)),new Pair (new Pair ("_Q",new Pair ("C",null)),null))),new Pair (new Pair ("path",new Pair (new Pair ("_Q",new Pair ("C",null)),new Pair (new Pair ("_Q",new Pair ("B",null)),new Pair (new Pair ("_Q",new Pair ("CB",null)),null)))),null))),null)))))))))))));
+let goals1 = new Pair (new Pair ("path",new Pair ("a",new Pair ("f",new Pair (new Pair ("_Q",new Pair ("P",null)),null)))),null);SET (prove3 (SET (db1),SET (goals1),SET (empty),1));SET (prove3 (SET (db1),SET (goals1),SET (empty),1));SET (prove5 (SET (db1),null,SET (goals1),SET (db1),SET (empty),1));
+let db2 = new Pair (new Pair (new Pair ("some",new Pair ("foo",null)),null),new Pair (new Pair (new Pair ("some",new Pair ("bar",null)),null),new Pair (new Pair (new Pair ("some",new Pair ("baz",null)),null),new Pair (new Pair (new Pair ("eq",new Pair (new Pair ("_Q",new Pair ("X",null)),new Pair (new Pair ("_Q",new Pair ("X",null)),null))),null),new Pair (new Pair (new Pair ("neq",new Pair (new Pair ("_Q",new Pair ("X",null)),new Pair (new Pair ("_Q",new Pair ("Y",null)),null))),new Pair (new Pair ("eq",new Pair (new Pair ("_Q",new Pair ("X",null)),new Pair (new Pair ("_Q",new Pair ("Y",null)),null))),new Pair ("_B",new Pair ("fail",null)))),new Pair (new Pair (new Pair ("neq",new Pair (new Pair ("_Q",new Pair ("X",null)),new Pair (new Pair ("_Q",new Pair ("Y",null)),null))),null),null))))));
+let goals2 = new Pair (new Pair ("some",new Pair (new Pair ("_Q",new Pair ("X",null)),null)),new Pair (new Pair ("some",new Pair (new Pair ("_Q",new Pair ("Y",null)),null)),new Pair (new Pair ("neq",new Pair (new Pair ("_Q",new Pair ("X",null)),new Pair (new Pair ("_Q",new Pair ("Y",null)),null))),null)));SET (prove6 (SET (db2),null,SET (goals2),SET (db2),SET (empty),1,null));

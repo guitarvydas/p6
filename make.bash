@@ -10,6 +10,6 @@ if [ -f "out.✗" ]; then
     cat "out.✗"
 else
     echo '** transpiled to Javascript **'
-    cat lisp.js out.js >prolog.js
+    cat lisp.js out.peep >prolog.js
     node prolog.js
 fi

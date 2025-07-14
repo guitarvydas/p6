@@ -1,9 +1,9 @@
 % rewrite tojs {
   Program [es+] = ‛«es»’
   TopLevelSexpr_special [e] = ‛«e»’
-  TopLevelSexpr_listConstant [e] = ‛«e»’
-  TopLevelSexpr_atom [e] = ‛«e»’
-  TopLevelSexpr_call [e] = ‛\n«e»’
+  TopLevelSexpr_listConstant [e] = ‛«e»;’
+  TopLevelSexpr_atom [e] = ‛«e»;’
+  TopLevelSexpr_call [e] = ‛\n«e»;’
   Sexpr[e] = ‛«e»’
 
   Special_functionDefinition [lp _define lp2 name formals* rp2 Body rp] = ‛

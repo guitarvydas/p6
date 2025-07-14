@@ -1,0 +1,34 @@
+peephole {
+  program = stuff+
+  stuff =
+    | applySyntactic<TopLevelSet> -- tlset
+    | applySyntactic<TopLevelCall> -- tlcall
+    | "(" stuff+ ")" -- nested
+    | ~"(" ~")" any -- other
+
+  SetCall = "SET" "(" parameter ")"
+  TopLevelSet = SetCall
+  InnerSet = "SET" "(" parameter ")"
+  Call = id "(" parameter* ")"
+  TopLevelCall = Call
+  InnerCall = Call
+
+  parameter =
+    | applySyntactic<InnerSet>-- set
+    | applySyntactic<InnerCall> -- call
+    | ~"(" ~")" any -- other
+    
+
+
+  id = firstLetter followLetter*
+  firstLetter = jsletter | (~separator ~unprintable any)
+  followLetter = jsletter | digit | (~separator ~unprintable any)
+  jsletter =
+    | "_" -- underscore
+    | letter -- other
+  special  = ";" | "#" | "(" | ")" | "‹" | "›" | "." | "⎨" | "⎬"
+  unprintable = ("\x00" .. "\x20") | "\x7F"
+  separator = space | special | end
+  comment = ";" (~"\n" any)* "\n"
+  space += comment
+}

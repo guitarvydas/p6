@@ -7,7 +7,7 @@
 	-x truthiness issue with ne in try?
 	-Y named let unwinding? << trying
 		- missing return in inner function
-[ ] prove6 failing
+[x] prove6 failing
 	- eq ("_B", car (g))???
-		
+[ ] peephole		
 

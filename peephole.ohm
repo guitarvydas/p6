@@ -1,6 +1,7 @@
 peephole {
   program = stuff+
   stuff =
+    | "{" -- openbrace
     | keyword -- keyword
     | applySyntactic<TopLevelSet> -- tlset
     | applySyntactic<TopLevelCall> -- tlcall
@@ -16,6 +17,7 @@ peephole {
 
   parameter =
     | keyword -- keyword
+    | "\"" (~"\"" any)* "\"" -- string
     | applySyntactic<InnerSet>-- set
     | applySyntactic<InnerCall> -- call
     | ~"(" ~")" any -- other

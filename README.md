@@ -5,13 +5,14 @@ To transpile prolog-6.scm to prolog.js:
 
 `$ make`
 
-## identity transpilation
-Early sanity test: just run `test.scm` through transpiler and expect the output to be the same as the input (reveals silly errors in workflow)
-`$ make identity`
-(N.B. this was used early in the development workflow and may fail due to incremental changes to the main workflow)
+The output should be the same as running the code with `mit-scheme`
+
+`$ make scm`
+
 ## scheme
 To see the modified Scheme code run:
 `$ make scm` 
+
 # Notes
 Generalized Scheme to JS is probably much harder, but, focussing on a single src program makes it easier and produces a useful result (Prolog engine in JS).
 

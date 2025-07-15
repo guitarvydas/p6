@@ -12,3 +12,5 @@ junk.*
 *.bkp
 .#*
 #*
+
+\#README.md#
